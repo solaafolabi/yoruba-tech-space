@@ -1,0 +1,24 @@
+.slick-prev,
+.slick-next {
+  width: 30px;
+  height: 30px;
+  z-index: 20;
+}
+
+.slick-prev:before,
+.slick-next:before {
+  font-size: 28px;
+  color: #ffd700;
+}
+
+@media (max-width: 768px) {
+  .slick-prev,
+  .slick-next {
+    width: 20px;
+    height: 20px;
+  }
+  .slick-prev:before,
+  .slick-next:before {
+    font-size: 20px;
+  }
+}

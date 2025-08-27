@@ -1,0 +1,595 @@
+{
+  "selectLanguage": "Select Language",
+  "yoruba": "Yoruba",
+  "english": "English",
+  "nav": {
+    "home": "Home",
+    "courses": "Courses",
+    "about": "About Us",
+    "contact": "Contact",
+    "donate": "Donate",
+    "login": "Login",
+    "signup": "Sign Up",
+    "parentSignup": "Parent Signup",
+    "adultSignup": "Adult Signup",
+     "parentSignupDescription": "For parents to manage their child’s learning progress, assignments, and course enrollment.",
+    "adultSignupDescription": "For adult learners to access courses and track their own progress."
+
+    
+  },
+  "hero": {
+    "welcome": "Welcome to",
+    "brandName": "Yorùbá Tech Space",
+    "description": "A digital learning platform where we teach you how to code using English language. Learn HTML, CSS, JavaScript, React, Python, and even AI E.T.C all explained clearly in a way you’ll truly understand.",
+    "startLearning": "Start Learning",
+    "seeHowItWorks": "See How It Works"
+  },
+  "howItWorks": {
+    "title": "How It Works",
+    "step1": {
+      "title": "1. Apply for Admission",
+      "desc": "Start your journey by applying for admission to join Yoruba Tech Space."
+    },
+    "step2": {
+      "title": "2. Get Admitted",
+      "desc": "Once admitted, gain access to our coding platform and resources."
+    },
+    "step3": {
+      "title": "3. Start Learning",
+      "desc": "Learn HTML, CSS, JavaScript, Python, and more in your preferred language."
+    },
+    "step4": {
+      "title": "4. Take Quizzes & Practical Tasks",
+      "desc": "Practice what you learn through quizzes and real coding projects."
+    },
+    "step5": {
+      "title": "5. Earn Badges & Certificate",
+      "desc": "Receive badges and a certificate to showcase your skills and progress."
+    }
+  },
+  "courses": {
+    "title": "Our Courses",
+    "description": "Learn from beginner to pro with hands-on projects.",
+    "list": {
+      "html": "HTML & CSS Basics",
+      "javascript": "JavaScript Mastery",
+      "python": "Python for Beginners",
+      "react": "React Development",
+      "firebase": "Firebase & Backend",
+      "git": "Git & GitHub Essentials"
+    },
+    "features": {
+      "bilingual": "Available in Yoruba & English",
+      "handsOn": "Learn by building projects",
+      "certificate": "Earn a completion certificate"
+    },
+    "viewCourse": "View Course"
+  },
+  "admissionCTA": {
+    "title": "Your tech journey starts here.",
+    "description": "Get admitted into Yorùbá Tech Space today.",
+    "applyButton": "Apply for Admission"
+  },
+  "login": {
+    "title": "Login to YorubaTech Space",
+    "email": "Email",
+    "password": "Password",
+    "show": "Show",
+    "hide": "Hide",
+    "remember": "Remember me",
+    "forgot": "Forgot password?",
+    "login": "Login",
+    "or": "— Or —",
+    "google": "Login with Google",
+    "success": "Login successful!",
+    "enterEmail": "Please enter your email.",
+    "resetLink": "🔑 A reset link has been sent to your email.",
+    "errors": {
+      "invalidCredentials": "Invalid email or password.",
+      "networkError": "Network error. Please try again.",
+      "requiredField": "Please fill out all required fields.",
+        "loading": "Loading..."
+    
+    }
+  },
+  "signup": {
+    "title": "Create an Account",
+    "fullName": "Full Name",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "show": "Show",
+    "hide": "Hide",
+    "remember": "Remember Me",
+    "signup": "Sign Up",
+    "google": "Sign up with Google",
+    "or": "— OR —",
+    "weakPassword": "Password must be at least 8 characters long.",
+       "parentTitle": "Parent's Signup",
+    "passwordMismatch": "Passwords do not match",
+    "success": "Account created successfully!",
+    "errors": {
+      "emailExists": "This email is already registered."
+      
+    }
+  },
+  "forgot": {
+    "title": "Forgot Password",
+    "email": "Enter your email",
+    "send": "Send Reset Link",
+    "success": "🔑 A reset link has been sent to your email.",
+    "errors": {
+      "invalidEmail": "Invalid email format.",
+      "requiredField": "Please enter your email."
+    }
+  },
+  "reset": {
+    "title": "Reset Your Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm Password",
+    "show": "Show Password",
+    "hide": "Hide Password",
+    "reset": "Reset Password",
+    "loading": "Resetting...",
+    "backToLogin": "Back to Login",
+    "weakPassword": "Password must be at least 8 characters long.",
+    "mismatch": "Passwords do not match.",
+    "success": "Your password has been successfully reset!",
+    "failed": "Failed to reset password. Please try again.",
+    "networkError": "Network error",
+    "errors": {
+      "requiredField": "Please fill out all required fields."
+    }
+  },
+  "donation": {
+    "title": "Help Us Empower the Next Tech Generation",
+    "englishMsg": "Your donation helps us train African talents in technology using their native language. Together, we can help them gain skills to provide for their families and contribute to the tech world.",
+    "yorubaMsg": "",
+    "impact": "₦2,000 donation provides 500 hours of learning for people around the world each month.",
+    "confirmTitle": "Confirm your donation:",
+    "preset": "Quick Donate",
+    "custom": "Or enter a custom amount",
+    "email": "Your Email",
+    "anonymous": "Donate anonymously",
+    "button": "Donate Now",
+    "thank_title": "Thank You!",
+    "thank_msg": "Your donation means a lot. Together, we are shaping the future."
+  },
+ "parentSignup": {
+  "title": "Parent Sign Up",
+  "fullName": "Full Name",
+  "email": "Email Address",
+  "password": "Password",
+  "show": "Show",
+  "hide": "Hide",
+  "signup": "Sign Up",
+  "loading": "Creating account...",
+  "success": "Signup successful! Redirecting...",
+  "errors": {
+    "emailExists": "Email already registered.",
+    "passwordShort": "Password should be at least 6 characters.",
+    "invalidEmail": "Invalid email format."
+    }
+  },
+  "parentLogin": {
+  "title": "Parent Login",
+  "parentEmail": "Parent Email",
+  "password": "Password",
+  "show": "Show",
+  "hide": "Hide",
+  "login": "Login",
+  "loading": "Logging in...",
+  "forgot": {
+    "link": "Forgot Password?"
+  },
+  "errors": {
+    "invalidCredentials": "Invalid email or password.",
+    "networkError": "Network error. Please try again.",
+    "requiredField": "Please fill all required fields."
+    }
+  },
+  "childrenDashboard": {
+    "welcomeTitle": "🌟 Yoruba Kids Tech!",
+    "subtitle": "Learn, play, and explore!",
+    "cards": {
+      "start": {
+        "title": "🚀 Start Learning",
+        "desc": "Begin your exciting journey in tech with fun lessons made just for you.",
+        "button": "Start Now"
+      },
+      "profile": {
+        "title": "🧑‍🎓 Your Profile",
+        "desc": "View your name, progress, and achievements."
+      },
+      "games": {
+        "title": "🎮 Games & Activities",
+        "desc": "Explore games and fun challenges to boost your learning."
+      },
+      "art": {
+        "title": "🎨 Create Art",
+        "desc": "Draw, drag, and build your ideas!"
+      },
+      "quiz": {
+        "title": "🧠 Quiz Me!",
+        "desc": "Answer fun questions and earn stars!"
+      },
+      "logout": {
+        "title": "🚪 Log Out",
+        "desc": "When you're done, you can safely leave here.",
+        "button": "Log Out"
+      }
+    },
+    "sidebar": {
+      "title": "Yoruba Kids Tech",
+      "level1": "Intro to Tech",
+      "level2": "Digital Literacy",
+      "stage3": "Visual Thinking",
+      "stage4": "Beginner Coding",
+      "stage5": "Real Code",
+      "funZone": "Fun Zone",
+      "badges": "Badges",
+      "profile": "Profile"
+      },
+      "topbar": {
+      "greeting": "Hello, {{name}}",
+      "profile": "My Profile",
+      "logout": "Log Out"
+      }
+      },
+    "profileForm": {
+      "title": "Update Profile",
+      "nickname": "Nickname",
+      "uploadPhoto": "Upload Profile Picture",
+      "save": "Save Changes",
+      "cancel": "Cancel"
+    },
+      "sidebar": {
+    "dashboard": "Dashboard",
+    "parentPanel": "Parent Panel",
+    "myChildren": "My Children",
+    "progressReports": "Progress Report",
+    "tutorMessages": "Tutor Messages",
+    "assignGoals": "Assign Goals",
+    "parentalControls": "Parental Controls",
+    "learningPackages": "Learning Packages",
+    "achievements": "Achievements",
+    "notifications": "Notifications",
+    "payments": "Payments",
+    "donations": "Donations",
+    "settings": "Settings",
+    "pickCourse": "Pick Your Course",
+    "loading": "Loading...",
+    "cancel": "Cancel",
+    "save": "Save",
+    "finalProject": "Final Project Upload",
+    "modules": "Modules",
+    "lessons": "Lessons",
+    "certificate": "View Certificate",
+    "joinDiscord": "Join Discord",
+    "activeCourse": "Please finish {{course}} before picking another",
+     "downloadCertificate": "Download certificate",
+    "generating": "generating"
+  },
+  "errors": {
+    "fetchData": "An error occurred while fetching data",
+    "saveCourse": "An error occurred while saving course"
+  },
+  "modals": {
+    "pickCourseTitle": "Pick Your Course",
+    "warning": "Warning",
+    "close": "Close"
+      },
+    
+  "topbar": {
+  "greeting": "Hello",
+  "welcome": "Welcome to Yoruba Tech Space",
+  "language": "Language",
+  "logout": "Logout",
+  "profile": "My Profile",
+  "editProfile": "Edit Profile",
+  "save": "Save",
+  "cancel": "Cancel",
+  "uploadPhoto": "Upload Photo",
+  "fullName": "Full Name",
+  "updating": "Updating...",
+  "updated": "Profile updated!"
+  },
+
+ "children": {
+    "manageChildren": "Manage Children",
+    "addChild": "Add Child",
+    "editChild": "Edit Child",
+    "fullName": "Full Name",
+    "usernameAuto": "Username (auto-generated)",
+    "age": "Age",
+    "gender": "Gender",
+    "avatar": "Avatar Image",
+    "password": "Password",
+    "passwordOptional": "Leave blank to keep current password",
+    "fullNameRequired": "Full name is required",
+    "usernameRequired": "Username is required",
+    "passwordRequired": "Password is required when adding a child",
+    "usernameError": "Failed to generate unique username",
+    "savedSuccessfully": "Saved successfully",
+    "saveFailed": "Save failed",
+    "confirmDelete": "Are you sure you want to delete '{name}'?",
+    "deletedSuccessfully": "Deleted successfully",
+    "deleteFailed": "Delete failed",
+    "edit": "Edit",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "save": "Save",
+    "saving": "Saving...",
+    "loading": "Loading...",
+    "loadingUser": "Loading user info...",
+    "confirm": "Confirm",
+    "ok": "OK",
+    "signinTitle": "Children Sign In",
+    "username": "Username",
+    "signinFailed": "Sign-in failed. Please check your credentials.",
+    "signin": "Sign In",
+    "signingIn": "Signing In..."
+ },
+    "genders": {
+      "male": "Male",
+      "female": "Female",
+      "nonbinary": "Non-Binary",
+      "prefernottosay": "Prefer Not to Say"
+    },
+    
+  "top": {
+    "welcome": "Welcome, {{name}}!",
+    "greetingYorubaTechSpace": "To Yoruba Tech Space",
+    "level": "Level",
+    "welcomeGeneric": ""
+  },
+    "levels": {
+      "earlyLearners": "Early Learners",
+      "youngJuniors": "Young Juniors",
+      "preTeens": "Pre-Teens",
+      "teens": "Teens"
+    },
+ "admission": {
+    "title": "Yoruba Tech Space Admission Form",
+    "switchLanguage": "Switch Language",
+    "alreadySubmitted": "You have already submitted an admission form.",
+    "processing": "Processing your submission...",
+    "success": "Your admission was successful! Redirecting...",
+    "fullName": "Full Name",
+    "email": "Email",
+    "phone": "Phone Number",
+    "sex": "Sex",
+    "male": "Male",
+    "female": "Female",
+    "motivation": "Why do you want to learn coding?",
+    "experienceNote": "Have you studied coding before? (Optional)",
+    "hearAboutUsLabel": "How did you hear about us?",
+  "hearOptions": {
+      "socialMedia": "Social Media",
+      "friend": "Friend",
+      "advertisement": "Advertisement",
+      "other": "Other"
+  },
+    "addressLabel": "Address",
+    "country": "Country",
+    "otherCountry": "Other Country",
+    "enterOtherCountry": "Please enter your country",
+    "state": "State",
+    "otherState": "Other State",
+    "city": "City",
+    "selectOption": "Select an option",
+    "agreeTerms": "I agree to the terms and conditions",
+    "errors": {
+      "required": "This field is required.",
+      "agreeTerms": "You must agree before submitting."
+    },
+    "submit": "Submit Admission",
+    "submitting": "Submitting...",
+    "confirmSubmission": "Confirm Submission",
+    "confirmationMessage": "Are you sure all the information provided is correct?",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "agreeTermsText": "I agree to the terms and conditions",
+     "confirmText": "Are you sure you want to submit your admission application? Please review your information before confirming.",
+    "personalInfo": "Personal Info",
+    "location": "Location",
+    "motivations": "Motivation",
+      "next": "Next",
+       "back": "Padà",  
+       "congrats": "Congratulations on Your Admission!",
+      "uploadPrompt": "Please upload your passport photo to generate your ID card and admission letter.",
+      "dragDrop": "Click or drag your passport photo here to upload",
+      "uploadButton": "Upload Passport",
+      "uploading": "Uploading...",
+      "uploadFailed": "Upload failed. Please try again.",
+      "idCardGenerated": "ID Card uploaded successfully!",
+      "generateId": "Generate ID Card (PDF)",
+      "printLetter": "Print Admission Letter (PDF)",
+      "proceed": "Proceed",
+      "fullNames": "Full Name",
+      "emails": "Email",
+      "admissionNo": "Admission No"
+  },
+  
+  "loading": "Loading...",
+  "parentControl": {
+    "title": "Parent Control Dashboard",
+    "scheduleEnabled": "Schedule Enabled",
+    "maxDailyHours": "Max Daily Hours",
+    "language": "Language",
+    "lockLessons": "Lock Lessons",
+    "lockQuizzes": "Lock Quizzes",
+    "notifications": "Notifications",
+    "sessionTime": "Session Time",
+    "usageToday": "Usage Today",
+    "rewardConfetti": "Reward Confetti",
+    "resetUsage": "Reset Usage"
+  },
+  "languages": {
+    "english": "English",
+    "yoruba": "Yoruba"
+  },
+  "profileDropdown": {
+    "profile": "Profile",
+    "uploadAvatar": "Upload New Avatar",
+    "selectImage": "Select Image",
+    "avatarPreview": "Avatar Preview",
+    "uploading": "Uploading...",
+    "uploadSuccess": "✅ Uploaded successfully!",
+    "uploadFailed": "❌ Upload failed. Try again.",
+    "fileTooLarge": "📛 File too large. Max size: 2MB",
+    "logout": "Logout"
+  },
+   
+  "practical": {
+    "loading": "Loading...",
+    "noSteps": "No practical steps found.",
+    "stepPassed": "Step Passed!",
+    "allCompleted": "All steps completed!",
+    "goDashboard": "Go to Dashboard",
+    "title": "Practical",
+    "lessonNotFound": "Lesson not found.",
+    "fetchStepsFailed": "Failed to fetch practical steps.",
+    "unexpectedError": "An unexpected error occurred."
+  },
+  "lessonStep": {
+    "noStepData": "⚠️ No step data provided.",
+    "editor": "{{lang}} Editor",
+    "livePreview": "Live Preview",
+    "running": "Running...",
+    "noOutput": "No output",
+    "errorRunning": "Error: {{message}}",
+    "step": "Step {{stepNumber}}",
+    "submitPractical": "✅ Submit Practical",
+    "checkCode": "✅ Check Code",
+    "run": "Run {{lang}}",
+    "validation": {
+      "mustContain": "❌ {{lang}} must contain \"{{value}}\"",
+      "mustNotContain": "❌ {{lang}} must NOT contain \"{{value}}\"",
+      "mustEqual": "❌ {{lang}} must equal exactly \"{{value}}\"",
+      "regexMismatch": "❌ {{lang}} must match /{{value}}/",
+      "invalidRegex": "⚠️ Invalid regex for {{lang}}",
+      "missingId": "❌ Missing element with id=\"{{id}}\"",
+      "htmlParseError": "❌ Error parsing HTML for ID checks.",
+      "missingCSS": "❌ Missing CSS: {{selector}} { {{property}}: {{value}} }",
+      "unknownRule": "⚠️ Unknown rule type: {{type}}"
+    },
+    "practicalProgress": {
+      "noSavedProgress": "No saved progress yet → start fresh.",
+      "errorSavingProgress": "Error saving progress:",
+      "progressSaved": "✅ Progress saved → Step",
+      "stepOf": "Step {{current}} of {{total}}"
+    }
+  },
+  "appTitle": "Yorùbá Tech",
+  "dashboard": {
+    "welcome": "Welcome",
+    "view": "View",
+     "discordDescription": "Connect with your peers, ask questions, and join study groups in our Discord community.",
+  
+    "whatsappDescription": "Join our WhatsApp group to get updates, ask questions, and stay connected with your classmates.",
+  "noWhatsapp": "WhatsApp link not available",
+   "noDiscord": "Discord link not available",
+    "studentFallback": "Student",
+    "audience": "Audience",
+    "reminder": "React Native live class starts at 6PM",
+    "presentCourse": "Present Course",
+    "noPresentCourse": "No active course yet",
+    "continue": "Continue Learning",
+    "nextLesson": "Next lesson",
+    "allCompleted": "All lessons completed 🎉",
+    "upcomingLiveClass": "Upcoming Live Class",
+    "instructor": "Instructor",
+    "joinNow": "Join Now",
+    "tabs": {
+      "myCourses": "My Courses",
+      "completed": "Completed",
+      "bookmarks": "Bookmarks"
+    },
+    "searchPlaceholder": "🔍 Search courses...",
+    "noCourses": "No courses found.",
+    "courseCompletion": "Course Completion",
+    "weeklyStreak": "Weekly Streak",
+    "newActivity": "📣 New Activity",
+    "noActivity": "No recent activity",
+    "progress": "Progress",
+    "pie": {
+      "completed": "Completed",
+      "inProgress": "In Progress",
+      "pending": "Pending"
+    },
+    "activity": {
+      "completed": "✅ Completed",
+      "continued": "↪️ Continued"
+    },
+    "live": {
+      "title": "React Native Live Session",
+      "time": "6:00 PM"
+    },
+    "toggleLang": "Toggle language",
+    "a11y": {
+      "openMenu": "Open menu",
+      "closeMenu": "Close menu"
+    },
+    "certificates": {
+      "title": "Certificates",
+      "view": "View",
+      "empty": "No certificates earned yet 🎓"
+    },
+    "discord": {
+      "title": "Join Discord",
+      "desc": "Connect with your peers, ask questions, and join study groups in our Discord community.",
+      "join": "Join Now 🚀",
+      "none": "Discord link not available",
+       "course": "Join Course Discord 🚀",
+    "general": "Join General Discord 🌍"
+    },
+    "whatsapp": {
+      "title": "Join WhatsApp",
+      "desc": "Join our WhatsApp group to get updates, ask questions, and stay connected with your classmates.",
+      "join": "Join Now 📱",
+      "none": "WhatsApp link not available",
+      "course": "Join Course WhatsApp 📚",
+    "general": "Join General WhatsApp 🌍"
+    }
+    },
+"finalProject": {
+  "title": "Final Project",
+  "loading": "Loading project...",
+  "instructions": "Project Instructions",
+  "maxPoints": "Maximum Points",
+  "reference": "Reference",
+  "repo": "Repository",
+  "status": "Status",
+  "approved": "Approved",
+  "rejected": "Rejected",
+  "pending": "Pending Review",
+  "feedbackSection": "Instructor Feedback",
+  "feedbackEn": "Feedback (English)",
+  "feedbackYo": "Feedback (Yoruba)",
+  "noFeedback": "No feedback yet",
+  "noFeedbackYo": "Ko si ifesi",
+  "score": "Final Score",
+  "notGraded": "Not graded yet",
+  "submittedOn": "Submitted on",
+  "repoLabel": "Enter your repository link",
+  "repoPlaceholder": "https://github.com/username/project",
+  "submitButton": "Submit Project",
+  "submitting": "Submitting...",
+  "projectApproved": "Your project has been approved 🎉"
+
+  },
+  "notifications": {
+    "titles": {
+      "lesson": "Lesson",
+      "quiz": "Quiz",
+      "system": "System",
+      "chat": "Chat",
+      "parent": "Parent",
+      "general": "General"
+    },
+    "noNotifications": "No notifications"
+  }
+  }
+
+

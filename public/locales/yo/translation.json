@@ -1,0 +1,585 @@
+{
+  "selectLanguage": "Yan Èdè",
+  "yoruba": "Èdè Yorùbá",
+  "english": "Èdè Gẹ̀ẹ́sì",
+  "nav": {
+    "home": "Àkọ́kọ́",
+    "courses": "Ẹ̀kọ́",
+    "about": "Nipa Wa",
+    "contact": "Kàn sí Wa",
+    "donate": "Ẹbùn",
+    "login": "Wọlé",
+    "parentSignup": "Forukọsilẹ Ọ̀bí",
+    "parentSignupDescription": "Fun awọn obi lati ṣakoso ilọsiwaju ẹkọ ọmọ wọn, iṣẹ ile, ati iforukọsilẹ awọn iṣẹ-ikẹkọ.",
+    "adultSignup": "Forukọsilẹ Agbalagba",
+    "adultSignupDescription": "Fun awọn agbalagba lati wọle si awọn iṣẹ-ikẹkọ, tọpa ilọsiwaju, ati pari iṣẹ-ile.",
+    "signup": "Forúkọsílẹ̀"
+    
+    },
+  "hero": {
+    "welcome": "Kaabo sí",
+    "brandName": "Yorùbá Tech Space",
+    "description": "Ibi ikẹkọ ori ayelujara nibiti a ti kọ́ ọ bi o ṣe le kọ́ kóòdù nipa lilo ede abinibi rẹ – Yorùbá. Kọ́ ẹ̀kọ́ HTML, CSS, JavaScript, React, Python, AI, àti bẹ́ẹ̀ bẹ́ẹ̀ lọ, gbogbo rẹ ni a ṣe alaye ni kedere lati ye ọ.",
+    "nativeDescription": "Ẹ jẹ ká kọ́ ẹ̀kọ́ kóòdù pẹ̀lú agbádá àti àyá gíga ní èdè Yorùbá. Ẹ̀kọ́ wa rọrùn, ṣoki, kedere, àti àtinúdá!",
+    "startLearning": "Bẹrẹ Ẹ̀kọ́",
+    "seeHowItWorks": "Ṣàbẹwò Bí A Ṣe Nṣiṣẹ́"
+  },
+  "howItWorks": {
+    "title": "Bá A Ṣe N Ṣiṣẹ́",
+    "step1": {
+      "title": "1. Ṣe Ìforúkọsílẹ̀",
+      "desc": "Bẹrẹ irinàjò rẹ nípa fífi orúkọ sílẹ̀ láti darapọ̀ mọ́ Yoruba Tech Space."
+    },
+    "step2": {
+      "title": "2. Gba Ìforúkọsílẹ̀",
+      "desc": "Lẹ́yìn ìforúkọsílẹ̀, iwọ yóò ní ààyè sí pẹpẹ àti àwọn ohun èlò ẹ̀kọ́ wa."
+    },
+    "step3": {
+      "title": "3. Bẹrẹ Kọ́ Ẹ̀kọ́",
+      "desc": "Kọ́ HTML, CSS, JavaScript, Python, àti òmíràn ní èdè tí o fẹ́."
+    },
+    "step4": {
+      "title": "4. Ṣe Idánwò àti Ìmúlò",
+      "desc": "Ṣe Idánwò, dáhùn àwọn ìbéèrè, àti ṣe iṣẹ́ kóòdù gidi."
+    },
+    "step5": {
+      "title": "5. Gba Ààmì àti Ìwé Ẹ̀rí",
+      "desc": "Gba ààmì àti ìwé ẹ̀rí láti fi hàn ìmọ̀ àti àtìlẹ́yìn rẹ."
+    }
+  },
+  "courses": {
+    "title": "Ẹ̀kọ́ Wa",
+    "description": "Kọ́ láti ìpele alakọbẹrẹ títí dé amọ̀ràn pẹ̀lú iṣẹ́ ọnà gidi.",
+    "list": {
+      "html": "Ìpilẹ̀ HTML & CSS",
+      "javascript": "Amọ̀ràn JavaScript",
+      "python": "Python Fún Alakọbẹrẹ",
+      "react": "Ẹ̀kọ́ React",
+      "firebase": "Firebase & Ẹ̀rọ Ẹ̀yìn",
+      "git": "Git & GitHub Fún Àmọ̀ràn"
+    },
+    "features": {
+      "bilingual": "Wà ní èdè Yorùbá àti Gẹ̀ẹ́sì",
+      "handsOn": "Kọ́ nípasẹ̀ iṣẹ́ ọwọ́ gidi",
+      "certificate": "Gba aṣẹ-ẹ̀rí ìparí ẹ̀kọ́"
+    },
+    "viewCourse": "Wo Ẹ̀kọ́"
+  },
+  "admissionCTA": {
+    "title": "Ìrìnàjò rẹ nípa imọ̀ ẹrọ bẹ̀rẹ̀ níbí.",
+    "description": "Darapọ mọ Yorùbá Tech Space lónìí.",
+    "applyButton": "Forúkọsílẹ̀ Fún Admission"
+  },
+  "login": {
+    "title": "Wọlé sí YorubaTech Space",
+    "email": "Imeeli",
+    "password": "Ọrọigbaniwọle",
+    "show": "Ṣafihan",
+    "hide": "Tọju",
+    "remember": "Rántí mi",
+    "forgot": "Gbagbe ọrọigbaniwọle?",
+    "login": "Wọlé",
+    "or": "— Tàbí —",
+    "google": "Wọlé pẹ̀lú Google",
+    "success": "✅ Wọlé rẹ́ yáyà!",
+    "enterEmail": "⚠️ Jọwọ tẹ imeeli rẹ kọ́.",
+    "resetLink": "🔑 A reset link ti rán sí imeeli rẹ."
+  },
+  "signup": {
+    "title": "Iforúkọsílẹ̀ Odo",
+    "fullName": "Orúkọ Kíkún",
+    "email": "Imeeli",
+    "password": "Ọrọigbaniwọle",
+    "confirmPassword": "Ṣe ìmúdájú Ọrọigbaniwọle",
+    "show": "Fi hàn",
+    "hide": "Tì pa",
+    "remember": "Rántí mi",
+    "signup": "Forúkọsílẹ̀",
+    "google": "Forúkọsílẹ̀ pẹ̀lú Google",
+    "or": "— Tàbí —",
+    "passwordMismatch": "Ọrọigbaniwọle méjì kò bá ara wọn mu",
+    "success": "Akọ́ọ̀lẹ́ dá sílẹ̀ nípasẹ̀ àṣeyọrí!",
+     "parentTitle": "Iforukọsilẹ Ọ̀bí"
+  },
+  "forgot": {
+    "title": "Gbagbe Ọrọigbaniwọle",
+    "email": "Tẹ imeeli rẹ",
+    "send": "Firanṣẹ ọna asopọ atunṣe",
+    "success": "🔑 A ti fi ọna asopọ atunṣe ranṣẹ si imeeli rẹ."
+  },
+  "reset": {
+    "title": "Tun Ọrọigbaniwọle Rẹ Ṣe",
+    "newPassword": "Ọrọigbaniwọle Tuntun",
+    "confirmPassword": "Jẹrisi Ọrọigbaniwọle",
+    "show": "Fi Ọrọigbaniwọle Han",
+    "hide": "Tọju Ọrọigbaniwọle",
+    "reset": "Tun Ọrọigbaniwọle Ṣe",
+    "loading": "N tuni ọrọigbaniwọle...",
+    "backToLogin": "Padà sí Iwọle",
+    "weakPassword": "Ọrọigbaniwọle gbọdọ ni o kere ju awọn lẹta 8.",
+    "mismatch": "Ọrọigbaniwọle ko baamu.",
+    "success": "A ti tun ọrọigbaniwọle rẹ ṣe ni aṣeyọri!",
+    "failed": "Kuna lati tun ọrọigbaniwọle ṣe. Jọwọ gbiyanju lẹẹkansi.",
+    "networkError": "Aṣiṣe nẹtiwọọki"
+  },
+  "donation": {
+    "title": "Ẹ Ran Wa Lọ́wọ́ Láti Fọwọ́sowọpọ́ Fún Ọ̀dọ́ Ẹlẹ́rọ Tuntun",
+    "englishMsg": "",
+    "yorubaMsg": "Ẹ̀bùn yín ń ran wa lọwọ láti kọ́ àwọn akẹ́kọ̀ọ́ Áfíríkà ní imọ̀ ẹ̀rọ ní èdè Yorùbá. Papọ̀, a lè jẹ́ kí wọ́n ní ọgbọ́n tó yẹ kí wọ́n lè tọ́jú ẹbí wọn àti darapọ̀ mọ́ ayé ìmọ̀ ẹ̀rọ.",
+    "impact": "Ìbùn ₦2,000 yóò fún ní wákàtí ẹ̀kọ́ 500 fún àwọn ènìyàn káàkiri ayé ní oṣù kan.",
+    "confirmTitle": "Jẹ́rìí Ìbùn Rẹ:",
+    "preset": "Ìbùn Kánkán",
+    "custom": "Tàbí tẹ iye ti ara rẹ̀",
+    "email": "Imeeli rẹ",
+    "anonymous": "Bù kó orúkọ mọ́",
+    "button": "Bù Ní Bayìí",
+    "thank_title": "Ẹ Ṣe Púpọ̀!",
+    "thank_msg": "Ẹ̀bùn yín túmọ̀ sí púpọ̀. Papọ̀, a ń dá ọjọ́ iwájú kọ́."
+  },
+ "parentSignup": {
+  "title": "Ìforúkọsílẹ̀ Òbí",
+  "fullName": "Orúkọ Kíkún",
+  "email": "Ímèlì",
+  "password": "Ọ̀rọ̀ aṣínà",
+  "show": "Fi hàn",
+  "hide": "Tẹ̀",
+  "signup": "Forúkọsílẹ̀",
+  "loading": "Àkópọ̀ àkọọlẹ̀...",
+  "success": "Ìforúkọsílẹ̀ yé! A ń tọ́ ọ lọ...",
+  "errors": {
+    "emailExists": "Ímèlì yìí ti forúkọsílẹ̀.",
+    "passwordShort": "Ọ̀rọ̀ aṣínà gbọ́dọ̀ jẹ́ àkọọlẹ̀ mẹ́fà (6) tàbí ju béẹ̀ lọ.",
+    "invalidEmail": "Fọ́ọ̀mù ímèlì kò bójú mu."
+    }
+  },
+"parentLogin": {
+  "title": "Ìbànisọ̀rọ̀ àwọn òbí",
+  "parentEmail": "Ímèlì Òbí",
+  "password": "Ọ̀rọ̀ aṣínà",
+  "show": "Fi hàn",
+  "hide": "Tẹ̀",
+  "login": "Wọlé",
+  "loading": "Ìwọlé ń lọ...",
+  "forgot": {
+    "link": "Gbàgbé Ọ̀rọ̀ aṣínà?"
+  },
+  "errors": {
+    "invalidCredentials": "Ìmèlì tàbí Ọ̀rọ̀ aṣínà kò pé.",
+    "networkError": "Àsopọ̀ nẹ́tíwọ́ọ̀kì dà. Jọwọ gbìyànjú lẹ́ẹ̀kansi.",
+    "requiredField": "Jọwọ fọwọ́ sí gbogbo àwọn apá tó yẹ."
+    }
+  },
+  "childrenDashboard": {
+    "welcomeTitle": "🌟 Ìmọ̀ Ẹ̀rọ fún Àwọn Ọmọde Yorùbá!",
+    "subtitle": "Kọ́ ẹ̀kọ́, ṣeré, kí o sì ṣàwárí ayé ìmọ̀!",
+    "topbar": {
+      "greeting": "Báwo, {{name}}",
+      "profile": "Àkọọ́lẹ́ Mi",
+      "logout": "Jáde"
+    },
+    "cards": {
+      "start": {
+        "title": "🚀 Bẹrẹ Kọ́ Ẹ̀kọ́",
+        "desc": "Bẹrẹ ìrìnàjò rẹ̀ lọ́dọ̀ ìmọ̀ ẹ̀rọ pẹ̀lú ẹ̀kọ́ ìdárayá tí a ṣe fún ọ.",
+        "button": "Ẹ jẹ́ ká bẹ̀rẹ̀!"
+      },
+      "profile": {
+        "title": "🧑‍🎓 Àkọọ́lẹ́ Mi",
+        "desc": "Wo orúkọ rẹ, ìpele ìtẹ̀síwájú àti àwọn àṣẹ́yọrí rẹ."
+      },
+      "games": {
+        "title": "🎮 Eré àti Ìdárayá",
+        "desc": "Ṣeré àwọn eré ìmọ̀ àti àwọn ìpenija ìdárayá láti mú ìmọ̀ rẹ pọ̀ síi."
+      },
+      "art": {
+        "title": "🎨 Ṣẹ́dá Àwòrán",
+        "desc": "Fa, fà, àti ṣẹ̀dá àwòrán ìmọ̀ ẹ̀rọ rẹ!"
+      },
+      "quiz": {
+        "title": "🧠 Ìdánwò Kíákíá",
+        "desc": "Dáhùn àwọn ìbéèrè ìdárayá kí o sì gba àwọn ìràwọ̀ ìyìn!"
+      },
+      "logout": {
+        "title": "🚪 Jáde",
+        "desc": "Ṣé o ti parí báyìí? Tẹ̀ níbí láti jáde.",
+        "button": "Jáde"
+      }
+    },
+ "sidebar": {
+  "title": "Yoruba Kids Tech",
+  "level1": "Ìtẹ̀síwájú Nípa Ẹ̀rọ",
+  "level2": "Ìmọ̀ Digital",
+  "stage3": "Ìrònú Àwòrán",
+  "stage4": "Kóòdì Títí bẹ̀rẹ̀",
+  "stage5": "Kóòdì Gidi",
+  "funZone": "Agọ̀ Ìdárayá",
+  "badges": "Àmi-ẹ̀yẹ",
+  "profile": "Àkọọ́lẹ́"
+ }
+    },
+    "profileForm": {
+      "title": "Ṣàtúnṣe Profaili",
+      "nickname": "Orúkọ ìkókó",
+      "uploadPhoto": "Po fọ́tò Profaili sẹ́yìn",
+      "save": "Fipamọ́ Àyípadà",
+      "cancel": "Fagilé"
+    },
+    
+ "sidebar": {
+   "dashboard": "Àkọ́kọ́lé",
+    "parentPanel": "Pánẹ́lì Ọbí",
+    "myChildren": "Àwọn Ọmọ Mi",
+    "progressReports": "Ìròyìn Ìlòsíwájú",
+    "tutorMessages": "Ìfiranṣẹ́ Olùkọ́",
+    "assignGoals": "Sètò Àfojúsùn",
+    "parentalControls": "Ìṣàkóso Ọbí",
+    "learningPackages": "Àpò Ẹ̀kọ́",
+    "achievements": "Àṣeyọrí",
+    "notifications": "Ìkìlọ̀",
+    "payments": "Ìsanwó",
+    "donations": "Ẹ̀bùn",
+    "settings": "Ìtòlẹ́sẹẹsẹ",
+    "pickCourse": "Yan Ẹ̀kọ́ Rẹ",
+    "loading": "Ń gbé e ...",
+    "cancel": "Fagilé",
+    "save": "Fipamọ",
+    "finalProject": "Fipamọ Ìṣe Ìpẹ̀yà",
+    "modules": "Àwọn Modulu",
+    "lessons": "Àwọn Ẹ̀kọ́",
+    "certificate": "Ijẹrisi Rẹ",
+    "joinDiscord": "Darapọ̀ mọ́ Discord",
+    "activeCourse": "Jọwọ parí ẹ̀kọ́ \"{{course}}\" kí o tó lè yan ẹ̀kọ́ míì",
+    "downloadCertificate": "Gba  ìwé-ẹ̀rí",
+    "generating": "Ohun wa"
+    
+      },
+  "errors": {
+    "fetchData": "Aṣiṣe ṣẹlẹ̀ nigba títà",
+    "saveCourse": "Aṣiṣe ṣẹlẹ̀ nigba títà ẹ̀kọ́"
+  },
+  "modals": {
+    "pickCourseTitle": "Yan Ẹ̀kọ́ Rẹ",
+    "warning": "Ikilọ̀",
+    "close": "Pa"
+  },
+  "topbar": {
+    "greeting": "Báwo ni",
+    "welcome": "Kaabọ sí Àyè Yoruba Tech",
+    "language": "Èdè",
+    "logout": "Jade",
+    "profile": "Àkọọlẹ Mi",
+    "editProfile": "Ṣatúnṣe Àkọọlẹ",
+    "save": "Fipamọ",
+    "cancel": "Fagilé",
+    "uploadPhoto": "Po fọto s'oke",
+    "fullName": "Orúkọ Kíkún",
+    "updating": "Nṣiṣẹ imudojuiwọn...",
+    "updated": "Àkọọlẹ ti yipada!"
+  },
+    "children": {
+    "manageChildren": "Ṣakoso Awọn ọmọ",
+    "addChild": "Fi ọmọ kun",
+    "editChild": "Ṣatunkọ ọmọ",
+    "fullName": "Orukọ kikun",
+    "usernameAuto": "Orukọ olumulo (a ṣe laifọwọyi)",
+    "age": "Ọjọ-ori",
+    "gender": "Ibalopo",
+    "avatar": "Aworan profaili",
+    "password": "Ọrọ aṣínà",
+    "passwordOptional": "Fi silẹ ofo lati tọju ọrọ aṣínà lọwọlọwọ",
+    "fullNameRequired": "Orukọ kikun jẹ dandan",
+    "usernameRequired": "Orukọ olumulo jẹ dandan",
+    "passwordRequired": "Ọrọ aṣínà jẹ dandan nigba fifi ọmọ kun",
+    "usernameError": "Ikuna lati ṣẹda orukọ olumulo alailẹgbẹ",
+    "savedSuccessfully": "Fipamọ ni aṣeyọri",
+    "saveFailed": "Fipamọ kuna",
+    "confirmDelete": "Ṣe o da ọ loju pe o fẹ paarẹ '{name}'?",
+    "deletedSuccessfully": "Paṣẹ ni aṣeyọri",
+    "deleteFailed": "Paṣẹ kuna",
+    "edit": "Ṣatunkọ",
+    "delete": "Pa",
+    "cancel": "Fagilee",
+    "save": "Fipamọ",
+    "saving": "Nṣiṣẹ fipamọ...",
+    "loading": "Nṣiṣẹ ikojọpọ...",
+    "loadingUser": "Nṣiṣẹ ikojọpọ alaye olumulo...",
+    "confirm": "Jẹrisi",
+    "ok": "O DARA",
+    "signinTitle": "Ìwọlé Ọmọde",
+    "username": "Orukọ olumulo",
+    "signin": "Wọlé",
+    "signingIn": "N wọlé...",
+    "emailRequired": "Ìmélì jẹ́ dandan.",
+    "invalidEmail": "Jọwọ tẹ adirẹsi ìmélì tó pé.",
+    "signinFailed": "Ìwọlé kò ṣàṣeyọrí. Jọwọ ṣàyẹ̀wò àwọn àkọọlẹ rẹ.",
+     "email": "Ìmélì"
+  },
+"genders": {
+      "male": "Male",
+      "female": "Female",
+      "nonbinary": "Non-Binary",
+      "prefernottosay": "Prefer Not to Say"
+},
+"ageRanges": {
+      "4-7": "4-7 (Early Learners)",
+      "8-10": "8-10 (Young Juniors)",
+      "11-12": "11-12 (Pre-Teens)",
+      "13-15": "13-15 (Teens)"
+  },
+"top": {
+    "welcome": "Ẹ káàbọ̀, {{name}}!",
+    "greetingYorubaTechSpace": "Si Àyè Ẹ̀kọ́ Yorùbá",
+    "level": "Ìpele"
+  },
+  "levels": {
+    "earlyLearners": "Awọn Akẹ́kọ̀ọ́ Àkọ́kọ́",
+    "youngJuniors": "Awọn Akẹ́kọ̀ọ́ Kekere",
+    "preTeens": "Àwọn Ọmọde Tí Ó Ti Dẹ́gbẹ́",
+    "teens": "Àwọn Ọdọ́"
+  },
+  
+  "admission": {
+    "title": "Fọọmu Iforukọsilẹ Yoruba Tech Space",
+    "switchLanguage": "Yipada Èdè",
+    "alreadySubmitted": "O ti fi fọọmu iforukọsilẹ rẹ ranṣẹ tẹlẹ.",
+    "processing": "A n ṣiṣẹ lori ifisilẹ rẹ...",
+    "success": "Iforukọsilẹ rẹ ti ṣaṣeyọri! A n tọ ọ lọ...",
+    "fullName": "Orukọ kikun",
+    "email": "Imeeli",
+    "phone": "Nọmba foonu",
+    "sex": "Ìbálòpọ̀",
+    "male": "Okunrin",
+    "female": "Obinrin",
+    "motivation": "Kí ló fàá tí o fẹ́ kọ́ ẹ̀kọ́ sisẹ́ kóòdù?",
+    "experienceNote": "Ṣé o ti kọ́ ẹ̀kọ́ kóòdù tẹ́lẹ̀? (Aṣayan)",
+    "hearAboutUsLabel": "Nibo ni o ti gbọ́ nípa wa?",
+    "hearOptions": {
+      "socialMedia": "Àwọ̀n ọ̀rọ̀ ajọṣepọ̀",
+      "friend": "Ọ̀rẹ́",
+      "advertisement": "Ìpolówó",
+      "other": "Ẹlòmíràn"
+    },
+    "addressLabel": "Àdírẹ́sì",
+    "country": "Orílẹ̀-èdè",
+    "otherCountry": "Orílẹ̀-èdè míì",
+    "enterOtherCountry": "Jọwọ tẹ orílẹ̀-èdè rẹ sii",
+    "state": "Ìpínlẹ̀",
+    "otherState": "Ìpínlẹ̀ míì",
+    "city": "Ìlú",
+    "selectOption": "Yan aṣayan kan",
+    "agreeTerms": "Mo gba àwọn ofin àti ìpinnu lórí ẹ̀sùn",
+    "errors": {
+      "required": "Àwọn ibi wọ̀nyí jẹ dandan.",
+      "agreeTerms": "O gbọdọ gba ofin ṣaaju fífi ranṣẹ."
+    },
+    "submit": "Firanṣẹ Iforukọsilẹ",
+    "submitting": "N firanṣẹ...",
+    "confirmSubmission": "Jẹ́ kí a jẹ́rìí fífi ranṣẹ",
+      "confirmText": "Ṣé o dájú pé o fẹ́ fi ìbéèrè ìforúkọsílẹ rẹ ránṣẹ́? Jọwọ ṣàyẹ̀wò àwọn àlàyé rẹ kí o tó jẹ́wọ́.",
+    "cancel": "Fagilé",
+    "confirm": "Jẹ́rìí",
+    "agreeTermsText": "Mo gba awọn ofin ati ipo lọwọ",
+    "personalInfo": "Alaye Ara ẹni",
+    "location": "Ibi tí ó wà",
+    "motivations": "Ìdánilójú",
+    "next": "Tẹ̀síwájú",
+   "back": "Back",
+    "congrats": "Ẹ ku orire lori Iforuko sii rẹ!",
+      "uploadPrompt": "Jọwọ po si fọto pasipọti rẹ lati ṣẹda kaadi ID ati lẹta ìforúkọsílẹ̀ rẹ.",
+      "dragDrop": "Tẹ tabi fa fọto pasipọti rẹ nibi lati po si",
+      "uploadButton": "Po si Pasipọti",
+      "uploading": "N po si...",
+      "uploadFailed": "Po si ko ṣiṣẹ. Jọwọ tun gbiyanju lẹẹkansi.",
+      "idCardGenerated": "Kaadi ID ti po si ni aṣeyọri!",
+      "generateId": "Ṣẹda Kaadi ID (PDF)",
+      "printLetter": "Ṣẹda Lẹta Iforuko sii (PDF)",
+      "proceed": "Tẹsiwaju",
+      "fullNames": "Orukọ kikun",
+      "emails": "Imeeli",
+      "admissionNo": "Nọ́mbà ìforúkọsílẹ̀"
+  },
+  "loading": "N n gbiyanju...",
+  "parentControl": {
+    "title": "Àkóso Ìbáṣepọ Ọmọ",
+    "scheduleEnabled": "Ètò Ìṣeto Ṣíṣe",
+    "maxDailyHours": "Àkókò Ọjọ́ Ọpọ̀jù",
+    "language": "Èdè",
+    "lockLessons": "Dènà Ìkọ́",
+    "lockQuizzes": "Dènà Ìdánwò",
+    "notifications": "Ìkìlọ̀",
+    "sessionTime": "Àkókò Ìpẹ̀yà",
+    "usageToday": "Lilo Lónìí",
+    "rewardConfetti": "Fún Àyáyá Ayọ̀",
+    "resetUsage": "Tun Lilo Se"
+  },
+  "languages": {
+    "english": "Gẹ̀ẹ́sì",
+    "yoruba": "Yorùbá"
+  },
+  "profileDropdown": {
+    "profile": "Profaili",
+    "uploadAvatar": "Gbe Avatar Tuntun Sílẹ̀",
+    "selectImage": "Yan Aworan",
+    "avatarPreview": "Àwòrán Àfihàn",
+    "uploading": "Ń gbe sórí...",
+    "uploadSuccess": "✅ Ti gbe sórí laisiyonu!",
+    "uploadFailed": "❌ Gbigbe kò ṣaṣeyọri. Gbiyanju lẹẹkansi.",
+    "fileTooLarge": "📛 Fáìlì tó tóbi ju. Iwọn tó pọ julọ: 2MB",
+    "logout": "Jade"
+  },
+  "practical": {
+    "loading": "N n ṣakoso...",
+    "noSteps": "Ko si igbesẹ iṣẹ-ọwọ.",
+    "stepPassed": "Igbesẹ ti kọja!",
+    "allCompleted": "Gbogbo awọn igbesẹ ti pari!",
+    "goDashboard": "Lọ si Dasibodu",
+    "title": "Iṣẹ-ọwọ",
+      "lessonNotFound": "Ẹ̀kọ́ kì í ṣe ìmọ̀.",
+      "fetchStepsFailed": "Kò ṣeé gba awọn igbesẹ iṣẹ-ọwọ.",
+      "unexpectedError": "Aṣiṣe ti a ko retí ṣẹlẹ."
+  },
+    
+  "lessonStep": {
+    "noStepData": "⚠️ A ko pese data fun igbesẹ yii.",
+    "editor": "{{lang}} olootu",
+    "livePreview": "Aworan Ayẹwo",
+    "run": "Ṣiṣe {{lang}}",
+    "checkCode": "✅ Ṣayẹwo Koodu",
+    "submitPractical": "✅ Fi Iṣẹ-ọwọ Ránṣẹ",
+    "step": "Igbesẹ {{stepNumber}}",
+    "validation": {
+      "mustContain": "❌ {{lang}} gbọdọ ni \"{{value}}\"",
+      "mustNotContain": "❌ {{lang}} kò gbọdọ ni \"{{value}}\"",
+      "mustEqual": "❌ {{lang}} gbọdọ dọgba gangan pẹlu \"{{value}}\"",
+      "regexMismatch": "❌ {{lang}} gbọdọ ba /{{value}}/ mu",
+      "invalidRegex": "⚠️ Regex ti ko wulo fun {{lang}}",
+      "missingId": "❌ Ko si eroja pẹlu id=\"{{id}}\"",
+      "htmlParseError": "❌ Aṣiṣe ninu parsing HTML fun ID check.",
+      "missingCSS": "❌ Ko si CSS: {{selector}} { {{property}}: {{value}} }",
+      "unknownRule": "⚠️ Iru ofin aimọ: {{type}}"
+    },
+    "noOutput": "Ko si esi",
+    "errorRunning": "Aṣiṣe: {{message}}"
+  },
+   "practicalProgress": {
+      "noSavedProgress": "Kò sí ìtẹ̀síwájú fipamọ̀ → bẹ̀rẹ̀ láti ìbẹ̀rẹ̀.",
+      "errorSavingProgress": "Aṣiṣe nínú fipamọ̀ ìtẹ̀síwájú:",
+      "progressSaved": "✅ Ìtẹ̀síwájú ti fipamọ → Igbesẹ",
+      "stepOf": "Igbesẹ {{current}} ti {{total}}"
+    
+   },
+  "appTitle": "Yorùbá Tech",
+  "dashboard": {
+    "loading": "Ìkó wà...",
+
+    "welcome": "Ẹ kú abọ̀",
+      "noDiscord": "Ìjápọ̀ Discord kò sí",
+    "noWhatsapp": "Ìjápọ̀ WhatsApp kò sí",
+    "studentFallback": "Akẹ́kọ̀ọ́",
+    "audience": "Ẹgbẹ́ olùgbọ́",
+    "reminder": "Kíláàsì React Native yóò bẹ̀rẹ̀ ní agogo mẹ́fà irọ̀lẹ́",
+    "presentCourse": "Kọ́ọ̀sì tí o ń ṣe lọ́wọ́",
+    "noPresentCourse": "Kò sí kọ́ọ̀sì tí o bẹ̀rẹ̀",
+    "continue": "Tẹ̀síwájú kọ́ ẹ̀kọ́",
+    "nextLesson": "Ẹ̀kọ́ tó ń bọ̀",
+    "allCompleted": "Gbogbo ẹ̀kọ́ ti parí 🎉",
+    "upcomingLiveClass": "Kọ́ọ̀sì ayélujára tó ń bọ̀",
+    "instructor": "Olùkọ́",
+    "joinNow": "Darapọ̀ ní báyìí",
+    "tabs": {
+      "myCourses": "Àwọn kọ́ọ̀sì mi",
+      "completed": "Tí o parí",
+      "bookmarks": "Ìforúkọsílẹ̀"
+    },
+    "searchPlaceholder": "🔍 Wá kọ́ọ̀sì...",
+    "noCourses": "Kò sí kọ́ọ̀sì tó bá a wá.",
+    "courseCompletion": "Ìparí kọ́ọ̀sì",
+    "weeklyStreak": "Àwọn ọjọ́ tẹ̀síwájú",
+    "newActivity": "📣 Ìṣẹ̀lẹ̀ tuntun",
+    "noActivity": "Kò sí ìṣẹ̀lẹ̀ tuntun",
+
+    "noCertificates": "Kò tí ì ní ìwé-ẹ̀rí",
+    "progress": "Ìlera iṣẹ́",
+    "pie": {
+      "completed": "Ti parí",
+      "inProgress": "Ní ìlera",
+      "pending": "Tí kò bẹ̀rẹ̀"
+    },
+    "activity": {
+      "completed": "✅ Ti parí",
+      "continued": "↪️ Tẹ̀síwájú"
+    },
+    "live": {
+      "title": "Ìpade Ayélujára React Native",
+      "time": "Agogo 6:00 irọ̀lẹ́"
+    },
+    "toggleLang": "Ṣàtúnṣe èdè",
+    "a11y": {
+      "openMenu": "Ṣí akojọ-ọrọ",
+      "closeMenu": "Pa akojọ-ọrọ"
+    },
+      "certificates": {
+      "title": "Àwọn ìwé-ẹ̀rí",
+      "view": "Wo",
+      "empty": "Kò tí ì ní ìwé-ẹ̀rí 🎓"
+    },
+    "discord": {
+      "title": "Darapọ̀ mọ́ Discord",
+      "desc": "Darapọ̀ mọ́ àwọn ẹlẹ́gbẹ́ rẹ, béèrè ìbéèrè, kí o sì kópa nínú ẹgbẹ́ ìkọ́ni wa ní Discord.",
+      "join": "Darapọ̀ báyìí 🚀",
+      "none": "Kò sí ìjápọ̀ Discord",
+       "course": "Darapọ̀ mọ́ Discord Ẹ̀kọ́ 🚀",
+    "general": "Darapọ̀ mọ́ Discord Gbogbogbò 🌍"
+    },
+    "whatsapp": {
+      "title": "Darapọ̀ mọ́ WhatsApp",
+      "desc": "Darapọ̀ mọ́ ẹgbẹ́ WhatsApp wa láti rí ìmúlòlùfẹ́ tuntun, béèrè ìbéèrè, kí o sì jẹ́ apá kan nínú ẹ̀gbẹ́ rẹ.",
+      "join": "Darapọ̀ báyìí 📱",
+      "none": "Kò sí ìjápọ̀ WhatsApp",
+        "course": "Darapọ̀ mọ́ WhatsApp Ẹ̀kọ́ 📚",
+    "general": "Darapọ̀ mọ́ WhatsApp Gbogbogbò 🌍"
+    }
+    },
+  "finalProject": {
+  "title": "Ìṣẹ́ ìkẹyìn",
+  "loading": "Ń gbé iṣẹ́ ìkẹyìn kalẹ̀...",
+  "instructions": "Ìtọná Ìṣẹ́",
+  "maxPoints": "Àmì tó pọ̀jùlọ",
+  "reference": "Ìtọ́kasí",
+  "repo": "Ìkànsí Ìṣàfilọ́lẹ̀",
+  "status": "Ìpo",
+  "approved": "Tí wọ́n fọwọ́ sí",
+  "rejected": "Kò tí wọ́n fọwọ́ sí",
+  "pending": "Ń dúró de àyẹ̀wò",
+  "feedbackSection": "Ìfèsì Olùkọ́",
+  "feedbackEn": "Ìfèsì (Gẹ̀ẹ́sì)",
+  "feedbackYo": "Ìfèsì (Yorùbá)",
+  "noFeedback": "Kò sí ìfèsì sibẹ̀",
+  "noFeedbackYo": "Kò sí ìfèsì",
+  "score": "Àmì ìkẹyìn",
+  "notGraded": "Kò tí wọ́n fi àmì sí",
+  "submittedOn": "Ìfihàn ní ọjọ́",
+  "repoLabel": "Tẹ ìkànsí iṣẹ́ rẹ",
+  "repoPlaceholder": "https://github.com/username/project",
+  "submitButton": "Fi iṣẹ́ ranṣẹ́",
+  "submitting": "Ń fi iṣẹ́ ranṣẹ́...",
+  "projectApproved": "Ìṣẹ́ rẹ ti jẹ́ kí wọ́n fọwọ́ sí 🎉"
+  },
+  "notifications": {
+    "titles": {
+      "lesson": "Ẹ̀kọ́",
+      "quiz": "Ìdánwò",
+      "system": "Ẹ̀rọ",
+      "chat": "Ìjíròrò",
+      "parent": "Ìyá àti Bàbá",
+      "general": "Gbogbo"
+    },
+    "noNotifications": "Kò sí ìfìlọ̀"
+
+    }
+  }
+
+
+  
+    
+    

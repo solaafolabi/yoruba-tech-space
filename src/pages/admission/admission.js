@@ -1,0 +1,73 @@
+// src/pages/admission/admission.js
+
+const admissionText = {
+  en: {
+    heading: "Admission Form",
+    fullName: "Full Name",
+    email: "Email",
+    nationality: "Nationality",
+    phone: "Phone Number",
+    sex: "Sex",
+    male: "Male",
+    female: "Female",
+    course: "Select a Course",
+    motivation: "Why do you want to take this course?",
+    experienceNote: "Do you have any experience in this area? (Optional)",
+    submit: "Submit",
+    success: "🎉 Admission successful! Redirecting to dashboard...",
+    processing: "Processing your admission...",
+    confirmSubmit: "Are you sure you want to submit your admission form?",
+    cancel: "Cancel",
+    confirm: "Confirm",
+    alreadySubmitted: "✅ You've already submitted your admission form.",
+    congrats: "🎉 Congratulations!",
+    uploadPrompt:
+      "You have been admitted into Yoruba Tech Space. Upload your profile picture to generate your ID card and print your admission letter.",
+    dragDrop: "Drag and drop your profile picture here.",
+    uploadButton: "Upload Profile Picture",
+    uploading: "Uploading...",
+    uploadFailed: "Upload failed. Please try again.",
+    generateId: "Generate ID Card",
+    printLetter: "Print Admission Letter",
+    proceed: "Proceed to Dashboard",
+    idCardGenerated: "✅ ID Card generated!",
+    letterPrinted: "🖨 Admission letter printed!",
+    admissionNo: "Admission No", // ✅ Added
+  },
+
+  yo: {
+    heading: "Fọọmu Gbigba",
+    fullName: "Orukọ kikun",
+    email: "Imeeli",
+    nationality: "Orilẹ̀-èdè",
+    phone: "Nọmba foonu",
+    sex: "Ibalopo",
+    male: "Ọkunrin",
+    female: "Obinrin",
+    course: "Yan Ẹ̀kọ́",
+    motivation: "Kí nìdí tí o fi fẹ́ kó ẹ̀kọ́ yìí?",
+    experienceNote: "Ṣe o ní iriri nípa ẹ̀kọ́ yìí? (Aṣayan)",
+    submit: "Fọwọ́si",
+    success: "🎉 Gbigba yọrí! A n tọ ọ sí Dasibodu...",
+    processing: "A n ṣàtẹ̀wọlé fọọmu rẹ...",
+    confirmSubmit: "Ṣé o dájú pé o fẹ́ fi fọọmu rẹ ranṣẹ́?",
+    cancel: "Fagilé",
+    confirm: "Dájú",
+    alreadySubmitted: "✅ O ti fi fọọmu gbigba rẹ ranṣẹ́ tẹ́lẹ̀.",
+    congrats: "🎉 Ẹ ku oriire!",
+    uploadPrompt:
+      "O ti gba wọlé si Yoruba Tech Space. Jọwọ gbe fọto profaili rẹ lati ṣẹda kaadi ID rẹ ki o tẹ lẹta ifọwọsi rẹ sita.",
+    dragDrop: "Fa ki o ju fọto rẹ silẹ nibi.",
+    uploadButton: "Gbe Fọto Profaili",
+    uploading: "N gbe fọto…",
+    uploadFailed: "Gbigbe ko ṣiṣẹ. Gbiyanju lẹẹkansi.",
+    generateId: "Ṣẹda Kaadi ID",
+    printLetter: "Tẹ Lẹta Ifọwọsi",
+    proceed: "Tẹsiwaju si Dashboard",
+    idCardGenerated: "✅ Kaadi ID ti ṣetan!",
+    letterPrinted: "🖨 Lẹta ifọwọsi ti tẹ sita!",
+    admissionNo: "Nọ́mbà Ìforúkọsílẹ̀", // ✅ Added
+  },
+};
+
+export default admissionText;

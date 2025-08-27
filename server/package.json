@@ -1,0 +1,40 @@
+{
+  "name": "yorubatech-backend",
+  "version": "1.0.0",
+  "description": "Backend server for YorubaTech app with custom password reset and email notifications",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.44.2",
+    "bcrypt": "^5.1.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "nodemailer": "^6.9.11",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10",
+    "eslint": "^9.8.0",
+    "prettier": "^3.3.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "keywords": [
+    "yoruba-tech",
+    "backend",
+    "supabase",
+    "password-reset",
+    "express",
+    "nodemailer"
+  ]
+}
