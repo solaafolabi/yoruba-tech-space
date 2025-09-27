@@ -36,10 +36,10 @@ export default function ParentSidebar({ sidebarOpen, setSidebarOpen }) {
     <aside
       className={`fixed z-40 inset-y-0 left-0 w-72 transform ${
         sidebarOpen ? "translate-x-0" : "-translate-x-full"
-      } bg-[#0f172a] text-white p-6 pt-8 transition-transform duration-300 ease-in-out md:translate-x-0 md:static rounded-tr-3xl rounded-br-3xl shadow-2xl mt-[64px] md:mt-0`}
+      } bg-[#112240] text-white p-6 pt-8 transition-transform duration-300 ease-in-out md:translate-x-0 md:static  shadow-2xl mt-[64px] md:mt-0`}
     >
       <div className="flex items-center justify-between mb-6">
-        <h2 className="text-2xl font-bold text-[#FFD700] drop-shadow-md">
+        <h2 className="text-2xl font-bold text-yellow-500 drop-shadow-md">
           👨‍👧 {t("sidebar.parentPanel")}
         </h2>
         <button onClick={() => setSidebarOpen(false)} className="md:hidden text-white text-xl">
@@ -55,8 +55,8 @@ export default function ParentSidebar({ sidebarOpen, setSidebarOpen }) {
           className={({ isActive }) =>
             `flex items-center gap-3 px-4 py-2 rounded-lg font-medium tracking-wide transition-all duration-200 text-base ${
               isActive
-                ? "bg-[#FFD700] text-[#0f172a] shadow-md scale-105"
-                : "hover:bg-[#1B263B] hover:text-[#FFD700] text-white"
+                ? "bg-yellow-500 text-[#0f172a] shadow-md scale-105"
+                : "hover:bg-[#1B263B] hover:text-yellow-500 text-white"
             }`
           }
         >
@@ -73,9 +73,10 @@ export default function ParentSidebar({ sidebarOpen, setSidebarOpen }) {
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-2 rounded-lg font-medium tracking-wide transition-all duration-200 text-base ${
                 isActive
-                  ? "bg-[#FFD700] text-[#0f172a] shadow-md scale-105"
-                  : "hover:bg-[#1B263B] hover:text-[#FFD700] text-white"
-              }`
+                  ? "bg-yellow-500 text-[#0f172a] shadow-md scale-105"
+                  : "hover:bg-[#1B263B] hover:text-yellow-500 text-white"
+              }`    
+             
             }
           >
             <span className="text-lg">{item.icon}</span>

@@ -370,31 +370,31 @@ export default function Dashboard() {
           <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-white text-2xl md:hidden" aria-label={sidebarOpen ? t("dashboard.a11y.closeMenu") : t("dashboard.a11y.openMenu")} title={sidebarOpen ? t("dashboard.a11y.closeMenu") : t("dashboard.a11y.openMenu")}>
             {sidebarOpen ? "✖" : "☰"}
           </button>
-          <h1 className="text-[#FFD700] font-bold text-lg">{t("appTitle")}</h1>
+          <h1 className="text-yellow-500 font-bold text-lg">{t("appTitle")}</h1>
           <div className="flex items-center gap-3">
-            <button onClick={() => i18n.changeLanguage(i18n.language === "yo" ? "en" : "yo")} className="px-3 py-1 bg-[#FFD700] text-[#0D1B2A] rounded font-semibold">{i18n.language === "yo" ? "EN" : "YO"}</button>
+            <button onClick={() => i18n.changeLanguage(i18n.language === "yo" ? "en" : "yo")} className="px-3 py-1 bg-yellow-600 text-[#0D1B2A] rounded font-semibold">{i18n.language === "yo" ? "EN" : "YO"}</button>
             <ProfileDropdown user={user} profile={profile} setProfile={setProfile} handleLogout={handleLogout} />
           </div>
         </div>
 
         {/* Content */}
         <div className="flex-1 p-4 md:p-8 overflow-auto">
-          <h1 className="text-xl md:text-3xl font-bold text-[#FFD700] mb-1">{t("dashboard.welcome")}, {profile?.full_name || t("dashboard.studentFallback")} 👋</h1>
-          <p className="text-sm text-gray-300 mb-4">{t("dashboard.audience")}: <span className="text-[#FFD700] font-semibold">{audience}</span></p>
-          <div className="mb-4 bg-yellow-800 text-yellow-100 py-2 px-4 rounded-lg text-sm">📅 {t("dashboard.reminder")}</div>
+          <h1 className="text-xl md:text-3xl font-bold text-yellow-500 mb-1">{t("dashboard.welcome")}, {profile?.full_name || t("dashboard.studentFallback")} 👋</h1>
+          
+          <div className="mb-4 bg-yellow-600 text-yellow-100 py-2 px-4 rounded-lg text-sm">📅 {t("dashboard.reminder")}</div>
 
           {/* Cards */}
           <div className="mb-6 flex flex-col md:flex-row gap-6">
             {/* Present Course */}
             <div className="flex-1 bg-[#1B263B] p-6 rounded-xl shadow-xl">
-              <h3 className="text-[#FFD700] font-semibold mb-4">{t("dashboard.presentCourse")}</h3>
+              <h3 className="text-yellow-500 font-semibold mb-4">{t("dashboard.presentCourse")}</h3>
               {presentCourse ? (
                 <>
                   <p className="font-semibold text-white mb-2">📘 {presentCourseTitle}</p>
                   {continueLesson ? (
                     <>
                       <div className="text-sm text-gray-300 mb-2">{t("dashboard.nextLesson")}: <span className="text-white font-medium">{i18n.language === "yo" && continueLesson.title_yo ? continueLesson.title_yo : continueLesson.title_en || continueLesson.title}</span></div>
-                      <button onClick={() => navigate(continueHref)} className="mt-1 px-4 py-2 bg-[#FFD700] text-[#0D1B2A] rounded font-bold w-full">{t("dashboard.continue")}</button>
+                      <button onClick={() => navigate(continueHref)} className="mt-1 px-4 py-2 bg-yellow-600 text-[#0D1B2A] rounded font-bold w-full">{t("dashboard.continue")}</button>
                     </>
                   ) : (
                     <div className="text-gray-300">{t("dashboard.allCompleted")}</div>
@@ -403,10 +403,11 @@ export default function Dashboard() {
               ) : <div className="text-gray-300">{t("dashboard.noPresentCourse")}</div>}
             </div>
 
-            {/* Live Class */}
            {/* Live Class */}
 <div className="flex-1 bg-[#1B263B] p-6 rounded-xl shadow-xl">
-  <h3 className="text-[#FFD700] font-semibold mb-4">{t("dashboard.upcomingLiveClass")}</h3>
+  <h3 className="text-yellow-500
+  
+  font-semibold mb-4">{t("dashboard.upcomingLiveClass")}</h3>
   {liveClass ? (
     <div className="mt-2 rounded-xl overflow-hidden p-4 bg-[#15203B]">
       <p className="text-sm text-gray-300">{t("dashboard.live.instructor")}: <span className="text-white font-semibold">{liveClass.instructor}</span></p>

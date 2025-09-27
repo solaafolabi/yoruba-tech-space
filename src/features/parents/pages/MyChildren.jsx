@@ -242,206 +242,247 @@ export default function ChildrenManager({ onSelectChild, selectedChild }) {
  
 
   return (
-    <div className="min-h-screenl mx-auto p-6 bg-[#112240] text-white rounded-lg">
-      <h1 className="text-3xl mb-6 font-bold">{t("children.manageChildren")}</h1>
-      <button
-        onClick={() => {
-          setEditingChild(null);
-          setFullName("");
-          setUsername("");
-          setEmail("");
-          setAgeRange("");
-          setGender(GENDERS[0]);
-          setPassword("");
-          setAvatarFile(null);
-          setAvatarPreview("");
-          setErrors({});
-          setShowForm(true);
-        }}
-        disabled={loading || showForm}
-        className="mb-4 px-4 py-2 bg-yellow-500 text-black rounded hover:bg-yellow-600"
-      >
-        {t("children.addChild")}
-      </button>
+    <div className="m-h-screen mx-auto p-4 sm:p-6 bg-[#112240] text-white rounded-lg">
+  <h1 className="text-2xl sm:text-3xl mb-4 sm:mb-6 font-bold truncate">
+    {t("children.manageChildren")}
+  </h1>
 
-      <ul className="space-y-4 max-h-96 overflow-y-auto mb-4">
-        {children.map((child) => {
-          const isSelected = selectedChild?.id === child.id;
-          return (
-            <li
-              key={child.id}
-              onClick={() => onSelectChild && onSelectChild(child)}
-              className={`bg-[#112240] p-4 rounded flex justify-between items-center cursor-pointer ${
-                isSelected ? "ring-2 ring-yellow-400" : ""
-              }`}
+  {/* Add Child Button */}
+  <button
+    onClick={() => {
+      setEditingChild(null);
+      setFullName("");
+      setUsername("");
+      setEmail("");
+      setAgeRange("");
+      setGender(GENDERS[0]);
+      setPassword("");
+      setAvatarFile(null);
+      setAvatarPreview("");
+      setErrors({});
+      setShowForm(true);
+    }}
+    disabled={loading || showForm}
+    className="mb-4 px-4 py-2 w-full sm:w-auto bg-yellow-500 text-black rounded hover:bg-yellow-600 text-center"
+  >
+    {t("children.addChild")}
+  </button>
+
+  {/* Children List */}
+  <ul className="space-y-4 max-h-[60vh] overflow-y-auto mb-4">
+    {children.map((child) => {
+      const isSelected = selectedChild?.id === child.id;
+      return (
+        <li
+          key={child.id}
+          onClick={() => onSelectChild?.(child)}
+          className={`bg-[#112240] p-3 sm:p-4 rounded flex flex-col sm:flex-row justify-between items-start sm:items-center cursor-pointer transition-all ${
+            isSelected ? "ring-2 ring-yellow-400" : ""
+          }`}
+        >
+          <div className="flex items-center gap-4 w-full sm:w-auto">
+            <img
+              src={child.avatar_url || "/placeholder-avatar.png"}
+              alt="avatar"
+              className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover border-2 border-yellow-500"
+            />
+            <div className="flex-1 min-w-0">
+              <p className="font-semibold truncate">{child.full_name}</p>
+              <p className="text-sm text-gray-300 truncate">{child.username}</p>
+              <p className="text-sm text-gray-400 truncate">
+                {t("children.email")}: {child.email}
+              </p>
+              <p className="text-sm text-gray-400 truncate">
+                {t("children.age")}: {child.age_range} | {t("children.level")}: {child.level} | {t("children.gender")}: {child.gender}
+              </p>
+            </div>
+          </div>
+
+          <div className="flex gap-2 mt-2 sm:mt-0 flex-wrap sm:flex-nowrap">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setEditingChild(child);
+                setFullName(child.full_name);
+                setUsername(child.username);
+                setEmail(child.email);
+                setAgeRange(child.age_range);
+                setGender(child.gender);
+                setPassword("");
+                setAvatarFile(null);
+                setAvatarPreview(child.avatar_url || "");
+                setErrors({});
+                setShowForm(true);
+              }}
+              className="px-3 py-1 bg-yellow-500 text-black rounded hover:bg-yellow-600"
+              disabled={loading || showForm}
             >
-              <div className="flex items-center gap-4">
-                <img
-                  src={child.avatar_url || "/placeholder-avatar.png"}
-                  alt="avatar"
-                  className="w-16 h-16 rounded-full object-cover border-2 border-yellow-500"
-                />
-                <div>
-                  <p className="font-semibold">{child.full_name}</p>
-                  <p className="text-sm text-gray-300">{child.username}</p>
-                  <p className="text-sm text-gray-400">
-                    {t("children.email")}: {child.email}
-                  </p>
-                  <p className="text-sm text-gray-400">
-                    {t("children.age")}: {child.age_range} | {t("children.level")}: {child.level} | {t("children.gender")}: {child.gender}
-                  </p>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setEditingChild(child);
-                    setFullName(child.full_name);
-                    setUsername(child.username);
-                    setEmail(child.email);
-                    setAgeRange(child.age_range);
-                    setGender(child.gender);
-                    setPassword("");
-                    setAvatarFile(null);
-                    setAvatarPreview(child.avatar_url || "");
-                    setErrors({});
-                    setShowForm(true);
-                  }}
-                  className="px-3 py-1 bg-yellow-500 text-black rounded hover:bg-yellow-600"
-                  disabled={loading || showForm}
-                >
-                  {t("children.edit")}
-                </button>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    confirmDelete(child);
-                  }}
-                  className="px-3 py-1 bg-red-600 rounded hover:bg-red-700"
-                  disabled={loading || showForm}
-                >
-                  {t("children.delete")}
-                </button>
-              </div>
-            </li>
-          );
-        })}
-      </ul>
-
-      {!done && <div ref={loadMoreRef} style={{ height: "1px" }} />}
-      {loading && <p>{t("children.loading")}</p>}
-
-      {showForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex justify-center items-center p-4 z-50">
-          <div className="bg-[#112240] p-6 rounded w-full max-w-md relative">
-            <h2 className="text-2xl mb-4">{editingChild ? t("children.editChild") : t("children.addChild")}</h2>
-            <div className="space-y-3">
-              <FloatingInput label={t("children.fullName")} value={fullName} onChange={(e) => setFullName(e.target.value)} error={errors.fullName} />
-              <FloatingInput label={t("children.usernameAuto")} value={username} readOnly error={errors.username} />
-              <FloatingInput label={t("children.email")} type="email" value={email} onChange={(e) => setEmail(e.target.value)} error={errors.email} />
-
-              <div className="relative">
-                <select
-                  value={ageRange}
-                  onChange={(e) => setAgeRange(e.target.value)}
-                  className="w-full p-3 rounded bg-[#112240] text-white border border-blue-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                >
-                  <option value="" disabled>
-                    {t("children.age")}
-                  </option>
-                  {ageRanges.map((ar) => (
-                    <option key={ar} value={ar}>
-                      {ar}
-                    </option>
-                  ))}
-                </select>
-                {errors.ageRange && <p className="text-red-500 text-sm mt-1">{errors.ageRange}</p>}
-              </div>
-
-              <div className="relative">
-                <select
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value)}
-                  className="w-full p-3 rounded bg-[#112240] text-white border border-blue-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-                >
-                  {GENDERS.map((g) => (
-                    <option key={g} value={g}>
-                      {t(`children.genders.${g.toLowerCase().replace(/[^a-z]/g, "")}`, { defaultValue: g })}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <label className="block text-sm font-semibold mb-1 text-gray-400">{t("children.avatar")}</label>
-              <input
-                type="file"
-                accept="image/*"
-                onChange={(e) => (e.target.files?.length ? setAvatarFile(e.target.files[0]) : clearAvatar())}
-                className="w-full p-2 rounded bg-[#112240] text-white"
-              />
-              {avatarPreview && (
-                <img
-                  src={avatarPreview}
-                  alt="Avatar Preview"
-                  className="mt-2 w-24 h-24 rounded-full object-cover border-2 border-yellow-500"
-                />
-              )}
-
-              {!editingChild && (
-                <div className="relative">
-                  <FloatingInput
-                    label={t("children.password")}
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    error={errors.password}
-                  >
-                    <button
-                      type="button"
-                      onClick={() => setShowPassword(!showPassword)}
-                      className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 hover:text-white"
-                    >
-                      {showPassword ? "🙈" : "👁️"}
-                    </button>
-                  </FloatingInput>
-                </div>
-              )}
-            </div>
-
-            <div className="mt-6 flex justify-end gap-3">
-              <button onClick={() => setShowForm(false)} className="px-4 py-2 rounded bg-gray-600 hover:bg-gray-700" disabled={loading}>
-                {t("children.cancel")}
-              </button>
-              <button onClick={saveChild} className="px-4 py-2 rounded bg-yellow-500 text-black hover:bg-yellow-600" disabled={loading}>
-                {loading ? t("children.saving") : t("children.save")}
-              </button>
-            </div>
+              {t("children.edit")}
+            </button>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                confirmDelete(child);
+              }}
+              className="px-3 py-1 bg-red-600 rounded hover:bg-red-700"
+              disabled={loading || showForm}
+            >
+              {t("children.delete")}
+            </button>
           </div>
-        </div>
-      )}
+        </li>
+      );
+    })}
+  </ul>
 
-      {modalType && modalMessage && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
-          <div className="bg-[#112240] p-6 rounded max-w-sm w-full text-center">
-            <p className="mb-6">{modalMessage}</p>
-            {modalType === "confirm" ? (
-              <div className="flex justify-center gap-4">
-                <button onClick={() => { deleteChild(); setModalType(null); }} className="px-4 py-2 bg-red-600 rounded hover:bg-red-700 text-white" disabled={loading}>
-                  {t("children.confirm")}
-                </button>
-                <button onClick={() => setModalType(null)} className="px-4 py-2 bg-gray-600 rounded hover:bg-gray-700 text-white" disabled={loading}>
-                  {t("children.cancel")}
-                </button>
-              </div>
-            ) : (
-              <button onClick={() => setModalType(null)} className="px-4 py-2 bg-yellow-500 rounded hover:bg-yellow-600 text-black">
-                OK
-              </button>
-            )}
+  {!done && <div ref={loadMoreRef} style={{ height: "1px" }} />}
+  {loading && <p className="text-center">{t("children.loading")}</p>}
+
+  {/* Add/Edit Form Modal */}
+  {showForm && (
+    <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center p-4 z-50">
+      <div className="bg-[#112240] p-4 sm:p-6 rounded-lg w-full max-w-md relative overflow-y-auto max-h-[90vh]">
+        <h2 className="text-xl sm:text-2xl mb-4 font-bold truncate">
+          {editingChild ? t("children.editChild") : t("children.addChild")}
+        </h2>
+
+        <div className="space-y-3">
+          <FloatingInput
+            label={t("children.fullName")}
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+            error={errors.fullName}
+          />
+          <FloatingInput
+            label={t("children.usernameAuto")}
+            value={username}
+            readOnly
+            error={errors.username}
+          />
+          <FloatingInput
+            label={t("children.email")}
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            error={errors.email}
+          />
+
+          {/* Age Range */}
+          <div className="relative">
+            <select
+              value={ageRange}
+              onChange={(e) => setAgeRange(e.target.value)}
+              className="w-full p-3 rounded bg-[#112240] text-white border border-blue-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            >
+              <option value="" disabled>{t("children.age")}</option>
+              {ageRanges.map((ar) => (
+                <option key={ar} value={ar}>{ar}</option>
+              ))}
+            </select>
+            {errors.ageRange && <p className="text-red-500 text-sm mt-1">{errors.ageRange}</p>}
           </div>
+
+          {/* Gender */}
+          <div className="relative">
+            <select
+              value={gender}
+              onChange={(e) => setGender(e.target.value)}
+              className="w-full p-3 rounded bg-[#112240] text-white border border-blue-500 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+            >
+              {GENDERS.map((g) => (
+                <option key={g} value={g}>
+                  {t(`children.genders.${g.toLowerCase().replace(/[^a-z]/g, "")}`, { defaultValue: g })}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Avatar Upload */}
+          <label className="block text-sm font-semibold text-gray-400">{t("children.avatar")}</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => e.target.files?.length ? setAvatarFile(e.target.files[0]) : clearAvatar()}
+            className="w-full p-2 rounded bg-[#112240] text-white"
+          />
+          {avatarPreview && (
+            <img src={avatarPreview} alt="Avatar Preview" className="mt-2 w-24 h-24 rounded-full object-cover border-2 border-yellow-500" />
+          )}
+
+          {/* Password (only for new child) */}
+          {!editingChild && (
+            <FloatingInput
+              label={t("children.password")}
+              type={showPassword ? "text" : "password"}
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              error={errors.password}
+            >
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-0 px-3 flex items-center text-gray-400 hover:text-white"
+              >
+                {showPassword ? "🙈" : "👁️"}
+              </button>
+            </FloatingInput>
+          )}
         </div>
-      )}
+
+        {/* Form Actions */}
+        <div className="mt-6 flex flex-col sm:flex-row justify-end gap-3">
+          <button
+            onClick={() => setShowForm(false)}
+            className="px-4 py-2 rounded bg-gray-600 hover:bg-gray-700 w-full sm:w-auto"
+            disabled={loading}
+          >
+            {t("children.cancel")}
+          </button>
+          <button
+            onClick={saveChild}
+            className="px-4 py-2 rounded bg-yellow-500 text-black hover:bg-yellow-600 w-full sm:w-auto"
+            disabled={loading}
+          >
+            {loading ? t("children.saving") : t("children.save")}
+          </button>
+        </div>
+      </div>
     </div>
-  );
+  )}
+
+  {/* Modal for Confirm/Delete */}
+  {modalType && modalMessage && (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 p-4">
+      <div className="bg-[#112240] p-6 rounded max-w-sm w-full text-center">
+        <p className="mb-6">{modalMessage}</p>
+        {modalType === "confirm" ? (
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
+            <button
+              onClick={() => { deleteChild(); setModalType(null); }}
+              className="px-4 py-2 bg-red-600 rounded hover:bg-red-700 text-white"
+              disabled={loading}
+            >
+              {t("children.confirm")}
+            </button>
+            <button
+              onClick={() => setModalType(null)}
+              className="px-4 py-2 bg-gray-600 rounded hover:bg-gray-700 text-white"
+              disabled={loading}
+            >
+              {t("children.cancel")}
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => setModalType(null)}
+            className="px-4 py-2 bg-yellow-500 rounded hover:bg-yellow-600 text-black w-full sm:w-auto"
+          >
+            OK
+          </button>
+        )}
+      </div>
+    </div>
+  )}
+</div>
+ );
 }

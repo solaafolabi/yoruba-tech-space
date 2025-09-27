@@ -3,19 +3,19 @@ import supabase from "../../../supabaseClient";
 import slugify from "slugify";
 import AdminLayout from "../../../features/admin/layout/AdminLayout";
 
-// Adjust these import paths if you place components in another folder.
-// This assumes: src/components/admin/* and this file located in src/features/admin/... (so ../../../components/admin)
 import LessonSelector from "./LessonSelector";
 import DeleteQuizModal from "./DeleteQuizModal";
 import LessonInfo from "./LessonInfo";
 import ContentBlocks from "./ContentBlocks";
 import QuizManager from "./QuizManager";
 import ContentPreview from "./ContentPreview";
-import ImageMatchManager from "./ImageMatchManager";
+import { v4 as uuidv4 } from "uuid";
 
-/* ---------- Main AdminLessonBuilder ---------- */
 export default function AdminLessonBuilder({ adminId }) {
-  // ENGLISH states
+  // stepper state
+  const [currentStep, setCurrentStep] = useState(1);
+
+  // ---- your existing states ----
   const [coursesEn, setCoursesEn] = useState([]);
   const [modulesEn, setModulesEn] = useState([]);
   const [lessonsEnList, setLessonsEnList] = useState([]);
@@ -23,7 +23,6 @@ export default function AdminLessonBuilder({ adminId }) {
   const [selectedModuleEn, setSelectedModuleEn] = useState("");
   const [selectedLessonEn, setSelectedLessonEn] = useState("");
 
-  // YORUBA states
   const [coursesYo, setCoursesYo] = useState([]);
   const [modulesYo, setModulesYo] = useState([]);
   const [lessonsYoList, setLessonsYoList] = useState([]);
@@ -31,7 +30,6 @@ export default function AdminLessonBuilder({ adminId }) {
   const [selectedModuleYo, setSelectedModuleYo] = useState("");
   const [selectedLessonYo, setSelectedLessonYo] = useState("");
 
-  // Lesson bilingual fields
   const [titleEn, setTitleEn] = useState("");
   const [titleYo, setTitleYo] = useState("");
   const [descriptionEn, setDescriptionEn] = useState("");
@@ -39,14 +37,10 @@ export default function AdminLessonBuilder({ adminId }) {
   const [ageGroup, setAgeGroup] = useState("");
   const [category, setCategory] = useState("");
   const [ageGroups, setAgeGroups] = useState([]);
-  const [imageMatches, setImageMatches] = useState([]);
 
-
-  // Content & quizzes
   const [contents, setContents] = useState([]);
   const [quizzes, setQuizzes] = useState([]);
 
-  // modal + UI states
   const [quizToDelete, setQuizToDelete] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [deleteLoadingId, setDeleteLoadingId] = useState(null);
@@ -57,9 +51,13 @@ export default function AdminLessonBuilder({ adminId }) {
   const [success, setSuccess] = useState(null);
   const [previewOpen, setPreviewOpen] = useState(false);
 
-  // active language & lesson
-  const activeLanguage = selectedLessonEn ? "en" : selectedLessonYo ? "yo" : null;
-  const activeLessonId = activeLanguage === "en" ? selectedLessonEn : selectedLessonYo;
+  const activeLanguage = selectedLessonEn
+    ? "en"
+    : selectedLessonYo
+    ? "yo"
+    : null;
+  const activeLessonId =
+    activeLanguage === "en" ? selectedLessonEn : selectedLessonYo;
 
   /* ---------- Fetch initial lists ---------- */
   useEffect(() => {
@@ -189,23 +187,31 @@ export default function AdminLessonBuilder({ adminId }) {
         setCategory(lessonData.lesson_type || "");
 
         // content blocks
-        const { data, error } = await supabase.from("lessons").select("content_blocks").eq("id", activeLessonId).single();
-        if (!error && data) {
-          setContents(data.content_blocks || []);
-        } else {
-          setContents([]);
-        }
+setContents(
+  (lessonData.content_blocks || []).map(block => {
+    if (block.type === "kids_html_css") {
+      return {
+        ...block,
+        showHtml: true,
+        showCss: true,
+        lessonSteps: block.lesson_steps || [],
+        initialHtml: block.html_en || "",
+        initialCss: block.css_en || "",
+      };
+    }
+    return block;
+  })
+);
+
 
         // quizzes
         const { data: quizData, error: quizError } = await supabase.from("quizzes").select("*").eq("lesson_id", activeLessonId).order("id", { ascending: true });
         if (!quizError && quizData) {
-          const parsed = quizData.map((q) => {
-            return {
-              ...q,
-              options_en: Array.isArray(q.options_en) ? q.options_en : (q.options ? JSON.parse(q.options || "[]") : []),
-              options_yo: Array.isArray(q.options_yo) ? q.options_yo : [],
-            };
-          });
+          const parsed = quizData.map((q) => ({
+            ...q,
+            options_en: Array.isArray(q.options_en) ? q.options_en : (q.options ? JSON.parse(q.options || "[]") : []),
+            options_yo: Array.isArray(q.options_yo) ? q.options_yo : [],
+          }));
           setQuizzes(parsed);
         } else {
           setQuizzes([]);
@@ -221,103 +227,171 @@ export default function AdminLessonBuilder({ adminId }) {
   }, [activeLessonId]);
 
   /* ---------- Content block helpers ---------- */
-  const addContentBlock = () => {
-    setContents((prev) => [
-      ...(Array.isArray(prev) ? prev : []),
-      {
-        type: "html",
-        content_en: "",
-        content_yo: "",
-        file_en: null,
-        file_yo: null,
-        uploading_en: false,
-        uploading_yo: false,
-        url_en: "",
-        url_yo: "",
-      },
-    ]);
-  };
+  const addContentBlock = (type = "html") => {
+  const blockId = uuidv4(); // generate unique UUID for every block
+  let block;
 
-  const updateContentBlock = (index, field, value) => {
-    setContents((prev) => {
-      const updated = [...(Array.isArray(prev) ? prev : [])];
-      updated[index] = { ...(updated[index] || {}), [field]: value };
-      return updated;
-    });
-  };
-
-  const removeContentBlock = (index) => {
-    const updatedContents = contents.filter((_, i) => i !== index);
-    setContents(updatedContents);
-    if (activeLessonId) saveContentBlocks(activeLessonId, updatedContents);
-  };
-
-  const saveContentBlocks = async (lessonIdToSave, updatedContents) => {
-    if (!lessonIdToSave) return;
-    const { data, error } = await supabase.from("lessons").update({ content_blocks: updatedContents }).eq("id", lessonIdToSave);
-    if (error) {
-      console.error("Error saving content blocks:", error);
-    } else {
-      console.log("Content blocks saved successfully");
-    }
-  };
-
-  const uploadFile = async (file, contentIndex, lessonIdForFile, lang = "en") => {
-    if (!file) return;
-    updateContentBlock(contentIndex, `uploading_${lang}`, true);
-    setError(null);
-
-    try {
-      const fileName = `${Date.now()}-${slugify(file.name, { lower: true })}`;
-      const filePath = `${fileName}`;
-
-      const { error: uploadError } = await supabase.storage.from("avatars").upload(filePath, file, { upsert: true });
-      if (uploadError) throw uploadError;
-
-      const { data } = supabase.storage.from("avatars").getPublicUrl(filePath);
-
-      updateContentBlock(contentIndex, `url_${lang}`, data.publicUrl);
-      updateContentBlock(contentIndex, `uploading_${lang}`, false);
-      updateContentBlock(contentIndex, `content_${lang}`, data.publicUrl);
-
-      if (lessonIdForFile) {
-        const { error: updateError } = await supabase.from("lessons").update({ [`file_url_${lang}`]: data.publicUrl }).eq("id", lessonIdForFile);
-        if (updateError) throw updateError;
+  if (type === "blockly") {
+    block = { 
+      id: blockId, 
+      type, 
+      gameType: "", 
+      instructions_en: "", 
+      instructions_yo: "",
+      validation_rules: {
+        grading_type: "numeric",  // or "string", "boolean", "loops", etc.
+        expected_answer: "",
+        must_use: [],
+        forbidden: [],
+        max_blocks: null
       }
-    } catch (err) {
-      setError(`File upload failed (${lang.toUpperCase()}): ` + err.message);
-      updateContentBlock(contentIndex, `uploading_${lang}`, false);
-    }
-  };
-// image match 
-const addMatch = () => {
-  setImageMatches(prev => [...prev, { label_en: "", label_yo: "", file: null, url: "", uploading: false }]);
+    };
+  } else if (type === "p5js") {
+    block = { 
+      id: blockId, 
+      type, 
+      code: "", 
+      instructions_en: "", 
+      instructions_yo: "" 
+    };
+  } else if (type === "kids_html_css") {
+    block = {
+      id: blockId,
+      type,
+      html: "",
+      css: "",
+      show_html: true,
+      show_css: true,
+      instructions_en: "",
+      instructions_yo: "",
+    };
+  } else if (type === "imagematch") {
+    block = {
+      id: blockId,
+      type,
+      pairs: [
+        { 
+          label_en: "", 
+          label_yo: "", 
+          file_en: null, 
+          file_yo: null, 
+          url_en: "", 
+          url_yo: "", 
+          uploading_en: false, 
+          uploading_yo: false 
+        }
+      ],
+      instructions_en: "",
+      instructions_yo: "",
+    };
+  } else if (type === "fabric") {
+    block = { 
+      id: blockId, 
+      type, 
+      canvasData: null, 
+      instructions_en: "", 
+      instructions_yo: "" 
+    };
+  } else {
+    block = {
+      id: blockId,
+      type,
+      content_en: "",
+      content_yo: "",
+      file_en: null,
+      file_yo: null,
+      uploading_en: false,
+      uploading_yo: false,
+      url_en: "",
+      url_yo: "",
+      instructions_en: "",
+      instructions_yo: "",
+      validation_rules: {}
+    };
+  }
+
+  setContents((prev) => [...(Array.isArray(prev) ? prev : []), block]);
 };
 
-const updateMatch = (index, field, value) => {
-  setImageMatches(prev => {
+const updateContentBlock = (index, field, value) => {
+  setContents((prev) => {
     const updated = [...prev];
-    updated[index] = { ...(updated[index] || {}), [field]: value };
+    updated[index] = { 
+      ...(updated[index] || {}), 
+      [field]: value, 
+      id: updated[index].id || uuidv4() 
+    };
     return updated;
   });
 };
 
-const removeMatch = (index) => {
-  setImageMatches(prev => prev.filter((_, i) => i !== index));
+// upload image
+const uploadFile = async (file, lang = "en", blockIndex, pairIndex = null) => {
+  if (!file) return;
+
+  // mark uploading
+  setContents((prev) => {
+    const updated = [...prev];
+    if (pairIndex !== null) {
+      updated[blockIndex].pairs[pairIndex][`uploading_${lang}`] = true;
+    } else {
+      updated[blockIndex][`uploading_${lang}`] = true;
+    }
+    return updated;
+  });
+
+  try {
+    const fileExt = file.name.split(".").pop();
+    const fileName = `${uuidv4()}.${fileExt}`;
+    const filePath = `lessons/${fileName}`; // inside avatars/lessons/
+
+    // upload to Supabase storage (avatars bucket)
+    const { error: uploadError } = await supabase.storage
+      .from("avatars")
+      .upload(filePath, file, { cacheControl: "3600", upsert: false });
+
+    if (uploadError) throw uploadError;
+
+    // get public URL
+    const { data } = supabase.storage.from("avatars").getPublicUrl(filePath);
+    const publicUrl = data?.publicUrl;
+
+    // update block with URL
+    setContents((prev) => {
+      const updated = [...prev];
+      if (pairIndex !== null) {
+        updated[blockIndex].pairs[pairIndex][`url_${lang}`] = publicUrl;
+        updated[blockIndex].pairs[pairIndex][`file_${lang}`] = null;
+        updated[blockIndex].pairs[pairIndex][`uploading_${lang}`] = false;
+      } else {
+        updated[blockIndex][`url_${lang}`] = publicUrl;
+        updated[blockIndex][`file_${lang}`] = null;
+        updated[blockIndex][`uploading_${lang}`] = false;
+      }
+      return updated;
+    });
+  } catch (err) {
+    console.error("Upload failed:", err.message);
+    setError("Image upload failed: " + err.message);
+
+    // reset uploading state on failure
+    setContents((prev) => {
+      const updated = [...prev];
+      if (pairIndex !== null) {
+        updated[blockIndex].pairs[pairIndex][`uploading_${lang}`] = false;
+      } else {
+        updated[blockIndex][`uploading_${lang}`] = false;
+      }
+      return updated;
+    });
+  }
 };
 
   /* ---------- Quiz helpers ---------- */
   const addQuiz = () => {
     setQuizzes((prev) => [
       ...(Array.isArray(prev) ? prev : []),
-      {
-        question_en: "",
-        question_yo: "",
-        options_en: ["", "", "", ""],
-        options_yo: ["", "", "", ""],
-        correct_answer_en: "",
-        correct_answer_yo: "",
-      },
+      { question_en: "", question_yo: "", options_en: ["", "", "", ""], options_yo: ["", "", "", ""], correct_answer_en: "", correct_answer_yo: "" },
     ]);
   };
 
@@ -340,15 +414,10 @@ const removeMatch = (index) => {
     });
   };
 
-  const removeQuizLocal = (index) => {
-    setQuizzes((prev) => prev.filter((_, i) => i !== index));
-  };
+  const removeQuizLocal = (index) => setQuizzes((prev) => prev.filter((_, i) => i !== index));
 
   const deleteQuizConfirm = async () => {
-    if (!quizToDelete) {
-      setIsModalOpen(false);
-      return;
-    }
+    if (!quizToDelete) { setIsModalOpen(false); return; }
     setDeleteError(null);
     setDeleteLoadingId(quizToDelete.id);
     try {
@@ -356,7 +425,6 @@ const removeMatch = (index) => {
         const { error } = await supabase.from("quizzes").delete().eq("id", quizToDelete.id);
         if (error) throw error;
       }
-      // remove locally by index
       setQuizzes((prev) => prev.filter((_, idx) => idx !== quizToDelete.index));
       setIsModalOpen(false);
       setQuizToDelete(null);
@@ -399,16 +467,18 @@ const removeMatch = (index) => {
       return;
     }
 
-    // Validate YouTube URLs
+    // Validate YouTube URLs in content blocks
     for (let i = 0; i < (contents || []).length; i++) {
       const c = contents[i];
-      if (c.type === "video" && c.content_en && !isValidYouTubeUrl(c.content_en) && !c.url_en) {
-        setError(`Invalid English YouTube URL in block #${i + 1}`);
-        return;
-      }
-      if (c.type === "video" && c.content_yo && !isValidYouTubeUrl(c.content_yo) && !c.url_yo) {
-        setError(`Invalid Yoruba YouTube URL in block #${i + 1}`);
-        return;
+      if (c.type === "video") {
+        if (c.content_en && !isValidYouTubeUrl(c.content_en) && !c.url_en) {
+          setError(`Invalid English YouTube URL in block #${i + 1}`);
+          return;
+        }
+        if (c.content_yo && !isValidYouTubeUrl(c.content_yo) && !c.url_yo) {
+          setError(`Invalid Yoruba YouTube URL in block #${i + 1}`);
+          return;
+        }
       }
     }
 
@@ -420,89 +490,42 @@ const removeMatch = (index) => {
       if (!lessonIdToUse) {
         const { data: lessonData, error: lessonError } = await supabase
           .from("lessons")
-          .insert([
-            {
-              module_id: moduleId,
-              title_en: titleEn,
-              title_yo: titleYo,
-              slug,
-              description_en: descriptionEn,
-              description_yo: descriptionYo,
-              target_audience: ageGroup,
-              lesson_type: category,
-              user_id: adminId,
-              content_blocks: contents,
-            },
-          ])
+          .insert([{ module_id: moduleId, title_en: titleEn, title_yo: titleYo, slug, description_en: descriptionEn, description_yo: descriptionYo, target_audience: ageGroup, lesson_type: category, user_id: adminId, content_blocks: contents }])
           .select()
           .single();
-
         if (lessonError) throw lessonError;
         lessonIdToUse = lessonData.id;
       } else {
-        const { error: updateError } = await supabase
-          .from("lessons")
-          .update({
-            title_en: titleEn,
-            title_yo: titleYo,
-            description_en: descriptionEn,
-            description_yo: descriptionYo,
-            target_audience: ageGroup,
-            lesson_type: category,
-            content_blocks: contents,
-          })
-          .eq("id", lessonIdToUse);
-
+        const { error: updateError } = await supabase.from("lessons").update({ title_en: titleEn, title_yo: titleYo, description_en: descriptionEn, description_yo: descriptionYo, target_audience: ageGroup, lesson_type: category, content_blocks: contents }).eq("id", lessonIdToUse);
         if (updateError) throw updateError;
-
-        // delete existing quizzes so we reinsert
         await supabase.from("quizzes").delete().eq("lesson_id", lessonIdToUse);
       }
 
       // insert quizzes
       for (const quiz of quizzes) {
         if (!quiz.question_en || !quiz.question_yo) continue;
-        const { error: quizError } = await supabase.from("quizzes").insert([
-          {
-            lesson_id: lessonIdToUse,
-            question_en: quiz.question_en,
-            question_yo: quiz.question_yo,
-            options_en: quiz.options_en || [],
-            options_yo: quiz.options_yo || [],
-            correct_answer_en: quiz.correct_answer_en,
-            correct_answer_yo: quiz.correct_answer_yo,
-            question: quiz.question_en,
-            options: JSON.stringify(quiz.options_en || []),
-            correct_answer: quiz.correct_answer_en,
-          },
-        ]);
+        const { error: quizError } = await supabase.from("quizzes").insert([{
+          lesson_id: lessonIdToUse,
+          question_en: quiz.question_en,
+          question_yo: quiz.question_yo,
+          options_en: quiz.options_en || [],
+          options_yo: quiz.options_yo || [],
+          correct_answer_en: quiz.correct_answer_en,
+          correct_answer_yo: quiz.correct_answer_yo,
+          question: quiz.question_en,
+          options: JSON.stringify(quiz.options_en || []),
+          correct_answer: quiz.correct_answer_en,
+        }]);
         if (quizError) throw quizError;
       }
 
       setSuccess("🔥 Lesson saved successfully!");
       setError(null);
 
-      // clear forms for new lesson creation
-      if (!selectedLessonEn && activeLanguage === "en") {
-        setTitleEn("");
-        setDescriptionEn("");
-        setAgeGroup("");
-        setCategory("");
-        setContents([]);
-        setQuizzes([]);
-        setSelectedLessonEn("");
-      }
-      if (!selectedLessonYo && activeLanguage === "yo") {
-        setTitleYo("");
-        setDescriptionYo("");
-        setAgeGroup("");
-        setCategory("");
-        setContents([]);
-        setQuizzes([]);
-        setSelectedLessonYo("");
-      }
+      if (!selectedLessonEn && activeLanguage === "en") setContents([]);
+      if (!selectedLessonYo && activeLanguage === "yo") setContents([]);
 
-      // refresh lessons list for current module
+      // refresh lessons list
       if (activeLanguage === "en") {
         const { data } = await supabase.from("lessons").select("id, title_en").eq("module_id", selectedModuleEn).order("created_at", { ascending: true });
         if (data) setLessonsEnList(data);
@@ -517,49 +540,77 @@ const removeMatch = (index) => {
     setLoading(false);
   };
 
+   const steps = [
+    { id: 1, label: "Select Lesson" },
+    { id: 2, label: "Lesson Info" },
+    { id: 3, label: "Content Blocks" },
+    { id: 4, label: "Quizzes" },
+    { id: 5, label: "Preview & Save" },
+  ];
+
+  const nextStep = () => setCurrentStep((s) => Math.min(s + 1, steps.length));
+  const prevStep = () => setCurrentStep((s) => Math.max(s - 1, 1));
+
   return (
     <AdminLayout>
       <div className="max-w-6xl mx-auto p-6 bg-white dark:bg-gray-900 rounded shadow">
         <h1 className="text-3xl font-bold mb-6 text-center">⚡ Admin Lesson Builder</h1>
 
-        {/* Selectors */}
-        <LessonSelector
-          language="English"
-          courses={coursesEn}
-          modules={modulesEn}
-          lessons={lessonsEnList}
-          selectedCourse={selectedCourseEn}
-          setSelectedCourse={setSelectedCourseEn}
-          selectedModule={selectedModuleEn}
-          setSelectedModule={setSelectedModuleEn}
-          selectedLesson={selectedLessonEn}
-          setSelectedLesson={(val) => {
-            setSelectedLessonEn(val);
-            setSelectedLessonYo("");
-          }}
-          clearOtherLanguage={() => setSelectedLessonYo("")}
-        />
+        {/* Progress Bar */}
+        <div className="flex justify-between mb-6">
+          {steps.map((step) => (
+            <div
+              key={step.id}
+              className={`flex-1 text-center font-medium ${
+                currentStep === step.id ? "text-purple-600" : "text-gray-400"
+              }`}
+            >
+              {step.label}
+            </div>
+          ))}
+        </div>
 
-        <LessonSelector
-          language="Yoruba"
-          courses={coursesYo}
-          modules={modulesYo}
-          lessons={lessonsYoList}
-          selectedCourse={selectedCourseYo}
-          setSelectedCourse={setSelectedCourseYo}
-          selectedModule={selectedModuleYo}
-          setSelectedModule={setSelectedModuleYo}
-          selectedLesson={selectedLessonYo}
-          setSelectedLesson={(val) => {
-            setSelectedLessonYo(val);
-            setSelectedLessonEn("");
-          }}
-          clearOtherLanguage={() => setSelectedLessonEn("")}
-        />
-
-        {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 gap-4">
+          {/* Step 1: Lesson Selector */}
+          {currentStep === 1 && (
+            <>
+              <LessonSelector
+                language="English"
+                courses={coursesEn}
+                modules={modulesEn}
+                lessons={lessonsEnList}
+                selectedCourse={selectedCourseEn}
+                setSelectedCourse={setSelectedCourseEn}
+                selectedModule={selectedModuleEn}
+                setSelectedModule={setSelectedModuleEn}
+                selectedLesson={selectedLessonEn}
+                setSelectedLesson={(val) => {
+                  setSelectedLessonEn(val);
+                  setSelectedLessonYo("");
+                }}
+                clearOtherLanguage={() => setSelectedLessonYo("")}
+              />
+              <LessonSelector
+                language="Yoruba"
+                courses={coursesYo}
+                modules={modulesYo}
+                lessons={lessonsYoList}
+                selectedCourse={selectedCourseYo}
+                setSelectedCourse={setSelectedCourseYo}
+                selectedModule={selectedModuleYo}
+                setSelectedModule={setSelectedModuleYo}
+                selectedLesson={selectedLessonYo}
+                setSelectedLesson={(val) => {
+                  setSelectedLessonYo(val);
+                  setSelectedLessonEn("");
+                }}
+                clearOtherLanguage={() => setSelectedLessonEn("")}
+              />
+            </>
+          )}
+
+          {/* Step 2: Lesson Info */}
+          {currentStep === 2 && (
             <LessonInfo
               titleEn={titleEn}
               setTitleEn={setTitleEn}
@@ -576,75 +627,121 @@ const removeMatch = (index) => {
               setCategory={setCategory}
               activeLessonId={activeLessonId}
             />
-          </div>
+          )}
 
-          <ContentBlocks
-            contents={contents}
-            setContents={setContents}
-            addContentBlock={addContentBlock}
-            updateContentBlock={updateContentBlock}
-            removeContentBlock={removeContentBlock}
-            uploadFile={uploadFile}
-            activeLessonId={activeLessonId}
-          />
-<QuizManager
+          {/* Step 3: Content Blocks */}
+          {currentStep === 3 && (
+            <>
+              <ContentBlocks
+                contents={contents}
+                setContents={setContents}
+                addContentBlock={addContentBlock}
+                updateContentBlock={updateContentBlock}
+               removeContentBlock={(index) =>
+  setContents((prev) => prev.filter((_, i) => i !== index))
+}
+                 uploadFile={uploadFile} 
+                activeLessonId={activeLessonId}
+              />
+
+              <div className="mt-4 flex flex-wrap gap-2">
+                <button type="button" onClick={() => addContentBlock("imagematch")} className="bg-yellow-400 px-4 py-2 rounded">+ Image Match Block</button>
+                <button type="button" onClick={() => addContentBlock("blockly")} className="bg-purple-400 px-4 py-2 rounded">+ Blockly Block</button>
+                <button type="button" onClick={() => addContentBlock("p5js")} className="bg-green-400 px-4 py-2 rounded">+ p5.js Block</button>
+                <button type="button" onClick={() => addContentBlock("kids_html_css")} className="bg-pink-400 px-4 py-2 rounded">+ Kids HTML & CSS Block</button>
+              </div>
+            </>
+          )}
+
+          {/* Step 4: Quizzes */}
+          {currentStep === 4 && (
+            <QuizManager
   quizzes={quizzes}
   addQuiz={addQuiz}
   updateQuiz={updateQuiz}
   updateQuizOption={updateQuizOption}
+  removeQuizLocal={removeQuizLocal} // pass remove handler
   setQuizToDelete={setQuizToDelete}
   setIsModalOpen={setIsModalOpen}
-  setQuizzes={setQuizzes}   // <-- pass this down
-/>
-<ImageMatchManager
-  matches={imageMatches}
-  setMatches={setImageMatches}
-  addMatch={addMatch}
-  updateMatch={updateMatch}
-  removeMatch={removeMatch}
-  uploadFile={uploadFile}
-  activeLessonId={activeLessonId}
+  setQuizzes={setQuizzes}
 />
 
+          )}
 
-          <div className="mt-10 flex gap-4 flex-col sm:flex-row">
-            <button type="submit" disabled={loading} className="flex-1 bg-purple-600 text-white font-bold py-3 rounded hover:bg-purple-700">
-              {loading ? "Saving..." : activeLessonId ? "Update Lesson" : "Create Lesson"}
-            </button>
+          {/* Step 5: Preview & Save */}
+         {currentStep === 5 && (
+  <>
+    <button
+      type="button"
+      className="mb-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+      onClick={() => setPreviewOpen(true)}
+    >
+      Preview Lesson
+    </button>
 
-            <button type="button" onClick={() => setPreviewOpen(true)} className="flex-1 bg-gray-600 text-white font-bold py-3 rounded hover:bg-gray-700">
-              Preview Lesson
-            </button>
+    {previewOpen && (
+      <ContentPreview
+        titleEn={titleEn}
+        descriptionEn={descriptionEn}
+        contents={contents}
+        quizzes={quizzes}
+        onClose={() => setPreviewOpen(false)}
+      />
+    )}
+
+    <button
+      type="submit"
+      disabled={loading}
+      className="w-full mt-6 bg-purple-600 text-white font-bold py-3 rounded hover:bg-purple-700"
+    >
+      {loading ? "Saving..." : activeLessonId ? "Update Lesson" : "Create Lesson"}
+    </button>
+  </>
+)}
+
+          {/* Step Navigation */}
+          <div className="flex justify-between mt-8">
+            {currentStep > 1 && (
+              <button
+                type="button"
+                onClick={prevStep}
+                className="px-6 py-2 rounded bg-gray-300 dark:bg-gray-700"
+              >
+                Previous
+              </button>
+            )}
+            {currentStep < steps.length && (
+              <button
+                type="button"
+                onClick={nextStep}
+                className="ml-auto px-6 py-2 rounded bg-purple-600 text-white"
+              >
+                Next
+              </button>
+            )}
           </div>
 
           {error && <p className="mt-4 text-red-500">{error}</p>}
           {success && <p className="mt-4 text-green-500">{success}</p>}
         </form>
+        
 
         {/* Delete quiz modal */}
-        <DeleteQuizModal
-          isOpen={isModalOpen}
-          quizToDelete={quizToDelete}
-          onCancel={() => {
-            setIsModalOpen(false);
-            setQuizToDelete(null);
-            setDeleteError(null);
-          }}
-          onConfirm={deleteQuizConfirm}
-          deleteLoadingId={deleteLoadingId}
-          deleteError={deleteError}
-        />
+       <DeleteQuizModal
+  isOpen={isModalOpen}
+  quizToDelete={quizToDelete}
+  onCancel={() => {
+    setIsModalOpen(false);
+    setQuizToDelete(null);
+    setDeleteError(null);
+  }}
 
-        {/* Preview modal */}
-        {previewOpen && (
-          <ContentPreview
-            titleEn={titleEn}
-            descriptionEn={descriptionEn}
-            contents={contents}
-            quizzes={quizzes}
-            onClose={() => setPreviewOpen(false)}
-          />
-        )}
+onConfirm={deleteQuizConfirm}
+  deleteLoadingId={deleteLoadingId}
+  deleteError={deleteError}
+/>
+
+
       </div>
     </AdminLayout>
   );

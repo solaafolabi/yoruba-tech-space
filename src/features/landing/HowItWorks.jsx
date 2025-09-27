@@ -20,7 +20,7 @@ function HowItWorks() {
       <div className="absolute top-0 left-0 w-[300px] h-[300px] bg-[#FFD700] opacity-5 blur-3xl rounded-full"></div>
       
       <h2 className="text-3xl md:text-4xl font-bold text-center mb-12">
-        <span className="text-blue-400">{t("howItWorks.title")}</span>
+        <span className="text-yellow-500">{t("howItWorks.title")}</span>
       </h2>
       
       <div className="grid md:grid-cols-5 gap-8 relative z-10">

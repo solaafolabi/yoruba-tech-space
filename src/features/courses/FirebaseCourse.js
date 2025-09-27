@@ -1,10 +1,12 @@
+// src/components/FirebaseCourse.jsx
 import React from "react";
 import { motion } from "framer-motion";
 import { FaFire } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
 
+export default function FirebaseCourse() {
+  const { t } = useTranslation();
 
-export default function FirebaseCourse()
- {
   return (
     <section className="min-h-screen bg-[#0D1B2A] text-white px-6 py-20 mt-24">
       <div className="max-w-4xl mx-auto">
@@ -15,15 +17,19 @@ export default function FirebaseCourse()
           className="mb-10 flex items-center gap-4"
         >
           <FaFire className="text-5xl text-[#FFA611]" />
-          <h1 className="text-4xl font-bold text-[#FFD700]">Firebase</h1>
+          <h1 className="text-4xl font-bold text-yellow-500">
+            {t("firebase.title")}
+          </h1>
         </motion.div>
 
         <p className="text-lg text-gray-300 mb-8 leading-relaxed">
-          Kọ́ bí a ṣe n lo Firebase fún authentication, firestore, àti hosting. Ṣe kódi lẹ́yìn ojú-òpó (backend) pẹ̀lú rọrùn.
+          {t("firebase.description")}
         </p>
 
         <div className="bg-[#1B263B] p-6 rounded-xl mb-8 border border-[#FFD700] shadow-md">
-          <h3 className="text-xl font-semibold text-[#FFD700] mb-2">Àpẹẹrẹ Kóòdù:</h3>
+          <h3 className="text-xl font-semibold text-yellow-500 mb-2">
+            {t("firebase.codeExample")}
+          </h3>
           <pre className="text-sm text-white overflow-x-auto">
 {`import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
@@ -39,8 +45,8 @@ const db = getFirestore(app);`}
           </pre>
         </div>
 
-        <button className="bg-[#FFD700] text-[#0D1B2A] px-6 py-3 rounded-lg font-bold hover:scale-105 transition-all">
-          Bẹrẹ Ẹ̀kọ́
+        <button className="bg-yellow-600 text-[#0D1B2A] px-6 py-3 rounded-lg font-bold hover:scale-105 transition-all">
+          {t("firebase.startLesson")}
         </button>
       </div>
     </section>

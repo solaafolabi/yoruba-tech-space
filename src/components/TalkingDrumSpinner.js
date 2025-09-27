@@ -45,7 +45,7 @@ export default function TalkingDrumSpinner() {
         })}
       </motion.svg>
 
-      <p className="text-[#FFD700] mt-6 text-lg animate-pulse">Ìkànnì Yorùbá Tech...</p>
+      <p className="text-yellow-500 mt-6 text-lg animate-pulse">Ìkànnì Yorùbá Tech...</p>
     </div>
   );
 }

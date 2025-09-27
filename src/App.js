@@ -15,8 +15,8 @@ import LanguagePopup from "./components/LanguagePopup";
 import { LanguageProvider } from "./pages/admission/LanguageContext";
 import TalkingDrumSpinner from "./components/TalkingDrumSpinner";
 
-// --- Components & Pages ---
-import ErrorPage from "./components/ErrorPage"; // ✅ New error page
+// Pages & Components
+import ErrorPage from "./components/ErrorPage";
 
 // Admin
 import AddLesson from "./features/admin/AddLesson";
@@ -33,16 +33,16 @@ import AdminLessonBuilder from "./features/admin/lesson_builder/AdminLessonBuild
 import AdminTestimonialManager from "./features/admin/AdminTestimonialManager";
 import AdminFinalProjectReview from "./features/admin/AdminFinalProjectReview";
 import AdminNotificationSender from "./features/admin/AdminNotificationSender";
+import Paystack from "./features/admin/paystack";
 import ManageAdmin from "./features/admin/ManageAdmin";
 import LiveClass from "./features/admin/LiveClass";
 import LiveMeeting from "./pages/live/LiveMeeting";
-
 
 // Kids
 import ParentLogin from "./features/parents/components/ParentLogin";
 import ParentSignup from "./features/parents/components/ParentSignup";
 import ChildrenDashboard from "./features/kids/ChildrenDashboard";
-import LessonViewKid from "./features/kids/LessonViewKid";
+import LessonViewKid from "./features/kids/lessonview/LessonViewKid";
 import KidLogin from "./features/kids/KidLogin";
 import ChildrenDashboardLayout from "./features/kids/ChildrenDashboardLayout";
 import ParentDashboardLayout from "./features/parents/layout/ParentDashboardLayout";
@@ -57,7 +57,6 @@ import Dashboard from "./pages/student/dashboard/Dashboard";
 import LessonView from "./pages/student/lesson/LessonView";
 import PracticalView from "./pages/student/Practical/PracticalView";
 import FinalProjectUpload from "./pages/student/FinalProjectUpload";
-
 
 // Landing Pages
 import Navbar from "./features/landing/Navbar";
@@ -89,9 +88,10 @@ import Signup from "./features/auth/Signup";
 import ForgotPassword from "./features/auth/ForgotPassword";
 import ResetPassword from "./features/auth/ResetPassword";
 
-/** -------------------------
- * ProtectedRoute
- * ------------------------- */
+// Scratch Full-Screen Component
+import ScratchFull from "./features/kids/lessonview/ScratchFull";
+
+/** ProtectedRoute */
 function ProtectedRoute({ allowedRoles, redirectPath }) {
   const [status, setStatus] = useState({ loading: true, allowed: false });
 
@@ -104,7 +104,6 @@ function ProtectedRoute({ allowedRoles, redirectPath }) {
 
         if (user) {
           role = user.user_metadata?.role?.toLowerCase() || null;
-
           if (!role) {
             const { data: childData, error: childError } = await supabase
               .from("children")
@@ -124,7 +123,6 @@ function ProtectedRoute({ allowedRoles, redirectPath }) {
         setStatus({ loading: false, allowed: false });
       }
     }
-
     checkAccess();
   }, [allowedRoles]);
 
@@ -132,12 +130,9 @@ function ProtectedRoute({ allowedRoles, redirectPath }) {
   return status.allowed ? <Outlet /> : <Navigate to={redirectPath} replace />;
 }
 
-/** -------------------------
- * AppContent
- * ------------------------- */
+/** AppContent */
 function AppContent() {
   const location = useLocation();
-  const { i18n } = useTranslation();
   const [user, setUser] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
 
@@ -152,6 +147,7 @@ function AppContent() {
     location.pathname.startsWith("/student/practical") ||
     location.pathname.startsWith("/student/final-project") ||
     location.pathname.startsWith("/parents/dashboard") ||
+    location.pathname.startsWith("/scratch") ||
     isKidsDashboard;
 
   useEffect(() => {
@@ -216,9 +212,10 @@ function AppContent() {
           <Route path="/admin/testimonials" element={<AdminTestimonialManager />} />
           <Route path="/admin/final-projects" element={<AdminFinalProjectReview />} />
           <Route path="/admin/notifications" element={<AdminNotificationSender />} />
+          <Route path="/admin/paystack" element={<Paystack />} />
           <Route path="/admin/manageadmin" element={<ManageAdmin />} />
-             <Route path="/admin/liveclass" element={<LiveClass />} />
-             <Route path="/live/:roomName" element={<LiveMeeting />} />
+          <Route path="/admin/liveclass" element={<LiveClass />} />
+          <Route path="/live/:roomName" element={<LiveMeeting />} />
         </Route>
 
         {/* Student */}
@@ -227,9 +224,10 @@ function AppContent() {
           <Route path="/dashboard/learn/:courseSlug/:lessonSlug" element={<LessonView />} />
           <Route path="/student/practical/:lessonSlug" element={<PracticalView />} />
           <Route path="/student/final-project/:courseId" element={<FinalProjectUpload />} />
-         
-
         </Route>
+
+        {/* Scratch Full-Screen */}
+        <Route path="/scratch/*" element={<ScratchFull />} />
 
         {/* Public Pages */}
         <Route path="/" element={<><Hero /><HowItWorks /><Courses /><AdmissionCTA /><Testimonial /></>} />
@@ -238,8 +236,6 @@ function AppContent() {
         <Route path="/courses" element={<Courses />} />
         <Route path="/admission" element={<AdmissionForm />} />
         <Route path="/donate" element={<Donate />} />
-
-        {/* Public Course Views */}
         <Route path="/courses/firebase" element={<FirebaseCourse />} />
         <Route path="/courses/react-native" element={<ReactNativeCourse />} />
         <Route path="/courses/javascript" element={<JsCourse />} />
@@ -247,7 +243,7 @@ function AppContent() {
         <Route path="/courses/git-github" element={<GitCourse />} />
         <Route path="/courses/html-css" element={<HtmlCourse />} />
 
-        {/* Catch-All Error Page */}
+        {/* Catch-All */}
         <Route path="*" element={<ErrorPage />} />
       </Routes>
 
@@ -257,9 +253,7 @@ function AppContent() {
   );
 }
 
-/** -------------------------
- * App Wrapper
- * ------------------------- */
+/** App Wrapper */
 export default function App() {
   const [loading, setLoading] = useState(true);
 
@@ -278,6 +272,3 @@ export default function App() {
     </Router>
   );
 }
-
-
-

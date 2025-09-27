@@ -22,6 +22,8 @@ const AdminSidebar = () => {
   const [testimonialDropdown, setTestimonialDropdown] = useState(false);
   const [projectDropdown, setProjectDropdown] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [paymentDropdown, setPaymentDropdown] = useState(false);
+
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -188,6 +190,28 @@ const AdminSidebar = () => {
                 </div>
               )}
             </li>
+                {/* Payment / Keys */}
+<li>
+  <button
+    onClick={() => setPaymentDropdown(!paymentDropdown)}
+    className="flex items-center justify-between w-full px-4 py-2 hover:bg-white/10 transition text-sm rounded"
+  >
+    💳 Payment
+    <FaChevronDown
+      className={`ml-2 transition-transform ${paymentDropdown ? "rotate-180" : ""}`}
+    />
+  </button>
+  {paymentDropdown && (
+    <div className="pl-6 space-y-1 mt-1">
+      <Link
+        to="/admin/paystack"
+        className="block w-full text-left px-2 py-1 hover:bg-white/10 text-xs rounded"
+      >
+        🔑 Manage Keys
+      </Link>
+    </div>
+  )}
+</li>
 
             {/* Back Home */}
             <li>

@@ -135,7 +135,7 @@ export default function CourseList({ userCourses, completedLessons, onCertificat
                 }}
                 className={`block mt-2 w-full px-4 py-2 rounded font-bold transition ${
                   completedCount === totalCount
-                    ? "bg-green-600 text-white hover:bg-green-500"
+                    ? "bg-yellow-500 text-white hover:bg-yellow-600"
                     : "bg-gray-700 text-gray-400 cursor-not-allowed"
                 }`}
               >
@@ -147,12 +147,12 @@ export default function CourseList({ userCourses, completedLessons, onCertificat
             {certificateReady && (
               <button
                 onClick={() => handleGenerateCertificate(uc)}
-                className={`block mt-2 w-full px-4 py-2 rounded font-bold text-black bg-yellow-400 hover:bg-yellow-300 transition flex justify-center items-center gap-2`}
+                className={`block mt-2 w-full px-4 py-2 rounded font-bold text-black bg-yellow-600 hover:bg-yellow-500 transition flex justify-center items-center gap-2`}
                 disabled={loadingCerts[uc.id]}
               >
                 {loadingCerts[uc.id] ? t("sidebar.generating") : `🎓 ${t("sidebar.downloadCertificate")}`}
                 {downloadedCerts[uc.id] && !loadingCerts[uc.id] && (
-                  <BsCheckCircleFill className="text-green-600" />
+                  <BsCheckCircleFill className="text-yellow-600" />
                 )}
               </button>
             )}
@@ -173,9 +173,9 @@ export default function CourseList({ userCourses, completedLessons, onCertificat
                     >
                       <span>{getTitle(mod)}</span>
                       <div className="flex items-center gap-2">
-                        <span className="text-sm text-[#FFD700]">{completedModCount}/{lessonCount}</span>
+                        <span className="text-sm text-yellow-500">{completedModCount}/{lessonCount}</span>
                         <FaChevronDown
-                          className={`transform transition-transform ${openModules[mod.id] ? "rotate-180 text-[#FFD700]" : "rotate-0"}`}
+                          className={`transform transition-transform ${openModules[mod.id] ? "rotate-180 text-yellow-500" : "rotate-0"}`}
                         />
                       </div>
                     </button>
@@ -188,7 +188,7 @@ export default function CourseList({ userCourses, completedLessons, onCertificat
                           className="flex items-center gap-2 pl-3 hover:text-white transition"
                         >
                           {completedLessons.includes(lesson.slug) ? (
-                            <BsCheckCircleFill className="text-green-400" />
+                            <BsCheckCircleFill className="text-yellow-400" />
                           ) : (
                             <BsCircle className="text-gray-500" />
                           )}

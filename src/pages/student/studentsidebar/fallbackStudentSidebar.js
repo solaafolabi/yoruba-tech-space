@@ -244,7 +244,7 @@ export default function StudentSidebar({ onLogout, closeSidebar }) {
                     }}
                     className={`block mt-2 w-full px-4 py-2 rounded font-bold transition ${
                       completedCount === totalCount
-                        ? "bg-green-600 text-white hover:bg-green-500"
+                        ? "bg-yellow-500 text-white hover:bg-yellow-500"
                         : "bg-gray-700 text-gray-400 cursor-not-allowed"
                     }`}
                   >

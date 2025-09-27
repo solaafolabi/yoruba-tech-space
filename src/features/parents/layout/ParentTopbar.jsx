@@ -1,11 +1,11 @@
-// ParentTopbar.jsx
+// src/features/parents/layout/ParentTopbar.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { motion, AnimatePresence } from "framer-motion";
 import supabase from "../../../supabaseClient";
 import { useNavigate } from "react-router-dom";
 
-export default function ParentTopbar({ setSidebarOpen }) {
+export default function ParentTopbar({ sidebarOpen, setSidebarOpen }) {
   const { i18n, t } = useTranslation();
   const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ export default function ParentTopbar({ setSidebarOpen }) {
   });
   const [notifications, setNotifications] = useState([]);
 
-  // Language & profile fetching
+  // Load language and profile
   useEffect(() => {
     const savedLang = localStorage.getItem("preferredLanguage");
     const browserLang = navigator.language.startsWith("yo") ? "yo" : "en";
@@ -47,10 +47,7 @@ export default function ParentTopbar({ setSidebarOpen }) {
             fullName: data.full_name || "Parent",
             avatarUrl: data.profile_picture || "/avatar.png",
           });
-          setFormData((prev) => ({
-            ...prev,
-            fullName: data.full_name || "",
-          }));
+          setFormData((prev) => ({ ...prev, fullName: data.full_name || "" }));
         } else {
           console.error("Error fetching profile:", error);
         }
@@ -72,7 +69,7 @@ export default function ParentTopbar({ setSidebarOpen }) {
     else console.error("Error fetching notifications:", error);
   };
 
-  // Close dropdowns on outside click
+  // Close dropdowns when clicking outside
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (avatarRef.current && !avatarRef.current.contains(e.target)) {
@@ -134,31 +131,33 @@ export default function ParentTopbar({ setSidebarOpen }) {
   };
 
   return (
-    <header className="bg-[#1B263B] text-white px-6 py-4 flex justify-between items-center border-b-4 border-[#FFD700] shadow-xl rounded-b-2xl relative z-50">
-      <div className="flex items-center gap-4">
+    <header className="bg-[#112240] text-white px-4 sm:px-6 py-4 flex flex-col sm:flex-row justify-between items-center border-b-4 border-yellow-500 shadow-xl relative z-50">
+      <div className="flex items-center gap-4 w-full sm:w-auto">
+        {/* Hamburger for mobile */}
         <motion.button
           whileTap={{ scale: 0.9 }}
           onClick={(e) => {
             e.stopPropagation();
-            if (typeof setSidebarOpen === "function") setSidebarOpen(true);
+            setSidebarOpen((prev) => !prev); // toggle sidebar
             setDropdownOpen(false);
             setNotifOpen(false);
           }}
-          className="md:hidden text-3xl text-[#FFD700] z-[10000]"
+          className="md:hidden text-3xl text-yellow-500 relative z-[99999]"
         >
-          ☰
+          {sidebarOpen ? "✖" : "☰"}
         </motion.button>
 
-        <h2 className="text-lg md:text-xl font-semibold text-[#fff]">
+        {/* Welcome text */}
+        <h2 className="text-sm sm:text-base md:text-lg font-semibold text-white truncate flex-1">
           👋 {t("topbar.welcome")}, {userProfile.fullName}
         </h2>
       </div>
 
-      <div className="flex items-center gap-4 relative">
+      <div className="flex flex-wrap sm:flex-nowrap items-center gap-2 sm:gap-4 mt-2 sm:mt-0 w-full sm:w-auto">
         {/* Language Toggle */}
         <button
           onClick={toggleLanguage}
-          className="hidden md:block text-sm px-4 py-2 bg-[#FFD700] text-[#0f172a] rounded-full font-bold shadow border"
+          className="text-sm px-3 py-2 bg-yellow-500 text-[#0f172a] rounded-full font-bold shadow border flex-1 sm:flex-none text-center"
         >
           🌍 {i18n.language === "en" ? "Yorùbá" : "English"}
         </button>
@@ -166,7 +165,7 @@ export default function ParentTopbar({ setSidebarOpen }) {
         {/* Notification Bell */}
         <div className="relative" ref={notifRef}>
           <button
-            className="relative w-12 h-12 flex items-center justify-center rounded-full bg-[#FFD700] text-[#0f172a] shadow-lg"
+            className="relative w-12 h-12 flex items-center justify-center rounded-full bg-yellow-500 text-[#0f172a] shadow-lg"
             onClick={() => setNotifOpen((prev) => !prev)}
           >
             🔔
@@ -174,6 +173,7 @@ export default function ParentTopbar({ setSidebarOpen }) {
               <span className="absolute top-1 right-1 w-3 h-3 bg-red-500 rounded-full animate-pulse" />
             )}
           </button>
+
           <AnimatePresence>
             {notifOpen && (
               <motion.div
@@ -187,7 +187,10 @@ export default function ParentTopbar({ setSidebarOpen }) {
                   <div className="p-4 text-gray-300">No notifications</div>
                 ) : (
                   notifications.map((n) => (
-                    <div key={n.id} className="p-3 border-b border-[#1B263B] hover:bg-[#1B263B] cursor-pointer">
+                    <div
+                      key={n.id}
+                      className="p-3 border-b border-[#1B263B] hover:bg-[#1B263B] cursor-pointer truncate"
+                    >
                       {n.message}
                     </div>
                   ))
@@ -207,7 +210,7 @@ export default function ParentTopbar({ setSidebarOpen }) {
             onClick={() => setDropdownOpen((prev) => !prev)}
             src={userProfile.avatarUrl}
             alt="Avatar"
-            className="w-12 h-12 min-w-[3rem] min-h-[3rem] rounded-full cursor-pointer border-2 border-[#FFD700] shadow-lg object-cover"
+            className="w-10 h-10 sm:w-12 sm:h-12 min-w-[2.5rem] min-h-[2.5rem] rounded-full cursor-pointer border-2 border-yellow-500 shadow-lg object-cover"
           />
 
           <AnimatePresence>
@@ -240,7 +243,7 @@ export default function ParentTopbar({ setSidebarOpen }) {
         </div>
       </div>
 
-      {/* Profile Edit Modal */}
+      {/* Profile Modal */}
       <AnimatePresence>
         {showProfileModal && (
           <motion.div
@@ -258,30 +261,20 @@ export default function ParentTopbar({ setSidebarOpen }) {
               <h2 className="text-xl font-bold mb-6 text-[#0f172a]">
                 {t("profileForm.title")}
               </h2>
-
               <form onSubmit={handleProfileUpdate} className="flex flex-col gap-4">
                 <input
                   type="text"
                   placeholder="Full Name"
                   value={formData.fullName}
-                  onChange={(e) =>
-                    setFormData({ ...formData, fullName: e.target.value })
-                  }
+                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                   className="border px-4 py-2 rounded"
                 />
-
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      avatarFile: e.target.files[0],
-                    })
-                  }
+                  onChange={(e) => setFormData({ ...formData, avatarFile: e.target.files[0] })}
                   className="border px-4 py-2 rounded"
                 />
-
                 <div className="flex justify-end gap-4 mt-4">
                   <button
                     type="button"
@@ -292,7 +285,7 @@ export default function ParentTopbar({ setSidebarOpen }) {
                   </button>
                   <button
                     type="submit"
-                    className="px-4 py-2 bg-[#FFD700] text-[#0f172a] rounded text-sm font-bold"
+                    className="px-4 py-2 bg-yellow-500 text-[#0f172a] rounded text-sm font-bold"
                   >
                     {t("profileForm.save")}
                   </button>

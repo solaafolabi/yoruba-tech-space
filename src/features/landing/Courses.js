@@ -32,13 +32,13 @@ export default function Courses() {
       className="bg-[#0D1B2A] pt-20 pb-10 px-6 md:px-16 text-white relative overflow-hidden"
     >
       {/* Subtle gold glow */}
-      <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-[#FFD700] opacity-5 blur-3xl rounded-full"></div>
+      <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-yellow-500 opacity-5 blur-3xl rounded-full"></div>
 
       <motion.h2
         initial={{ y: -50, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className="text-4xl font-bold text-center text-blue-400 mb-12"
+        className="text-4xl font-bold text-center text-yellow-500 mb-12"
       >
         {t("courses.title")}
       </motion.h2>
@@ -51,7 +51,7 @@ export default function Courses() {
             href={link}
             whileHover={{ scale: 1.05 }}
             transition={{ type: "spring", stiffness: 200 }}
-            className="block bg-[#1B263B] border border-transparent hover:border-blue-500 rounded-2xl p-6 shadow-md hover:shadow-blue-400/30 transition-all cursor-pointer"
+            className="block bg-[#1B263B] border border-transparent hover:border-yellow-600 rounded-2xl p-6 shadow-md hover:shadow-blue-400/30 transition-all cursor-pointer"
           >
             <Suspense fallback={<div className="w-10 h-10 bg-gray-700 rounded-full mb-4" />}>
               <Icon className="text-4xl mb-4" style={{ color }} />
@@ -67,7 +67,7 @@ export default function Courses() {
                 <FaLaptopCode className="text-green-400" /> {t("courses.features.handsOn")}
               </li>
               <li className="flex items-center gap-2">
-                <FaCertificate className="text-yellow-400" /> {t("courses.features.certificate")}
+                <FaCertificate className="text-yellow-600" /> {t("courses.features.certificate")}
               </li>
             </ul>
             <button className="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-700 hover:scale-105 transition-all shadow-md border border-[#FFD700]">

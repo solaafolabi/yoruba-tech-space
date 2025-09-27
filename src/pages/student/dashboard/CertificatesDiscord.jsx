@@ -15,10 +15,10 @@ export default function CertificatesDiscord({
   return (
     <div className="grid md:grid-cols-3 gap-6 mt-6">
       {/* Certificates Card */}
-      <div className="bg-gradient-to-br from-[#1B263B] to-[#0D1B2A] p-6 rounded-2xl shadow-xl border border-yellow-500/20">
+      <div className="bg-gradient-to-br from-[#1B263B] to-[#0D1B2A] p-6 rounded-2xl shadow-xl border border-yellow-600">
         <div className="flex items-center gap-3 mb-4">
-          <FaCertificate className="text-[#FFD700] text-2xl" />
-          <h3 className="text-xl font-bold text-[#FFD700]">
+          <FaCertificate className="text-yellow-600 text-2xl" />
+          <h3 className="text-xl font-bold text-yellow-500">
             {t("dashboard.certificates.title")}
           </h3>
         </div>
@@ -36,7 +36,7 @@ export default function CertificatesDiscord({
                   href={cert.file_url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3 py-1 bg-[#FFD700] text-[#0D1B2A] rounded font-semibold hover:bg-yellow-400 transition"
+                  className="px-3 py-1 bg-yellow-500 text-[#0D1B2A] rounded font-semibold hover:bg-yellow-400 transition"
                 >
                   {t("dashboard.certificates.view")}
                 </a>
@@ -49,7 +49,7 @@ export default function CertificatesDiscord({
       </div>
 
       {/* Discord Card */}
-      <div className="bg-gradient-to-br from-[#1B263B] to-[#0D1B2A] p-6 rounded-2xl shadow-xl border border-indigo-500/20">
+      <div className="bg-gradient-to-br from-[#1B263B] to-[#0D1B2A] p-6 rounded-2xl shadow-xl border border-yellow-500">
         <div className="flex items-center gap-3 mb-4">
           <FaDiscord className="text-indigo-400 text-2xl" />
           <h3 className="text-xl font-bold text-indigo-400">
@@ -86,7 +86,7 @@ export default function CertificatesDiscord({
       </div>
 
       {/* WhatsApp Card */}
-      <div className="bg-gradient-to-br from-[#1B263B] to-[#0D1B2A] p-6 rounded-2xl shadow-xl border border-green-500/20">
+      <div className="bg-gradient-to-br from-[#1B263B] to-[#0D1B2A] p-6 rounded-2xl shadow-xl border border-yellow-600">
         <div className="flex items-center gap-3 mb-4">
           <FaWhatsapp className="text-green-400 text-2xl" />
           <h3 className="text-xl font-bold text-green-400">

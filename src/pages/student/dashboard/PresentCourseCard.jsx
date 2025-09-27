@@ -33,7 +33,7 @@ export default function PresentCourseCard({ presentCourse, continueLesson }) {
           </div>
           <button
             onClick={() => navigate(continueHref)}
-            className="mt-1 px-4 py-2 bg-[#FFD700] text-[#0D1B2A] rounded font-bold w-full"
+            className="mt-1 px-4 py-2 bg-yellow-500 text-[#0D1B2A] rounded font-bold w-full"
           >
             {t("dashboard.continue")}
           </button>

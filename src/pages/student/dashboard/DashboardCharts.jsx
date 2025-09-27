@@ -9,7 +9,7 @@ export default function DashboardCharts({ pieData, streakData, COLORS }) {
   return (
     <div className="grid md:grid-cols-2 gap-6 mb-6">
       <div className="bg-[#1B263B] p-6 rounded-xl shadow-xl">
-        <h3 className="text-[#FFD700] font-semibold mb-4">{t("dashboard.courseCompletion")}</h3>
+        <h3 className="text-yellow-500 font-semibold mb-4">{t("dashboard.courseCompletion")}</h3>
         <ResponsiveContainer width="100%" height={250}>
           <PieChart>
             <Pie data={pieData} dataKey="value" nameKey="name" outerRadius={80}>
@@ -22,7 +22,7 @@ export default function DashboardCharts({ pieData, streakData, COLORS }) {
         </ResponsiveContainer>
       </div>
       <div className="bg-[#1B263B] p-6 rounded-xl shadow-xl">
-        <h3 className="text-[#FFD700] font-semibold mb-4">{t("dashboard.weeklyStreak")}</h3>
+        <h3 className="text-yellow-500 font-semibold mb-4">{t("dashboard.weeklyStreak")}</h3>
         <ResponsiveContainer width="100%" height={250}>
           <LineChart data={streakData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
             <CartesianGrid strokeDasharray="3 3" />

@@ -140,7 +140,7 @@ export default function AdmissionForm() {
   const handleFinalSubmit = async () => {
   setShowModal(false);
   setProcessing(true);
-  setProcessingCaption("Verifying your information, please wait...");
+  setProcessingCaption(t("admission.verifying"));
 
   // Simulate 8 seconds of verification delay
   setTimeout(async () => {
@@ -190,7 +190,7 @@ export default function AdmissionForm() {
       })
       .eq("id", user.id);
 
-    setProcessingCaption("Verification successful! Redirecting you now...");
+   setProcessingCaption(t("admission.verifying"));;
     setTimeout(() => {
       setProcessing(false);
       setSuccess(true);
@@ -203,7 +203,7 @@ export default function AdmissionForm() {
   if (alreadySubmitted) {
     return (
      <div className="min-h-screen bg-[#0f172a] text-white px-4 pt-32 pb-20 flex justify-center">
-        <div className="bg-[#1B263B] p-10 rounded shadow-lg text-center text-yellow-400 text-lg">
+        <div className="bg-[#1B263B] p-10 rounded shadow-lg text-center text-yellow-500 text-lg">
           🎉 {t("admission.alreadySubmitted")}
         </div>
       </div>
@@ -214,7 +214,7 @@ export default function AdmissionForm() {
    <div className="min-h-screen bg-[#0f172a] text-white px-4 pt-40 pb-40 flex justify-center">
       <div className="w-full max-w-3xl bg-[#1B263B] p-8 rounded-lg shadow-lg">
        <div className="flex justify-center items-center mb-6">
-  <h1 className="text-2xl font-bold text-[#FFD700]">{t("admission.title")}</h1>
+  <h1 className="text-2xl font-bold text-yellow-500">{t("admission.title")}</h1>
 </div>
 
         {/* Stepper */}
@@ -225,7 +225,7 @@ export default function AdmissionForm() {
       <div
         className={`z-10 w-8 h-8 rounded-full flex items-center justify-center font-bold ${
           i === step
-            ? "bg-yellow-400 text-[#0f172a]"
+            ? "bg-yellow-600 text-[#0f172a]"
             : i < step
             ? "bg-[#fff] text-[#0f1724]"
             : "bg-gray-600 text-gray-300"
@@ -237,7 +237,7 @@ export default function AdmissionForm() {
       {/* Label */}
       <div
         className={`mt-2 text-xs select-none text-center ${
-          i === step ? "text-yellow-400" : i < step ? "text-[#fff]" : "text-gray-400"
+          i === step ? "text-yellow-500" : i < step ? "text-[#fff]" : "text-gray-400"
         }`}
       >
         {label}
@@ -257,9 +257,9 @@ export default function AdmissionForm() {
 
         </div>
 {processing ? (
-  <div className="flex flex-col items-center text-yellow-400 space-y-4">
+  <div className="flex flex-col items-center text-yellow-500 space-y-4">
     <svg
-      className="animate-spin h-10 w-10 text-yellow-400"
+      className="animate-spin h-10 w-10 text-yellow-5000"
 
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
@@ -295,29 +295,51 @@ export default function AdmissionForm() {
                   transition={{ duration: 0.4 }}
                   className="grid grid-cols-1 md:grid-cols-2 gap-6"
                 >
-                  {/* Phone */}
-                  <div className="flex flex-col">
-                    <label htmlFor="phone" className="mb-1 text-white font-semibold select-none">
-                      {t("admission.phone")}
-                    </label>
-                    <input
-                      type="tel"
-                      id="phone"
-                      name="phone"
-                      value={form.phone}
-                      onChange={handleChange}
-                      className={`w-full rounded bg-[#0A192F] border px-3 py-2 text-white focus:outline-none focus:ring-2 ${
-                        errors.phone ? "border-red-500 focus:ring-red-400" : "border-blue-600 focus:ring-yellow-400"
-                      }`}
-                      aria-invalid={!!errors.phone}
-                      aria-describedby="phone-error"
-                    />
-                    {errors.phone && (
-                      <p id="phone-error" className="mt-1 text-red-500 text-xs select-none" role="alert">
-                        {errors.phone}
-                      </p>
-                    )}
-                  </div>
+                 {/* Phone */}
+<div className="flex flex-col">
+  <label
+    htmlFor="phone"
+    className="mb-1 text-white font-semibold select-none"
+  >
+    {t("admission.phone")}
+  </label>
+  <input
+    type="tel"
+    id="phone"
+    name="phone"
+    value={form.phone}
+    onChange={(e) => {
+      let val = e.target.value.replace(/\D/g, ""); // remove non-digits
+      if (val.length <= 11) setForm((prev) => ({ ...prev, phone: val }));
+
+      // Real-time error
+      if (val.length !== 11) {
+        setErrors((prev) => ({
+          ...prev,
+          phone: t("admission.phoneError") || "Phone must be 11 digits",
+        }));
+      } else {
+        setErrors((prev) => ({ ...prev, phone: "" }));
+      }
+    }}
+    className={`w-full rounded bg-[#0A192F] border px-3 py-2 text-white focus:outline-none focus:ring-2 ${
+      errors.phone
+        ? "border-red-500 focus:ring-red-400"
+        : "border-blue-600 focus:ring-yellow-500"
+    }`}
+    aria-invalid={!!errors.phone}
+    aria-describedby="phone-error"
+  />
+  {errors.phone && (
+    <p
+      id="phone-error"
+      className="mt-1 text-red-500 text-xs select-none"
+      role="alert"
+    >
+      {errors.phone}
+    </p>
+  )}
+</div>
 
                   {/* Sex */}
                   <div className="flex flex-col">
@@ -329,7 +351,7 @@ export default function AdmissionForm() {
                       name="sex"
                       value={form.sex}
                       onChange={handleChange}
-                      className="w-full rounded bg-[#0A192F] border border-blue-600 text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400"
+                      className="w-full rounded bg-[#0A192F] border border-blue-600 text-white px-3 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-500"
                     >
                       <option value="male">{t("admission.male")}</option>
                       <option value="female">{t("admission.female")}</option>
@@ -347,7 +369,7 @@ export default function AdmissionForm() {
                       value={form.hearAboutUs}
                       onChange={handleChange}
                       className={`w-full rounded bg-[#0A192F] border px-3 py-2 text-white focus:outline-none focus:ring-2 ${
-                        errors.hearAboutUs ? "border-red-500 focus:ring-red-400" : "border-blue-600 focus:ring-yellow-400"
+                        errors.hearAboutUs ? "border-red-500 focus:ring-red-400" : "border-blue-600 focus:ring-yellow-500"
                       }`}
                       aria-invalid={!!errors.hearAboutUs}
                       aria-describedby="hearAboutUs-error"
@@ -387,7 +409,7 @@ export default function AdmissionForm() {
         value={form.country}
         onChange={handleChange}
         className={`w-full rounded bg-[#0A192F] border px-3 py-2 text-white focus:outline-none focus:ring-2 ${
-          errors.country ? "border-red-500 focus:ring-red-400" : "border-blue-600 focus:ring-yellow-400"
+          errors.country ? "border-red-500 focus:ring-red-400" : "border-blue-600 focus:ring-yellow-500"
         }`}
         aria-invalid={!!errors.country}
         aria-describedby="country-error"
@@ -415,7 +437,7 @@ export default function AdmissionForm() {
           value={form.otherCountry}
           onChange={handleChange}
           className={`w-full rounded bg-[#0A192F] border px-3 py-2 text-white focus:outline-none focus:ring-2 ${
-            errors.otherCountry ? "border-red-500 focus:ring-red-400" : "border-blue-600 focus:ring-yellow-400"
+            errors.otherCountry ? "border-red-500 focus:ring-red-400" : "border-blue-600 focus:ring-yellow-500"
           }`}
           aria-invalid={!!errors.otherCountry}
           aria-describedby="otherCountry-error"
@@ -440,7 +462,7 @@ export default function AdmissionForm() {
           value={form.state}
           onChange={handleChange}
           className={`w-full rounded bg-[#0A192F] border px-3 py-2 text-white focus:outline-none focus:ring-2 ${
-            errors.state ? "border-red-500 focus:ring-red-400" : "border-blue-600 focus:ring-yellow-400"
+            errors.state ? "border-red-500 focus:ring-red-400" : "border-blue-600 focus:ring-yellow-500"
           }`}
           aria-invalid={!!errors.state}
           aria-describedby="state-error"
@@ -474,7 +496,7 @@ export default function AdmissionForm() {
           value={form.city}
           onChange={handleChange}
           className={`w-full rounded bg-[#0A192F] border px-3 py-2 text-white focus:outline-none focus:ring-2 ${
-            errors.city ? "border-red-500 focus:ring-red-400" : "border-blue-600 focus:ring-yellow-400"
+            errors.city ? "border-red-500 focus:ring-red-400" : "border-blue-600 focus:ring-yellow-450"
           }`}
           aria-invalid={!!errors.city}
           aria-describedby="city-error"
@@ -497,7 +519,7 @@ export default function AdmissionForm() {
           value={form.address}
           onChange={handleChange}
           className={`w-full rounded bg-[#0A192F] border px-3 py-2 text-white focus:outline-none focus:ring-2 ${
-            errors.address ? "border-red-500 focus:ring-red-400" : "border-blue-600 focus:ring-yellow-400"
+            errors.address ? "border-red-500 focus:ring-red-400" : "border-blue-600 focus:ring-yellow-500"
           }`}
           aria-invalid={!!errors.address}
           aria-describedby="address-error"
@@ -532,7 +554,7 @@ export default function AdmissionForm() {
                       value={form.motivation}
                       onChange={handleChange}
                       className={`w-full rounded bg-[#0A192F] border px-3 py-2 text-white focus:outline-none focus:ring-2 ${
-                        errors.motivation ? "border-red-500 focus:ring-red-400" : "border-blue-600 focus:ring-yellow-400"
+                        errors.motivation ? "border-red-500 focus:ring-red-400" : "border-blue-600 focus:ring-yellow-500"
                       }`}
                       rows="4"
                       aria-invalid={!!errors.motivation}
@@ -568,7 +590,7 @@ export default function AdmissionForm() {
                       name="agreeTerms"
                       checked={form.agreeTerms}
                       onChange={handleChange}
-                      className="w-4 h-4 text-yellow-400 rounded border-gray-300 focus:ring-yellow-400 focus:ring-2"
+                      className="w-4 h-4 text-yellow-500 rounded border-gray-300 focus:ring-yellow-500 focus:ring-2"
                     />
                     <label htmlFor="agreeTerms" className="text-white select-none">
                       {t("admission.agreeTermsText")}
@@ -590,7 +612,7 @@ export default function AdmissionForm() {
                   type="button"
                   onClick={prevStep}
                   disabled={processing}
-                  className="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-5 rounded transition disabled:opacity-50"
+                  className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-5 rounded transition disabled:opacity-50"
                 >
                   {t("admission.back")}
                 </button>
@@ -601,7 +623,7 @@ export default function AdmissionForm() {
               <button
                 type="submit"
                 disabled={processing}
-                className="bg-yellow-400 hover:bg-yellow-500 text-[#0f172a] font-bold py-2 px-6 rounded transition disabled:opacity-60 disabled:cursor-not-allowed"
+                className="bg-yellow-500 hover:bg-yellow-600 text-[#0f172a] font-bold py-2 px-6 rounded transition disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {step === stepLabels.length - 1
                   ? processing
@@ -635,7 +657,7 @@ export default function AdmissionForm() {
                 </button>
                 <button
                   onClick={handleFinalSubmit}
-                  className="px-4 py-2 bg-yellow-400 text-[#0f172a] font-bold rounded hover:bg-yellow-500 transition"
+                  className="px-4 py-2 bg-yellow-500 text-[#0f172a] font-bold rounded hover:bg-yellow-600 transition"
                   disabled={processing}
                 >
                   {processing ? t("admission.submitting") : t("admission.confirm")}

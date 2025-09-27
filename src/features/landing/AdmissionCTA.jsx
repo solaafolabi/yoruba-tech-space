@@ -12,7 +12,7 @@ export default function AdmissionCTA() {
     <Suspense fallback={<div className="text-center text-white">Loading...</div>}>
       <section className="bg-[#1B263B] text-white py-20 px-6 text-center relative overflow-hidden">
         {/* Subtle gold glow */}
-        <div className="absolute -top-20 -left-20 w-[300px] h-[300px] bg-[#FFD700] opacity-5 rounded-full blur-3xl"></div>
+        <div className="absolute -top-20 -left-20 w-[300px] h-[300px] bg-yellow-600 opacity-5 rounded-full blur-3xl"></div>
 
         <motion.h2
           initial={{ opacity: 0, y: 30 }}
@@ -29,7 +29,7 @@ export default function AdmissionCTA() {
           whileInView={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
           viewport={{ once: true }}
-          className="mb-6 text-lg text-gray-300 max-w-2xl mx-auto"
+          className="mb-6 text-lg text-yellow-500 max-w-2xl mx-auto"
         >
           {t("admissionCTA.description")}
         </motion.p>
@@ -38,7 +38,7 @@ export default function AdmissionCTA() {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => navigate("/Signup")}
-          className="bg-blue-600 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition-all duration-200 shadow-md border border-[#FFD700]"
+          className="bg-blue-600 text-yellow-500 px-8 py-3 rounded-full font-bold hover:bg-blue-700 transition-all duration-200 shadow-md border border-[#FFD700]"
         >
           📝 {t("admissionCTA.applyButton")}
         </motion.button>

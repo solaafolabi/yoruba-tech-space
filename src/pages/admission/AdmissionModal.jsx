@@ -156,17 +156,10 @@ export default function AdmissionModal({ user, onComplete, onClose }) {
     <div
       aria-modal="true"
       role="dialog"
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-[#0F172A]  bg-opacity-80 p-4"
     >
-      <div className="bg-[#1B263B] text-white rounded-3xl p-8 max-w-3xl w-full shadow-2xl border border-yellow-400 overflow-y-auto max-h-[90vh] relative">
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          aria-label={t("admission.close")}
-          className="absolute top-4 right-4 text-yellow-400 hover:text-yellow-300 font-bold text-2xl focus:outline-none"
-        >
-          &times;
-        </button>
+      <div className="bg-[#1B263B] text-white rounded-3xl p-8 max-w-3xl w-full shadow-2xl border border-yellow-600 overflow-y-auto max-h-[90vh] relative">
+       
 
         {/* Language Toggle */}
         <div className="flex justify-end mb-4">
@@ -174,22 +167,22 @@ export default function AdmissionModal({ user, onComplete, onClose }) {
             onClick={() =>
               i18n.changeLanguage(isYoruba ? "en" : "yo")
             }
-            className="px-4 py-1 bg-yellow-400 text-[#0F172A] rounded-md hover:bg-yellow-500 font-semibold"
+            className="px-4 py-1 bg-yellow-500 text-[#0F172A] rounded-md hover:bg-yellow-600 font-semibold"
           >
             {isYoruba ? "English" : "Yorùbá"}
           </button>
         </div>
 
         {/* Title */}
-        <h2 className="text-center text-3xl font-bold text-yellow-400 mb-6">{t("admission.congrats")}</h2>
+        <h2 className="text-center text-3xl font-bold text-blue-500 mb-6">{t("admission.congrats")}</h2>
 
         {/* Upload Section */}
         <p className="text-center text-gray-300 mb-6">{t("admission.uploadPrompt")}</p>
 
-        <div className="bg-[#0F172A] p-6 border border-dashed border-yellow-400 rounded-md text-center">
+        <div className="bg-[#0F172A] p-6 border border-dashed border-yellow-600 rounded-md text-center">
           <label
             htmlFor="uploadInput"
-            className="cursor-pointer text-yellow-300 hover:text-yellow-500 font-semibold select-none"
+            className="cursor-pointer text-white hover:text-yellow-600 font-semibold select-none"
           >
             {file ? file.name : t("admission.dragDrop")}
           </label>
@@ -204,7 +197,7 @@ export default function AdmissionModal({ user, onComplete, onClose }) {
           <button
             onClick={handleUpload}
             disabled={uploading}
-            className="mt-4 px-6 py-2 bg-yellow-400 text-[#0F172A] font-semibold rounded-md hover:bg-yellow-500 disabled:opacity-50"
+            className="mt-4 px-6 py-2 bg-yellow-500 text-[#0F172A] font-semibold rounded-md hover:bg-yellow-600 disabled:opacity-50"
           >
             {uploading ? t("admission.uploading") : t("admission.uploadButton")}
           </button>
@@ -224,7 +217,7 @@ export default function AdmissionModal({ user, onComplete, onClose }) {
             <img
               src={profileUrl}
               alt="Preview"
-              className="mt-6 w-28 h-28 rounded-full object-cover border border-yellow-400 mx-auto"
+              className="mt-6 w-28 h-28 rounded-full object-cover border border-yellow-600 mx-auto"
             />
           )}
         </div>
@@ -235,7 +228,7 @@ export default function AdmissionModal({ user, onComplete, onClose }) {
             onClick={() => downloadPdf(idCardRef, "ID_Card.pdf", setIdDownloaded, true)}
             disabled={!profileUrl}
             className={`flex-1 py-3 rounded-md font-semibold text-[#0F172A] ${
-              idDownloaded ? "bg-green-600" : "bg-yellow-400"
+              idDownloaded ? "bg-green-600" : "bg-yellow-500 hover:bg-yellow-600" 
             } disabled:opacity-50`}
           >
             {t("admission.generateId")}
@@ -245,7 +238,7 @@ export default function AdmissionModal({ user, onComplete, onClose }) {
             onClick={() => downloadPdf(letterRef, "Admission_Letter.pdf", setLetterDownloaded)}
             disabled={!profileUrl}
             className={`flex-1 py-3 rounded-md font-semibold text-[#0F172A] ${
-              letterDownloaded ? "bg-green-600" : "bg-yellow-400"
+              letterDownloaded ? "bg-green-600" : "bg-yellow-500 hover:bg-yellow-600"
             } disabled:opacity-50`}
           >
             {t("admission.printLetter")}
@@ -272,7 +265,7 @@ export default function AdmissionModal({ user, onComplete, onClose }) {
             ref={idCardRef}
             className="w-[340px] h-[210px] relative rounded-xl shadow-2xl overflow-hidden bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white font-sans border border-gray-700"
           >
-            <div className="absolute left-0 top-0 w-3 h-full bg-gradient-to-b from-yellow-400 to-yellow-600"></div>
+            <div className="absolute left-0 top-0 w-3 h-full bg-gradient-to-b from-yellow-500 to-yellow-600"></div>
             <div className="absolute top-2 left-0 w-full text-center text-[13px] font-bold text-yellow-300">
               Yoruba Tech Space
             </div>

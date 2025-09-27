@@ -1,23 +1,49 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
+# ------------------
+# Dependencies
 /node_modules
 /.pnp
 .pnp.js
 
-# testing
+# ------------------
+# Testing
 /coverage
 
-# production
+# ------------------
+# Production builds
 /build
+/dist
+/.next
+/out
 
-# misc
+# ------------------
+# Misc
 .DS_Store
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-
+.vercel
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# ------------------
+# Environment files (never commit secrets!)
+.env
+.env.*
+supabase/.env
+supabase/.temp/
+supabase/functions/.env
+
+# ------------------
+# Supabase (ignore auto-generated, keep migrations/config.toml)
+/supabase/.branches
+/supabase/.migrations_lock
+
+# ------------------
+# Scratch GUI / Scratch builds
+public/scratch-gui/build/
+public/scratch/build/
+public/scratch-gui/node_modules/
+public/scratch/node_modules/
+
+# ------------------
+# Local cache
+*.log
+.cache/

@@ -22,7 +22,7 @@ export default function Navbar() {
   const handleLinkClick = () => setMenuOpen(false);
 
   return (
-    <nav className="fixed top-0 left-0 w-full z-50 bg-[#0D1B2A] border-b border-blue-400 shadow-md">
+    <nav className="fixed top-0 left-0 w-full z-50 bg-[#0D1B2A] border-b border-yellow-500 shadow-md">
       <div className="flex items-center justify-between px-6 md:px-16 py-4 max-w-7xl mx-auto">
         {/* Logo */}
         <motion.div
@@ -33,7 +33,7 @@ export default function Navbar() {
         >
           <Link to="/" onClick={handleLinkClick} className="flex items-center gap-2">
             <img src="/logo.png" alt="Yoruba Tech Logo" className="h-10 w-auto" />
-            <span className="text-blue-400 text-2xl font-bold">YorubaTech</span>
+            <span className="text-blue-400 text-2xl font-bold">Yorùbá Tech Space </span>
           </Link>
         </motion.div>
 
@@ -50,54 +50,58 @@ export default function Navbar() {
             <li
               onMouseEnter={() => setSignupDropdownOpen(true)}
               onMouseLeave={() => setSignupDropdownOpen(false)}
-              className="relative cursor-pointer text-yellow-400 font-semibold"
+              className="relative cursor-pointer text-yellow-500 font-semibold"
             >
-              <span className="flex items-center gap-1 hover:text-yellow-300">
+              <span className="flex items-center gap-1 hover:text-yellow-600">
                 {t("nav.signup")} ▼
               </span>
 
-              <AnimatePresence>
-                {signupDropdownOpen && (
-                  <motion.ul
-                    initial={{ opacity: 0, y: -10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    className="absolute top-full left-0 mt-2 bg-[#112240] rounded shadow-lg border border-blue-500 w-64"
-                  >
-                    <li>
-                      <Link
-                        to="/parents/signup"
-                        onClick={handleLinkClick}
-                        className="block px-4 py-2 text-yellow-400 hover:bg-yellow-400 hover:text-[#0D1B2A] rounded font-semibold"
-                      >
-                        {t("nav.parentSignup")}
-                      </Link>
-                      <span className="block text-xs text-gray-300 mt-1">
-                        {t("nav.parentSignupDescription")}
-                      </span>
-                    </li>
-                    <li>
-                      <Link
-                        to="/signup"
-                        onClick={handleLinkClick}
-                        className="block px-4 py-2 text-yellow-400 hover:bg-yellow-400 hover:text-[#0D1B2A] rounded font-semibold"
-                      >
-                        {t("nav.adultSignup")}
-                      </Link>
-                      <span className="block text-xs text-gray-300 mt-1">
-                        {t("nav.adultSignupDescription")}
-                      </span>
-                    </li>
-                  </motion.ul>
-                )}
-              </AnimatePresence>
+             <AnimatePresence>
+  {signupDropdownOpen && (
+    <motion.ul
+      initial={{ opacity: 0, y: -10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      className="absolute top-full left-0 mt-2 bg-[#112240] rounded shadow-lg border border-blue-500 w-64 p-4 space-y-4"
+    >
+      {/* Parent Signup */}
+      <li>
+        <Link
+          to="/parents/signup"
+          onClick={handleLinkClick}
+          className="block text-xl px-2 py-2 text-yellow-500 hover:bg-yellow-600 hover:text-[#0D1B2A] rounded font-bold"
+        >
+          {t("nav.parentSignup")}
+        </Link>
+        <span className="block text-sm text-gray-300 mt-1">
+          {t("nav.parentSignupDescription")}
+        </span>
+      </li>
+
+      {/* Adult Signup */}
+      <li>
+        <Link
+          to="/signup"
+          onClick={handleLinkClick}
+          className="block text-xl px-2 py-2 text-yellow-500 hover:bg-yellow-600 hover:text-[#0D1B2A] rounded font-bold"
+        >
+          {t("nav.adultSignup")}
+        </Link>
+        <span className="block text-sm text-gray-300 mt-1">
+          {t("nav.adultSignupDescription")}
+        </span>
+      </li>
+    </motion.ul>
+  )}
+</AnimatePresence>
+
             </li>
           </ul>
 
           {/* Single Login Button */}
           <Link
             to="/login"
-            className="ml-6 text-white bg-blue-500 px-4 py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
+            className="ml-6 text-[#112240] bg-yellow-500 px-4 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition"
           >
             {t("nav.login")}
           </Link>
@@ -105,7 +109,7 @@ export default function Navbar() {
           {/* Donate Button */}
           <Link
             to="/donate"
-            className="ml-4 bg-blue-500 text-white px-4 py-2 rounded-lg font-semibold hover:bg-blue-600 transition"
+            className="ml-4 bg-yellow-500 text-[#112240] px-4 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition"
           >
             {t("nav.donate")}
           </Link>
@@ -113,14 +117,14 @@ export default function Navbar() {
           {/* Language Toggle */}
           <button
             onClick={toggleLanguage}
-            className="ml-4 bg-white text-[#0D1B2A] px-3 py-1 rounded-lg font-semibold hover:bg-blue-400 transition"
+            className="ml-4 bg-white text-[#0D1B2A] px-3 py-1 rounded-lg font-semibold hover:bg-yellow-600 transition"
           >
             {i18n.language === "en" ? "Yoruba" : "English"}
           </button>
         </div>
 
         {/* Mobile Menu Toggle */}
-        <div className="md:hidden cursor-pointer text-blue-400 text-3xl" onClick={() => setMenuOpen(!menuOpen)}>
+        <div className="md:hidden cursor-pointer text-yellow-500 text-3xl" onClick={() => setMenuOpen(!menuOpen)}>
           {menuOpen ? "✕" : "☰"}
         </div>
       </div>
@@ -145,7 +149,7 @@ export default function Navbar() {
             <li>
               <button
                 onClick={() => setSignupDropdownOpen(!signupDropdownOpen)}
-                className="flex justify-between w-full text-yellow-400 font-semibold text-lg"
+                className="flex justify-between w-full text-yellow-500 font-semibold text-lg"
               >
                 {t("nav.signup")} {signupDropdownOpen ? "▲" : "▼"}
               </button>
@@ -155,13 +159,13 @@ export default function Navbar() {
                     initial={{ height: 0, opacity: 0 }}
                     animate={{ height: "auto", opacity: 1 }}
                     exit={{ height: 0, opacity: 0 }}
-                    className="flex flex-col gap-2 mt-2 pl-4 border-l border-yellow-400"
+                    className="flex flex-col gap-2 mt-2 pl-4 border-l border-yellow-600"
                   >
                     <li>
                       <Link
                         to="/parents/signup"
                         onClick={handleLinkClick}
-                        className="block text-yellow-400 hover:text-yellow-300 font-semibold"
+                        className="block text-yellow-500 hover:text-yellow-600 font-semibold"
                       >
                         {t("nav.parentSignup")}
                       </Link>
@@ -173,7 +177,7 @@ export default function Navbar() {
                       <Link
                         to="/signup"
                         onClick={handleLinkClick}
-                        className="block text-yellow-400 hover:text-yellow-300 font-semibold"
+                        className="block text-yellow-500 hover:text-yellow-600 font-semibold"
                       >
                         {t("nav.adultSignup")}
                       </Link>
@@ -195,7 +199,7 @@ export default function Navbar() {
 
             {/* Donate */}
             <li>
-              <Link to="/donate" onClick={handleLinkClick} className="block bg-blue-500 text-white text-center px-4 py-2 rounded-lg font-semibold hover:bg-blue-600 transition mt-2">
+              <Link to="/donate" onClick={handleLinkClick} className="block bg-yellow-500 text-[#112240] text-center px-4 py-2 rounded-lg font-semibold hover:bg-yellow-600 transition mt-2">
                 {t("nav.donate")}
               </Link>
             </li>
@@ -204,9 +208,9 @@ export default function Navbar() {
             <li>
               <button
                 onClick={() => { toggleLanguage(); setMenuOpen(false); }}
-                className="bg-white text-[#0D1B2A] px-3 py-1 rounded-lg font-semibold hover:bg-blue-400 transition w-full mt-2"
+                className="bg-white text-[#0D1B2A] px-3 py-1 rounded-lg font-semibold hover:bg-yellow-600 transition w-full mt-2"
               >
-                {i18n.language === "en" ? "Yoruba" : "English"}
+                {i18n.language === "en" ? "Yorùbá" : "English"}
               </button>
             </li>
           </motion.ul>

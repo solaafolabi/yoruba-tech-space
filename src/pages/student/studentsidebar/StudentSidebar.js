@@ -135,7 +135,7 @@ export default function StudentSidebar({ onLogout }) {
     <>
       {/* Hamburger for mobile */}
       <button
-        className="fixed top-4 left-4 z-50 p-2 bg-[#FFD700] text-[#0D1B2A] rounded-md md:hidden"
+        className="fixed top-4 left-4 z-50 p-2 bg-yellow-600 text-[#0D1B2A] rounded-md md:hidden"
         onClick={() => setSidebarOpen(!sidebarOpen)}
       >
         <FaBars />
@@ -162,9 +162,9 @@ export default function StudentSidebar({ onLogout }) {
           {!loading && availableCourses.length > 0 && (
             <button
               onClick={() => setShowModal(true)}
-              className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#FFD700]/10 transition w-full text-left mt-4"
+              className="flex items-center gap-3 p-3 rounded-lg hover:bg-yellow- transition w-full text-left mt-4"
             >
-              <FaHtml5 className="text-[#FFD700]" /> {t("sidebar.pickCourse")}
+              <FaHtml5 className="text-yellow-500" /> {t("sidebar.pickCourse")}
             </button>
           )}
 
@@ -175,7 +175,7 @@ export default function StudentSidebar({ onLogout }) {
                 .map((c) => (
                   <div
                     key={c.id}
-                    className="flex justify-between items-center gap-2 p-3 mt-2 bg-[#2B3A67] rounded-lg hover:bg-[#3A4A8C]/70 transition"
+                    className="flex justify-between items-center gap-2 p-3 mt-2  rounded-lg hover:text-yellow-600 transition"
                   >
                     <span>{c.courses.title_en || c.courses.title_yo || c.courses.name}</span>
                     <button

@@ -17,8 +17,8 @@ export default function SidebarNavLink({ to, icon: Icon, translationKey }) {
     <NavLink
       to={to}
       className={({ isActive }) =>
-        `flex items-center gap-3 p-3 rounded-lg hover:bg-[#FFD700]/10 transition ${
-          isActive ? "bg-[#FFD700]/10 border-l-4 border-[#FFD700]" : ""
+        `flex items-center gap-3 p-3 rounded-lg hover:bg-yellow-600 transition ${
+          isActive ? "bg-yellow-500 border-l-4 border-yellow-600" : ""
         }`
       }
     >

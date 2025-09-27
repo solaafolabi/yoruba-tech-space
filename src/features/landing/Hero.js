@@ -26,9 +26,10 @@ export default function Hero() {
   }, []);
 
   const videoUrl =
-    i18n.language === "yo"
-      ? "https://www.youtube.com/embed/_gJ9MOIaW4s"
-      : "https://www.youtube.com/embed/-Tz0KH6Kauc";
+  i18n.language === "yo"
+    ? "https://www.youtube.com/embed/_gJ9MOIaW4s?rel=0&controls=1&modestbranding=1&showinfo=0"
+    : "https://www.youtube.com/embed/-Tz0KH6Kauc?rel=0&controls=1&modestbranding=1&showinfo=0";
+
 
   return (
     <section
@@ -40,61 +41,77 @@ export default function Hero() {
 
       <div className="relative z-10 grid grid-cols-1 md:grid-cols-2 gap-12 items-center w-full max-w-7xl mx-auto">
         {/* Left Text */}
-        <motion.div
-          initial={{ x: -150, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ duration: 1, type: "spring" }}
-          className="text-center md:text-left"
-        >
-          <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
-            {t("hero.welcome")}{" "}
-            <span className="text-blue-400">{t("hero.brandName")}</span>
-          </h1>
-          <p className="text-lg md:text-xl text-gray-300 mb-4 max-w-xl mx-auto md:mx-0 leading-relaxed">
-            {t("hero.description")}
-          </p>
+     <motion.div
+  initial={{ x: -150, opacity: 0 }}
+  animate={{ x: 0, opacity: 1 }}
+  transition={{ duration: 1, type: "spring" }}
+  className="text-center md:text-left"
+>
+  {/* Highlight Badge */}
+  <div className="inline-block bg-yellow-600 text-[#0D1B2A] px-5 py-2 rounded-full text-sm md:text-base font-bold mb-5 shadow-lg">
+    {t("hero.no1Bilingual")}
+  </div>
+<h1 className="text-4xl md:text-6xl font-extrabold mb-6 max-w-2xl mx-auto md:mx-0">
+  {t("hero.headline").split("\n").map((line, i) => (
+    <span key={i} className="block leading-[1.2]">{line}</span>
+  ))}
+</h1>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
-            {/* Primary CTA: Donate / Start Learning */}
-            <a
-              href="#courses"
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:scale-110 hover:bg-blue-700 transition-all shadow-md"
-            >
-              {t("hero.startLearning")}
-            </a>
-            {/* Secondary CTA: See How It Works */}
-            <a
-              href="#how-it-works"
-              className="border border-[#FFD700] px-6 py-3 rounded-lg text-[#FFD700] hover:bg-[#FFD700] hover:text-[#0D1B2A] transition-all"
-            >
-              {t("hero.seeHowItWorks")}
-            </a>
-          </div>
-        </motion.div>
+
+  {/* Description */}
+  <p className="text-lg md:text-xl text-gray-300 mb-6 max-w-2xl mx-auto md:mx-0 leading-[1.6]">
+    {t("hero.description")}
+  </p>
+
+  {/* Who It's For */}
+  <ul className="text-gray-200 text-base md:text-lg space-y-3 mb-8 max-w-2xl mx-auto md:mx-0 leading-relaxed">
+    <li>👧 <strong>{t("hero.kids.title")}:</strong> {t("hero.kids.text")}</li>
+    <li>👦 <strong>{t("hero.teens.title")}:</strong> {t("hero.teens.text")}</li>
+    <li>👩‍🎓 <strong>{t("hero.adults.title")}:</strong> {t("hero.adults.text")}</li>
+    <li>👨‍👩‍👧 <strong>{t("hero.parents.title")}:</strong> {t("hero.parents.text")}</li>
+  </ul>
+
+  {/* CTAs */}
+  <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+    <a
+      href="#courses"
+      className="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold hover:scale-110 hover:bg-blue-700 transition-all shadow-md"
+    >
+      {t("hero.startLearning")}
+    </a>
+    <a
+      href="#how-it-works"
+      className="border border-yellow-600 px-6 py-3 rounded-lg text-white hover:bg-yellow-600 hover:text-[#0D1B2A] transition-all"
+    >
+      {t("hero.seeHowItWorks")}
+    </a>
+  </div>
+</motion.div>
 
         {/* Right: Intro Video */}
-        <motion.div
-          initial={{ x: 100, scale: 0.8, opacity: 0 }}
-          animate={{ x: 0, scale: 1, opacity: 1 }}
-          transition={{ duration: 1.2, delay: 0.2, type: "spring" }}
-          className="flex justify-center"
-        >
-          <div className="w-full max-w-xl rounded-2xl overflow-hidden border-2 border-blue-400 shadow-2xl">
-            <div className="relative w-full pb-[56.25%] h-0 overflow-hidden rounded-xl shadow-lg">
-              {loadVideo && (
-                <iframe
-                  src={videoUrl}
-                  title="Yorùbá Tech Intro Video"
-                  loading="lazy"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  className="absolute top-0 left-0 w-full h-full"
-                />
-              )}
-            </div>
-          </div>
-        </motion.div>
+       <motion.div
+  initial={{ x: 100, scale: 0.8, opacity: 0 }}
+  animate={{ x: 0, scale: 1, opacity: 1 }}
+  transition={{ duration: 1.2, delay: 0.2, type: "spring" }}
+  className="flex justify-center w-full"
+>
+  <div className="w-full max-w-3xl rounded-2xl overflow-hidden border-2 border-blue-400 shadow-2xl">
+    <div className="relative w-full pb-[56.25%] h-0 overflow-hidden rounded-xl shadow-lg">
+      {loadVideo && (
+        <iframe
+          src={videoUrl}
+          title="Yorùbá Tech Intro Video"
+          loading="lazy"
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+          className="absolute top-0 left-0 w-full h-full"
+        />
+      )}
+    </div>
+  </div>
+</motion.div>
+
       </div>
 
       {/* Floating Symbols (subtle gold) */}

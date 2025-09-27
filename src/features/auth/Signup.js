@@ -1,3 +1,4 @@
+// src/pages/auth/Signup.jsx
 import React, { useState, useEffect } from "react";
 import supabase from "../../supabaseClient";
 import { useNavigate } from "react-router-dom";
@@ -16,8 +17,6 @@ const FloatingLabelInput = ({
   onTogglePassword,
 }) => {
   const [isFocused, setIsFocused] = useState(false);
-
-  // Label stays up if input is focused or has text
   const labelActive = isFocused || (value && value.length > 0);
 
   return (
@@ -29,23 +28,20 @@ const FloatingLabelInput = ({
         onChange={onChange}
         onFocus={() => setIsFocused(true)}
         onBlur={() => setIsFocused(false)}
-        placeholder=" " // hide native placeholder
+        placeholder=" "
         className={`peer block w-full appearance-none border-b-2 bg-transparent px-0 pb-1.5 pt-5 text-white focus:outline-none focus:ring-0 focus:border-yellow-400 transition-colors ${
           error ? "border-red-500" : "border-blue-500"
         }`}
         autoComplete="off"
       />
-
       <label
         htmlFor={id}
-        className={`absolute left-0 transition-all duration-200
-          text-gray-400 text-sm select-none cursor-text
+        className={`absolute left-0 transition-all duration-200 text-sm select-none cursor-text
           ${
             labelActive
-              ? "top-0 text-yellow-400 font-semibold"
+              ? "top-0 text-yellow-500 font-semibold"
               : "top-5 text-gray-400"
-          }
-        `}
+          }`}
       >
         {label}
       </label>
@@ -54,7 +50,7 @@ const FloatingLabelInput = ({
         <button
           type="button"
           onClick={onTogglePassword}
-          className="absolute right-0 top-1.5 text-yellow-400 font-semibold text-sm select-none"
+          className="absolute right-0 top-1.5 text-yellow-500 font-semibold text-sm select-none"
           aria-label={showPassword ? "Hide password" : "Show password"}
         >
           {showPassword ? "Hide" : "Show"}
@@ -76,8 +72,9 @@ export default function Signup() {
   const [success, setSuccess] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     const savedEmail = localStorage.getItem("user_email");
@@ -89,46 +86,23 @@ export default function Signup() {
 
   const validateFields = () => {
     const errs = {};
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
 
-    if (!fullName.trim()) {
-      errs.fullName =
-        i18n.language === "yo" ? "Oruko kikun nilo" : "Full Name is required";
-    }
+    if (!fullName.trim()) errs.fullName = t("signup.errors.fullNameRequired");
+    if (!email.trim()) errs.email = t("signup.errors.emailRequired");
+    else if (!emailRegex.test(email))
+      errs.email = t("signup.errors.emailInvalid");
 
-    if (!email.trim()) {
-      errs.email = i18n.language === "yo" ? "Imeeli nilo" : "Email is required";
-    } else {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        errs.email = i18n.language === "yo" ? "Imeeli ko ye" : "Invalid email format";
-      }
-    }
+    if (!password) errs.password = t("signup.errors.passwordRequired");
+    else if (!passwordRegex.test(password))
+      errs.password = t("signup.errors.passwordWeak");
 
-    if (!password) {
-      errs.password =
-        i18n.language === "yo" ? "Ọrọigbaniwọle nilo" : "Password is required";
-    } else {
-      const passwordRegex =
-        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&]).{8,}$/;
-      if (!passwordRegex.test(password)) {
-        errs.password =
-          i18n.language === "yo"
-            ? "Ọrọigbaniwọle gbọdọ ni lẹ́tà nla, lẹ́tà kékeré, nọmba kan ati aami pataki kan."
-            : "Password must contain at least 8 characters, one uppercase, one lowercase, one number, and one special character.";
-      }
-    }
-
-    if (!confirmPassword) {
-      errs.confirmPassword =
-        i18n.language === "yo"
-          ? "Ìmúdájú Ọrọigbaniwọle nilo"
-          : "Confirm Password is required";
-    } else if (password !== confirmPassword) {
-      errs.confirmPassword =
-        i18n.language === "yo"
-          ? "Ọrọigbaniwọle ati ìmúdájú rẹ ko baamu."
-          : "Password and confirmation do not match.";
-    }
+    if (!confirmPassword)
+      errs.confirmPassword = t("signup.errors.confirmPasswordRequired");
+    else if (password !== confirmPassword)
+      errs.confirmPassword = t("signup.errors.confirmPasswordMismatch");
 
     setErrors(errs);
     return Object.keys(errs).length === 0;
@@ -136,37 +110,36 @@ export default function Signup() {
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    if (loading) return;
+
     setError("");
     setSuccess("");
     setErrors({});
+    setLoading(true);
 
     if (!validateFields()) {
+      setLoading(false);
       return;
     }
 
     try {
-      const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
-        email,
-        password,
-        options: { data: { full_name: fullName, role: "student" } },
-      });
+      const { data: signUpData, error: signUpError } =
+        await supabase.auth.signUp({
+          email,
+          password,
+          options: { data: { full_name: fullName, role: "student" } },
+        });
 
       if (signUpError) {
-        setError(
-          i18n.language === "yo"
-            ? "Oti fi Oruko sile tele: " + signUpError.message
-            : "Signup error: " + signUpError.message
-        );
+        setError(t("signup.errors.signupError", { msg: signUpError.message }));
+        setLoading(false);
         return;
       }
 
       const user = signUpData?.user;
       if (!user) {
-        setError(
-          i18n.language === "yo"
-            ? "Ìforúkọsílẹ̀ ṣaṣeyọri ṣugbọn ko si olumulo to pada."
-            : "Signup succeeded but no user returned."
-        );
+        setError(t("signup.errors.noUser"));
+        setLoading(false);
         return;
       }
 
@@ -178,10 +151,9 @@ export default function Signup() {
 
       if (upsertError) {
         setError(
-          i18n.language === "yo"
-            ? "Ìpamọ profaili kuna: " + upsertError.message
-            : "Profile save failed: " + upsertError.message
+          t("signup.errors.profileSaveFailed", { msg: upsertError.message })
         );
+        setLoading(false);
         return;
       }
 
@@ -193,29 +165,24 @@ export default function Signup() {
           last_seen: new Date().toISOString(),
         },
       ]);
+
       if (statusError) {
         setError(
-          i18n.language === "yo"
-            ? "Ìfọwọ́sí ipo olumulo kuna: " + statusError.message
-            : "User status record creation failed: " + statusError.message
+          t("signup.errors.statusSaveFailed", { msg: statusError.message })
         );
+        setLoading(false);
         return;
       }
 
       if (rememberMe) localStorage.setItem("user_email", email);
       else localStorage.removeItem("user_email");
 
-      setSuccess(
-        i18n.language === "yo"
-          ? "Ìforúkọsílẹ̀ ṣaṣeyọri! Ẹ jọ̀ọ́ ṣàyẹ̀wò imeeli yín fún ìmúdájú."
-          : "Signup successful! Please check your email for confirmation."
-      );
-
-      setTimeout(() => navigate("/admission"), 1500);
-    } catch (error) {
-      setError(
-        error.message || (i18n.language === "yo" ? "Aṣiṣe kan ṣẹlẹ." : "An error occurred.")
-      );
+      setSuccess(t("signup.success"));
+      setTimeout(() => navigate("/admission", { replace: true }), 1500);
+    } catch (err) {
+      setError(t("signup.errors.unknown", { msg: err.message }));
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -225,16 +192,18 @@ export default function Signup() {
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ type: "spring", stiffness: 100 }}
-        className="relative z-10 bg-[#112240]/90 backdrop-blur-lg p-6 rounded-2xl shadow-2xl max-w-md w-full border border-blue-500"
+        className="relative z-10 bg-[#112240]/90 backdrop-blur-lg p-6 rounded-2xl shadow-2xl max-w-md w-full border border-yellow-600"
       >
         <motion.h2
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          className="text-3xl font-extrabold text-blue-400 mb-5 text-center"
+          className="text-3xl font-extrabold text-yellow-500 mb-5 text-center"
         >
           {t("signup.title")}
         </motion.h2>
+
         {error && <p className="text-red-400 mb-3">{error}</p>}
+        {success && <p className="text-green-400 mb-3">{success}</p>}
 
         <form onSubmit={handleSignup} className="space-y-5">
           <FloatingLabelInput
@@ -244,7 +213,6 @@ export default function Signup() {
             onChange={(e) => setFullName(e.target.value)}
             error={errors.fullName}
           />
-
           <FloatingLabelInput
             id="email"
             label={t("signup.email")}
@@ -253,7 +221,6 @@ export default function Signup() {
             onChange={(e) => setEmail(e.target.value)}
             error={errors.email}
           />
-
           <FloatingLabelInput
             id="password"
             label={t("signup.password")}
@@ -263,9 +230,8 @@ export default function Signup() {
             error={errors.password}
             showPasswordToggle
             showPassword={showPassword}
-            onTogglePassword={() => setShowPassword((prev) => !prev)}
+            onTogglePassword={() => setShowPassword((p) => !p)}
           />
-
           <FloatingLabelInput
             id="confirmPassword"
             label={t("signup.confirmPassword")}
@@ -273,8 +239,10 @@ export default function Signup() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             error={errors.confirmPassword}
+            showPasswordToggle
+            showPassword={showPassword}
+            onTogglePassword={() => setShowPassword((p) => !p)}
           />
-
           <label className="flex items-center gap-2 text-sm text-white">
             <input
               type="checkbox"
@@ -284,14 +252,18 @@ export default function Signup() {
             />
             {t("signup.remember")}
           </label>
-
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            whileHover={!loading ? { scale: 1.05 } : {}}
+            whileTap={!loading ? { scale: 0.95 } : {}}
+            disabled={loading}
             type="submit"
-            className="w-full bg-blue-600 text-white font-bold py-2 rounded shadow-lg transition-all border border-yellow-400 hover:bg-blue-700"
+            className={`w-full font-bold py-2 rounded shadow-lg transition-all border border-yellow-600 ${
+              loading
+                ? "bg-gray-500 cursor-not-allowed text-gray-300"
+                : "bg-blue-600 text-yellow-500 hover:bg-blue-700"
+            }`}
           >
-            {t("signup.signup")}
+            {loading ? t("signup.loading") : t("signup.signup")}
           </motion.button>
         </form>
       </motion.div>

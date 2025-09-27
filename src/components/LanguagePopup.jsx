@@ -91,13 +91,13 @@ export default function LanguagePopup({ onClose }) {
             {/* Welcome Message */}
             <h2 className="text-2xl md:text-3xl font-bold mb-2 text-yellow-400 text-center">
               {i18n.language === "yo"
-                ? "👋 Kaabọ si Yoruba Tech Space"
+                ? "👋 Káàbọ̀ sí Yorùbá Tech Space"
                 : "👋 Welcome to Yoruba Tech Space"}
             </h2>
             <p className="text-center text-gray-200 mb-6 text-sm md:text-base">
               {i18n.language === "yo"
-                ? "Akọ́kọ́ oju opo wẹẹbu ìkọ́ ẹ̀kọ́ ìmọ̀ ẹrọ tó jẹ́ ẹ̀dá meji: Yorùbá àti Gẹ̀ẹ́sì."
-                : "The first bilingual Yoruba-English tech learning website."}
+                ? "Ákọ́kọ́ Ìkánnì ẹ̀kọ́ ìmọ̀ ẹ̀rọ tó jẹ́ ẹ̀dá méjì fún ọmoọdẹ́ àti Àgbàlagbà:  Yorùbá àti Gẹ̀ẹ́sì"
+                : "The first bilingual Yoruba-English tech learning website for kids and adult."}
             </p>
 
             {/* Language Dropdown */}
@@ -107,7 +107,7 @@ export default function LanguagePopup({ onClose }) {
                 className="block text-gray-200 font-semibold mb-2 text-center"
               >
                 {i18n.language === "yo"
-                  ? "Yan Èdè Tí O Fé"
+                  ? "O ti yan Yorùbá, gbádùn ẹ̀kọ́ rẹẹ"
                   : "Choose Language"}
               </label>
               <select
@@ -171,7 +171,7 @@ export default function LanguagePopup({ onClose }) {
               onClick={onClose}
               className="mt-2 text-sm text-gray-300 hover:text-white transition"
             >
-              {i18n.language === "yo" ? "Gbekuro" : "Close"}
+              {i18n.language === "yo" ? "Gbekúrò" : "Close"}
             </button>
           </motion.div>
         </motion.div>

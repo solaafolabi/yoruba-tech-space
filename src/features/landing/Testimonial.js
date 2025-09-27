@@ -54,11 +54,11 @@ export default function Testimonial() {
   const videoSliderSettings = { ...imageSliderSettings, autoplaySpeed: 8000 };
 
   return (
-    <section className="bg-[#0D1B2A] text-white py-16 px-4 md:px-10 relative overflow-hidden">
+    <section className="bg-[#0D1B2A] text-yellow-500 py-16 px-4 md:px-10 relative overflow-hidden">
       {/* Subtle blue glow */}
       <div className="absolute top-0 left-0 w-[250px] h-[250px] bg-blue-500 opacity-10 blur-3xl rounded-full"></div>
 
-      <h2 className="text-3xl md:text-4xl font-bold text-blue-400 text-center mb-10 relative z-10">
+      <h2 className="text-3xl md:text-4xl font-bold text-yellow-500 text-center mb-10 relative z-10">
         {i18n.language === "yo"
           ? "Ẹ̀rí àwọn Akẹ́kọ̀ọ́"
           : "Student Testimonials"}
@@ -95,7 +95,7 @@ export default function Testimonial() {
                   </p>
 
                   {t.rating > 0 && (
-                    <div className="flex justify-center gap-1 text-blue-400 text-base">
+                    <div className="flex justify-center gap-1 text-yellow-600 text-base">
                       {[...Array(t.rating)].map((_, i) => (
                         <FaStar key={i} />
                       ))}
