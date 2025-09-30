@@ -32,21 +32,22 @@ const FabricBlock = ({
     "#000000", // black
     "#ffffff", // white
   ];
-// Friendly color name → hex mapping (matches presetColors)
-const colorMap = {
-  red: "#ff3b30",
-  orange: "#ff9500",
-  yellow: "#ffcc00",
-  green: "#34c759",
-  blue: "#0a84ff",
-  purple: "#5856d6",
-  black: "#000000",
-  white: "#ffffff",
-};
+
+  const colorMap = {
+    red: "#ff3b30",
+    orange: "#ff9500",
+    yellow: "#ffcc00",
+    green: "#34c759",
+    blue: "#0a84ff",
+    purple: "#5856d6",
+    black: "#000000",
+    white: "#ffffff",
+  };
 
   const [brushColor, setBrushColor] = useState(presetColors[0]);
   const [brushWidth, setBrushWidth] = useState(6);
   const [brushType, setBrushType] = useState("Pencil");
+  const [drawMode, setDrawMode] = useState(null); // "circle" | "rect" | "line" | "triangle" | "star" | "heart" | "arrow" | null
   const [hasDrawn, setHasDrawn] = useState(false);
   const [startTime, setStartTime] = useState(Date.now());
   const [saved, setSaved] = useState(false);
@@ -58,7 +59,7 @@ const colorMap = {
   const undoStack = useRef([]);
   const redoStack = useRef([]);
 
-  // Utility: normalize colors using canvas context so "red", "#ff0000", "rgb(...)" compare equal
+  // ======= Color normalization =======
   const ensureColorContext = () => {
     if (colorTestCtx.current) return colorTestCtx.current;
     const cvs = document.createElement("canvas");
@@ -66,39 +67,51 @@ const colorMap = {
     return colorTestCtx.current;
   };
 
-const normalizeColor = (color) => {
-  if (!color) return null;
-  try {
-    const ctx = ensureColorContext();
-    ctx.fillStyle = "#000"; // reset
-    ctx.fillStyle = color;
-    // Always convert to hex for consistency
-    const computed = ctx.fillStyle.toLowerCase();
+  const normalizeColor = (color) => {
+    if (!color) return null;
+    try {
+      const ctx = ensureColorContext();
+      ctx.fillStyle = "#000";
+      ctx.fillStyle = color;
+      const computed = ctx.fillStyle.toLowerCase();
 
-    // Force rgb → hex
-    const d = document.createElement("div");
-    d.style.color = computed;
-    document.body.appendChild(d);
-    const rgb = getComputedStyle(d).color;
-    document.body.removeChild(d);
+      // Force rgb -> hex via DOM computed style (works cross-browser)
+      const d = document.createElement("div");
+      d.style.color = computed;
+      document.body.appendChild(d);
+      const rgb = getComputedStyle(d).color;
+      document.body.removeChild(d);
 
-    // convert "rgb(255, 0, 0)" → "#ff0000"
-    const match = rgb.match(/(\d+),\s*(\d+),\s*(\d+)/);
-    if (match) {
-      const r = parseInt(match[1]).toString(16).padStart(2, "0");
-      const g = parseInt(match[2]).toString(16).padStart(2, "0");
-      const b = parseInt(match[3]).toString(16).padStart(2, "0");
-      return `#${r}${g}${b}`;
+      const match = rgb.match(/(\d+),\s*(\d+),\s*(\d+)/);
+      if (match) {
+        const r = parseInt(match[1]).toString(16).padStart(2, "0");
+        const g = parseInt(match[2]).toString(16).padStart(2, "0");
+        const b = parseInt(match[3]).toString(16).padStart(2, "0");
+        return `#${r}${g}${b}`;
+      }
+      return computed;
+    } catch (e) {
+      console.warn("normalizeColor failed:", color, e);
+      return null;
     }
-    return computed;
-  } catch (e) {
-    console.warn("normalizeColor failed:", color, e);
-    return null;
-  }
-};
+  };
 
+  // ======= Snapshot helpers =======
+  const pushSnapshot = (cap = 50) => {
+    const canvas = fabricRef.current;
+    if (!canvas) return;
+    try {
+      const json = canvas.toJSON();
+      undoStack.current.push(json);
+      if (undoStack.current.length > cap) undoStack.current.shift();
+      // when pushing a new snapshot, clear redo
+      redoStack.current = [];
+    } catch (e) {
+      console.warn("pushSnapshot failed", e);
+    }
+  };
 
-  // ========= Resize =========
+  // ======= Resize =======
   const resizeCanvas = () => {
     if (!fabricRef.current || !canvasRef.current) return;
     const containerRect = containerRef.current?.getBoundingClientRect();
@@ -109,127 +122,359 @@ const normalizeColor = (color) => {
     fabricRef.current.renderAll();
   };
 
-
-  // ========= Init Canvas =========
+  // ======= Init Canvas =======
   useEffect(() => {
     const canvasEl = canvasRef.current;
     if (!canvasEl || !(canvasEl instanceof HTMLCanvasElement)) return;
 
+    // dispose previous if any
     if (fabricRef.current) {
-      fabricRef.current.dispose();
+      try {
+        fabricRef.current.dispose();
+      } catch (e) {}
       fabricRef.current = null;
     }
 
     const canvas = new fabric.Canvas(canvasEl, {
       backgroundColor: backgroundColor,
       isDrawingMode: true,
-      selection: false,
+      selection: true,
     });
     fabricRef.current = canvas;
 
-    // set default brush
+    // default free drawing brush
     const pencil = new fabric.PencilBrush(canvas);
     pencil.width = brushWidth;
     pencil.color = brushColor;
     canvas.freeDrawingBrush = pencil;
 
-    // draw event -> save state snapshot (JSON) for undo
+    // snapshot when objects change (keeps undo/redo consistent)
+    const handleChange = () => {
+      try {
+        // push snapshot only when object added/modified/removed by user (not internal)
+        pushSnapshot();
+        setHasDrawn(true);
+      } catch (e) {}
+    };
+    canvas.on("object:added", handleChange);
+    canvas.on("object:modified", handleChange);
+    canvas.on("object:removed", handleChange);
+
+    // also snapshot when free drawing paths are created
     const onPathCreated = () => {
       setHasDrawn(true);
-      try {
-        undoStack.current.push(canvas.toJSON());
-        redoStack.current = [];
-      } catch (e) {
-        // ignore
-      }
+      pushSnapshot();
     };
     canvas.on("path:created", onPathCreated);
 
+    // initial sizing and listeners
     resizeCanvas();
-
-    let resizeTimeout;
+    let resizeTimeout = null;
     const handleResize = () => {
       clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(() => resizeCanvas(), 120);
+      resizeTimeout = setTimeout(resizeCanvas, 120);
     };
-
     window.addEventListener("resize", handleResize);
-
     const ro = new ResizeObserver(handleResize);
     if (containerRef.current) ro.observe(containerRef.current);
 
     setStartTime(Date.now());
 
-    // load saved drawing if exists on block
+    // load saved drawing if provided
     (async () => {
       try {
         if (block && block.savedDrawing) {
-          canvas.loadFromJSON(block.savedDrawing, () => canvas.renderAll());
+          canvas.loadFromJSON(block.savedDrawing, () => {
+            canvas.renderAll();
+            // after load, record initial snapshot
+            pushSnapshot();
+          });
+        } else {
+          // push blank initial snapshot
+          pushSnapshot();
         }
       } catch (e) {
-        // ignore
+        console.warn("loadFromJSON failed", e);
       }
     })();
 
     return () => {
       clearTimeout(resizeTimeout);
       window.removeEventListener("resize", handleResize);
+      canvas.off("object:added", handleChange);
+      canvas.off("object:modified", handleChange);
+      canvas.off("object:removed", handleChange);
       canvas.off("path:created", onPathCreated);
-      ro.disconnect();
-      canvas.dispose();
+      try {
+        ro.disconnect();
+      } catch (e) {}
+      try {
+        canvas.dispose();
+      } catch (e) {}
       fabricRef.current = null;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [block, userId, blockId]);
 
-  // ========= Brush Updates =========
+  // ======= Brush updates (free drawing) =======
   useEffect(() => {
-    if (!fabricRef.current) return;
     const canvas = fabricRef.current;
+    if (!canvas) return;
 
-    // reset any mouse handlers
-    canvas.off("mouse:down");
+    // If drawMode is active we want to disable free drawing
+    canvas.isDrawingMode = !drawMode;
+
+    // remove any previous mouse:down handler the brush set earlier
+    canvas.off("mouse:down:brush"); // custom event name not actually used by fabric, safe but harmless
 
     if (brushType === "Rainbow") {
-      // rainbow: pencil brush that cycles hue each time mouse is pressed
       let hue = 0;
       const rainbow = new fabric.PencilBrush(canvas);
       rainbow.width = brushWidth;
       rainbow.color = `hsl(${hue}, 100%, 50%)`;
       canvas.freeDrawingBrush = rainbow;
 
-      canvas.on("mouse:down", () => {
+      // cycle hue on mouse down
+      const cycleHue = () => {
         hue = (hue + 40) % 360;
         try {
           canvas.freeDrawingBrush.color = `hsl(${hue}, 100%, 50%)`;
         } catch (e) {}
-      });
+      };
+      // attach generic mouse down to canvas (not interfering with shape handlers)
+      canvas.on("mouse:down", cycleHue);
+      return () => canvas.off("mouse:down", cycleHue);
     } else if (brushType === "Spray") {
       const spray = new fabric.SprayBrush(canvas);
       spray.width = brushWidth;
       spray.color = brushColor;
       canvas.freeDrawingBrush = spray;
     } else {
-      // Pencil or default
       const pencil = new fabric.PencilBrush(canvas);
       pencil.width = brushWidth;
       pencil.color = brushColor;
       canvas.freeDrawingBrush = pencil;
     }
-  }, [brushColor, brushWidth, brushType]);
+  }, [brushColor, brushWidth, brushType, drawMode]);
 
-  // ========= Undo/Redo using JSON snapshots =========
+  // ======= Shape drawing mode (drag to draw) =======
+  useEffect(() => {
+    const canvas = fabricRef.current;
+    if (!canvas) return;
+
+    let shape = null;
+    let startX = 0;
+    let startY = 0;
+
+    const createStarPath = () =>
+      // 5-point star centered at origin; we'll scale with scaleX/scaleY
+      "M 0 -50 L 14 -15 H 47 L 23 7 L 29 40 L 0 25 L -29 40 L -23 7 L -47 -15 H -14 Z";
+
+    const createHeartPath = () =>
+      "M 0 -30 C -30 -60, -60 -10, 0 40 C 60 -10, 30 -60, 0 -30 Z";
+
+    const createArrowPath = () =>
+      // simple arrow to the right; scale to change size
+      "M 0 0 L 80 0 L 80 -10 L 100 10 L 80 30 L 80 20 L 0 20 Z";
+
+const handleMouseDown = (opt) => {
+  if (!drawMode) return;
+  const pointer = canvas.getPointer(opt.e);
+  startX = pointer.x;
+  startY = pointer.y;
+
+  if (drawMode === "circle") {
+    shape = new fabric.Circle({
+      left: startX,
+      top: startY,
+      radius: 1,
+      fill: brushColor,
+      originX: "center",
+      originY: "center",
+      selectable: false,
+    });
+    shape.customType = "circle";
+  } else if (drawMode === "rect") {
+    shape = new fabric.Rect({
+      left: startX,
+      top: startY,
+      width: 1,
+      height: 1,
+      fill: brushColor,
+      originX: "left",
+      originY: "top",
+      selectable: false,
+    });
+    shape.customType = "rect";
+  } else if (drawMode === "line") {
+    shape = new fabric.Line([startX, startY, startX, startY], {
+      stroke: brushColor,
+      strokeWidth: brushWidth,
+      selectable: false,
+    });
+    shape.customType = "line";
+  } else if (drawMode === "triangle") {
+    shape = new fabric.Triangle({
+      left: startX,
+      top: startY,
+      width: 1,
+      height: 1,
+      fill: brushColor,
+      originX: "left",
+      originY: "top",
+      selectable: false,
+    });
+    shape.customType = "triangle";
+  } else if (drawMode === "star") {
+    shape = new fabric.Path(createStarPath(), {
+      left: startX,
+      top: startY,
+      originX: "center",
+      originY: "center",
+      fill: brushColor,
+      selectable: false,
+    });
+    shape.customType = "star";
+  } else if (drawMode === "heart") {
+    shape = new fabric.Path(createHeartPath(), {
+      left: startX,
+      top: startY,
+      originX: "center",
+      originY: "center",
+      fill: brushColor,
+      selectable: false,
+    });
+    shape.customType = "heart";
+  } else if (drawMode === "arrow") {
+    shape = new fabric.Path(createArrowPath(), {
+      left: startX,
+      top: startY,
+      originX: "center",
+      originY: "center",
+      fill: brushColor,
+      selectable: false,
+    });
+    shape.customType = "arrow";
+  } else if (drawMode === "diamond") {
+    shape = new fabric.Polygon(
+      [
+        { x: 0, y: -40 },
+        { x: 40, y: 0 },
+        { x: 0, y: 40 },
+        { x: -40, y: 0 },
+      ],
+      {
+        left: startX,
+        top: startY,
+        originX: "center",
+        originY: "center",
+        fill: brushColor,
+        selectable: false,
+      }
+    );
+    shape.customType = "diamond";
+  } else if (drawMode === "hexagon") {
+    const points = Array.from({ length: 6 }, (_, i) => {
+      const angle = (Math.PI / 3) * i;
+      return { x: 40 * Math.cos(angle), y: 40 * Math.sin(angle) };
+    });
+    shape = new fabric.Polygon(points, {
+      left: startX,
+      top: startY,
+      originX: "center",
+      originY: "center",
+      fill: brushColor,
+      selectable: false,
+    });
+    shape.customType = "hexagon";
+  } else if (drawMode === "cloud") {
+    shape = new fabric.Path(
+      "M 30 20 C 30 10, 50 10, 50 20 C 60 10, 80 20, 70 30 C 90 30, 90 50, 70 50 C 70 60, 50 60, 50 50 C 30 60, 10 50, 30 40 Z",
+      {
+        left: startX,
+        top: startY,
+        originX: "center",
+        originY: "center",
+        fill: brushColor,
+        selectable: false,
+      }
+    );
+    shape.customType = "cloud";
+  }
+
+  // ✅ Add shape to canvas if created
+  if (shape) {
+    canvas.add(shape);
+  }
+};
+    const handleMouseMove = (opt) => {
+      if (!shape || !drawMode) return;
+      const pointer = canvas.getPointer(opt.e);
+      const dx = pointer.x - startX;
+      const dy = pointer.y - startY;
+
+      if (drawMode === "circle") {
+        const radius = Math.sqrt(dx * dx + dy * dy) / 2;
+        shape.set({ radius: Math.abs(radius) });
+        // keep center at start; nothing else needed
+      } else if (drawMode === "rect" || drawMode === "triangle") {
+        // rectangle/triangle calculation: accommodate dragging in any direction
+        const left = Math.min(startX, pointer.x);
+        const top = Math.min(startY, pointer.y);
+        const width = Math.abs(pointer.x - startX) || 1;
+        const height = Math.abs(pointer.y - startY) || 1;
+        shape.set({ left, top, width, height });
+      } else if (drawMode === "line") {
+        shape.set({ x2: pointer.x, y2: pointer.y });
+      } else if (["star", "heart", "arrow"].includes(drawMode)) {
+        // scale path by distance from center (use average)
+        const scale = Math.max(0.01, Math.max(Math.abs(dx), Math.abs(dy)) / 50);
+        shape.set({ scaleX: scale, scaleY: scale });
+      }
+
+      canvas.renderAll();
+    };
+
+    const handleMouseUp = () => {
+      if (shape) {
+        // finalize: make selectable and record customType stays
+        shape.set({ selectable: true });
+        // ensure object coordinates are clean
+        shape.setCoords();
+        pushSnapshot();
+        setHasDrawn(true);
+      }
+      shape = null;
+      // exit draw mode after one shape
+      setDrawMode(null);
+    };
+
+    canvas.on("mouse:down", handleMouseDown);
+    canvas.on("mouse:move", handleMouseMove);
+    canvas.on("mouse:up", handleMouseUp);
+
+    return () => {
+      canvas.off("mouse:down", handleMouseDown);
+      canvas.off("mouse:move", handleMouseMove);
+      canvas.off("mouse:up", handleMouseUp);
+    };
+  }, [drawMode, brushColor, brushWidth]);
+
+  // ======= Undo / Redo / Clear / Download =======
   const handleUndo = () => {
     const canvas = fabricRef.current;
     if (!canvas) return;
-    if (!undoStack.current.length) return;
+    // need at least 2 states: initial + current
+    if (undoStack.current.length <= 1) return;
     try {
-      const current = canvas.toJSON();
+      const current = undoStack.current.pop();
       redoStack.current.push(current);
-      const prev = undoStack.current.pop();
-      canvas.loadFromJSON(prev, () => canvas.renderAll());
+      const prev = undoStack.current[undoStack.current.length - 1];
+      canvas.loadFromJSON(prev, () => {
+        canvas.renderAll();
+      });
     } catch (e) {
-      // fallback: clear
-      console.warn(e);
+      console.warn("undo failed", e);
     }
   };
 
@@ -238,224 +483,152 @@ const normalizeColor = (color) => {
     if (!canvas) return;
     if (!redoStack.current.length) return;
     try {
-      const next = redoStack.current.pop();
-      undoStack.current.push(canvas.toJSON());
-      canvas.loadFromJSON(next, () => canvas.renderAll());
+      const state = redoStack.current.pop();
+      undoStack.current.push(state);
+      canvas.loadFromJSON(state, () => {
+        canvas.renderAll();
+      });
     } catch (e) {
-      console.warn(e);
+      console.warn("redo failed", e);
     }
   };
 
-  // ========= Clear =========
   const handleClear = () => {
     const canvas = fabricRef.current;
     if (!canvas) return;
-    canvas.getObjects().forEach((obj) => canvas.remove(obj));
+    // snapshot current so user can undo clear
+    pushSnapshot();
+    canvas.getObjects().forEach((o) => canvas.remove(o));
     canvas.backgroundColor = backgroundColor;
-    canvas.renderAll();
+    canvas.requestRenderAll();
     setHasDrawn(false);
     setStartTime(Date.now());
-    undoStack.current = [];
-    redoStack.current = [];
   };
 
-  // ========= Shape Tools =========
-  const addCircle = () => {
-    const canvas = fabricRef.current;
-    if (!canvas) return;
-    const circle = new fabric.Circle({
-      radius: 50,
-      fill: brushColor,
-      left: 100,
-      top: 100,
-      selectable: true,
-    });
-    canvas.add(circle);
-    undoStack.current.push(canvas.toJSON());
-    redoStack.current = [];
-    setHasDrawn(true);
-  };
-
-  const addRectangle = () => {
-    const canvas = fabricRef.current;
-    if (!canvas) return;
-    const rect = new fabric.Rect({
-      width: 100,
-      height: 60,
-      fill: brushColor,
-      left: 100,
-      top: 100,
-      selectable: true,
-    });
-    canvas.add(rect);
-    undoStack.current.push(canvas.toJSON());
-    redoStack.current = [];
-    setHasDrawn(true);
-  };
-
-  const addLine = () => {
-    const canvas = fabricRef.current;
-    if (!canvas) return;
-    const line = new fabric.Line([50, 50, 150, 150], {
-      stroke: brushColor,
-      strokeWidth: brushWidth,
-      selectable: true,
-    });
-    canvas.add(line);
-    undoStack.current.push(canvas.toJSON());
-    redoStack.current = [];
-    setHasDrawn(true);
-  };
-
-  // ========= Validation =========
-  // ========= Validation =========
-const toolMap = {
-  circle: (o) => o.type === "circle",
-  rectangle: (o) => o.type === "rect",
-  line: (o) => o.type === "line",
-  pencil: (o) => o.type === "path" && !String(o.stroke || "").includes("hsl("),
-  rainbow: (o) => o.type === "path" && String(o.stroke || "").includes("hsl("),
-  spray: (o) => o.type === "path" && (o.path?.length || 0) > 5,
-};
-
-const validateDrawing = (canvas) => {
-  const objects = canvas.getObjects();
-  const rules = block?.validation_rules || validationRules || {};
-  const elapsed = Math.floor((Date.now() - startTime) / 1000);
-
-  let reasons = [];
-  let score = 0;
-
-  if (objects.length === 0) return { valid: false, score: 0, reasons: ["empty"] };
-  score += 10;
-
-  // Normalize shape(s)
-  if (rules.requireShape) {
-    const requiredShapes = Array.isArray(rules.requireShape)
-      ? rules.requireShape.map((s) => String(s).toLowerCase())
-      : [String(rules.requireShape).toLowerCase()];
-
-    requiredShapes.forEach((shape) => {
-      const checkFn = toolMap[shape];
-      if (checkFn) {
-        const hasShape = objects.some(checkFn);
-        if (hasShape) score += 20;
-        else reasons.push(`missing_${shape}`);
-      } else {
-        console.warn("Unknown shape rule:", shape);
-      }
-    });
-  }
-console.log("RULE requireColor =", rules.requireColor);
-objects.forEach((o, i) => {
-  console.log("Object", i, {
-    stroke: o.stroke,
-    fill: o.fill,
-    type: o.type,
-  });
-});
-
-  // Normalize color
-// ========= Color Validation =========
-if (rules.requireColor) {
-  const requiredName = rules.requireColor.toLowerCase();
-  const requiredHex = colorMap[requiredName] || normalizeColor(rules.requireColor);
-
-  let hasColor = false;
-  objects.forEach((o) => {
-    const stroke = (o.stroke || "").toLowerCase();
-    const fill = (o.fill || "").toLowerCase();
-    if (stroke === requiredHex || fill === requiredHex) {
-      hasColor = true;
-    }
-  });
-
-  if (hasColor) score += 20;
-  else reasons.push(`missing_color_${rules.requireColor}`);
-}
-
-
-  // Time
-  if (rules.minSeconds && elapsed >= rules.minSeconds) score += 20;
-  else if (rules.minSeconds) reasons.push("too_fast");
-
-  // Strokes
-  if (rules.maxStrokes && objects.length > rules.maxStrokes) {
-    reasons.push("too_many_strokes");
-    score -= 10;
-  }
-  if (rules.minStrokes && objects.length < rules.minStrokes) {
-    reasons.push("too_few_strokes");
-    score -= 10;
-  }
-
-  score = Math.max(0, Math.min(100, score));
-  const valid = reasons.length === 0 && score >= (rules.passMark || 70);
-
-  console.log("Validation:", { rules, reasons, score, valid, objects });
-
-  return { valid, score, reasons };
-};
-
-
-  // ========= Save =========
-  const handleSave = async () => {
-    setErrorMsg("");
-    setScore(null);
-    if (!userId) return setErrorMsg(t("drawing.error_user"));
-    if (!blockId) return setErrorMsg(t("drawing.error_block"));
-    if (!fabricRef.current) return setErrorMsg(t("drawing.error_canvas"));
-
-    const validation = validateDrawing(fabricRef.current);
-    setScore(validation.score);
-    if (!validation.valid) {
-      return setErrorMsg(`Your score is ${validation.score}/100. Try again!`);
-    }
-
-    setSaving(true);
-    try {
-      const data = JSON.stringify(fabricRef.current.toJSON());
-      const { error: drawError } = await supabase.from("kid_drawings").upsert({
-        user_id: userId,
-        block_id: blockId,
-        drawing: data,
-        score: validation.score,
-        updated_at: new Date().toISOString(),
-      });
-      if (drawError) setErrorMsg(t("drawing.error_save"));
-      else {
-        setSaved(true);
-        try {
-          confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } });
-        } catch (e) {}
-        setShowCongrats(true);
-        setTimeout(() => setShowCongrats(false), 4000);
-        setTimeout(() => setSaved(false), 2000);
-      }
-    } catch (err) {
-      setErrorMsg(err.message);
-    } finally {
-      setSaving(false);
-    }
-  };
-
-  // ========= Download =========
   const handleDownload = () => {
     const canvas = fabricRef.current;
     if (!canvas) return;
+    // force render to ensure everything up-to-date
+    canvas.renderAll();
     const dataURL = canvas.toDataURL({ format: "png" });
     const link = document.createElement("a");
     link.href = dataURL;
-    link.download = `${t("drawing.download_name")}.png`;
+    link.download = `${t("drawing.download_name") || "drawing"}.png`;
     link.click();
   };
 
-  // Helpful: quick button to set brush to an easy-to-tap style
+  // ======= Validation helpers / toolMap =======
+  const toolMap = {
+    circle: (o) => o.customType === "circle" || o.type === "circle",
+    rectangle: (o) => o.customType === "rect" || o.type === "rect",
+    line: (o) => o.customType === "line" || o.type === "line",
+    triangle: (o) => o.customType === "triangle" || o.type === "triangle",
+    star: (o) => o.customType === "star" || (o.type === "path" && o.path && String(o.path).includes("L") && (o.customType === "star" || false)),
+    heart: (o) => o.customType === "heart" || (o.type === "path" && o.path && o.customType === "heart"),
+    arrow: (o) => o.customType === "arrow" || (o.type === "path" && o.path && o.customType === "arrow"),
+    pencil: (o) => o.type === "path" && !String(o.stroke || "").includes("hsl(") && !o.customType,
+    rainbow: (o) => o.type === "path" && String(o.stroke || "").includes("hsl("),
+    spray: (o) => o.type === "path" && (o.path?.length || 0) > 5,
+    diamond: (o) => o.customType === "diamond" || o.type === "polygon",
+hexagon: (o) => o.customType === "hexagon" || o.type === "polygon",
+cloud: (o) => o.customType === "cloud" || (o.type === "path" && o.customType === "cloud"),
+
+  };
+
+  const validateDrawing = (canvas) => {
+    const objects = canvas.getObjects();
+    const rules = block?.validation_rules || validationRules || {};
+    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+
+    let reasons = [];
+    let score = 0;
+
+    if (objects.length === 0) return { valid: false, score: 0, reasons: ["empty"] };
+    score += 10;
+
+    // Shapes required
+    if (rules.requireShape) {
+      const requiredShapes = Array.isArray(rules.requireShape)
+        ? rules.requireShape.map((s) => String(s).toLowerCase())
+        : [String(rules.requireShape).toLowerCase()];
+
+      requiredShapes.forEach((shape) => {
+        const checkFn = toolMap[shape];
+        if (checkFn) {
+          const hasShape = objects.some(checkFn);
+          if (hasShape) score += 20;
+          else reasons.push(`missing_${shape}`);
+        } else {
+          console.warn("Unknown shape rule:", shape);
+        }
+      });
+    }
+
+    // Color required
+    if (rules.requireColor) {
+      const requiredName = String(rules.requireColor).toLowerCase();
+      const requiredHex = colorMap[requiredName] || normalizeColor(rules.requireColor);
+
+      let hasColor = false;
+      objects.forEach((o) => {
+        // some objects use stroke, some fill
+        const stroke = normalizeColor(o.stroke);
+        const fill = normalizeColor(o.fill);
+        if (stroke === requiredHex || fill === requiredHex) {
+          hasColor = true;
+        }
+      });
+
+      if (hasColor) score += 20;
+      else reasons.push(`missing_color_${rules.requireColor}`);
+    }
+
+    // Time
+    if (rules.minSeconds && elapsed >= rules.minSeconds) score += 20;
+    else if (rules.minSeconds) reasons.push("too_fast");
+
+    // Strokes
+    if (rules.maxStrokes && objects.length > rules.maxStrokes) {
+      reasons.push("too_many_strokes");
+      score -= 10;
+    }
+    if (rules.minStrokes && objects.length < rules.minStrokes) {
+      reasons.push("too_few_strokes");
+      score -= 10;
+    }
+
+    score = Math.max(0, Math.min(100, score));
+    const valid = reasons.length === 0 && score >= (rules.passMark || 70);
+
+    console.log("Validation:", { rules, reasons, score, valid, objects });
+
+    return { valid, score, reasons };
+  };
+
+  // Save to local storage
+const saveToLocal = (json) => {
+  if (!userId || !blockId) return;
+  localStorage.setItem(`drawing_${userId}_${blockId}`, json);
+};
+
+// Load from local storage
+const loadFromLocal = () => {
+  if (!userId || !blockId) return null;
+  return localStorage.getItem(`drawing_${userId}_${blockId}`);
+};
+
+
+  // ======= Save (unchanged semantics) =======
+  const handleSave = async () => { setErrorMsg(""); setScore(null); if (!userId) return setErrorMsg(t("drawing.error_user")); if (!blockId) return setErrorMsg(t("drawing.error_block")); if (!fabricRef.current) return setErrorMsg(t("drawing.error_canvas")); const validation = validateDrawing(fabricRef.current); setScore(validation.score); if (!validation.valid) { return setErrorMsg(`Your score is ${validation.score}/100. Try again!`); } setSaving(true); try { const data = JSON.stringify(fabricRef.current.toJSON()); const { error: drawError } = await supabase.from("kid_drawings").upsert({ user_id: userId, block_id: blockId, drawing: data, score: validation.score, updated_at: new Date().toISOString(), }); if (drawError) { setErrorMsg(t("drawing.error_save")); } else { setSaved(true); try { confetti({ particleCount: 120, spread: 70, origin: { y: 0.6 } }); } catch (e) {} setShowCongrats(true); setTimeout(() => setShowCongrats(false), 4000); setTimeout(() => setSaved(false), 2000); } } catch (err) { setErrorMsg(err.message); } finally { setSaving(false); } }; // ======= Load (when component mounts) ======= useEffect(() => { const loadDrawing = async () => { if (!userId || !blockId || !fabricRef.current) return; const { data, error } = await supabase .from("kid_drawings") .select("drawing, score") .eq("user_id", userId) .eq("block_id", blockId) .single(); if (error) { console.warn("No saved drawing:", error.message); return; } if (data?.drawing) { try { fabricRef.current.loadFromJSON(data.drawing, () => { fabricRef.current.renderAll(); }); } catch (e) { console.error("Error loading drawing JSON:", e); } } if (data?.score !== null) { setScore(data.score); } }; loadDrawing(); }, [userId, blockId]);
+  // Helpful preset picker
   const handlePickPreset = (c) => {
     setBrushColor(c);
     setBrushType("Pencil");
   };
 
+
+
+  
   return (
     <div ref={containerRef} className="flex flex-col items-center w-full h-full px-2 relative">
       <h2 className="text-2xl font-bold text-gray-800 mb-2">{t("drawing.heading")}</h2>
@@ -470,7 +643,11 @@ if (rules.requireColor) {
         </p>
       )}
 
-      <canvas ref={canvasRef} className="border border-gray-300 shadow-sm w-full rounded-md" style={{ display: "block", maxWidth: "100%", flex: "1 1 auto", touchAction: 'none' }} />
+      <canvas
+        ref={canvasRef}
+        className="border border-gray-300 shadow-sm w-full rounded-md"
+        style={{ display: "block", maxWidth: "100%", flex: "1 1 auto", touchAction: "none" }}
+      />
 
       {/* Kid-friendly palette */}
       <div className="flex items-center justify-center gap-3 mt-3 mb-2 flex-wrap">
@@ -482,7 +659,6 @@ if (rules.requireColor) {
             className={`w-12 h-12 rounded-full shadow-lg transform transition-all duration-150 focus:outline-none flex items-center justify-center ${brushColor === c ? 'scale-110 ring-4 ring-offset-2 ring-yellow-300' : ''}`}
             style={{ backgroundColor: c }}
           >
-            {/* show a smiley on the selected color for kids */}
             {brushColor === c ? <span className="text-sm font-bold">✓</span> : null}
           </button>
         ))}
@@ -499,7 +675,26 @@ if (rules.requireColor) {
           className={`px-3 py-2 rounded-lg font-bold shadow-lg border-2 ${brushType === 'Spray' ? 'border-black' : 'border-transparent'}`}
         >
           ✨ Spray
-        </button>
+        </button>\
+        <button
+  className={`px-3 py-1 bg-purple-500 text-white rounded-lg font-bold hover:bg-purple-600 ${drawMode === "diamond" ? "ring-2 ring-yellow-300" : ""}`}
+  onClick={() => setDrawMode("diamond")}
+>
+  ♦️
+</button>
+<button
+  className={`px-3 py-1 bg-purple-500 text-white rounded-lg font-bold hover:bg-purple-600 ${drawMode === "hexagon" ? "ring-2 ring-yellow-300" : ""}`}
+  onClick={() => setDrawMode("hexagon")}
+>
+  ⬡
+</button>
+<button
+  className={`px-3 py-1 bg-purple-500 text-white rounded-lg font-bold hover:bg-purple-600 ${drawMode === "cloud" ? "ring-2 ring-yellow-300" : ""}`}
+  onClick={() => setDrawMode("cloud")}
+>
+  ☁️
+</button>
+
       </div>
 
       <div className="flex flex-wrap items-center justify-center gap-2 mt-2 mb-2">
@@ -524,15 +719,48 @@ if (rules.requireColor) {
           </select>
         </label>
 
-        {/* Shape buttons */}
-        <button className="px-3 py-1 bg-purple-500 text-white rounded-lg font-bold hover:bg-purple-600" onClick={addCircle}>
-          {t("drawing.add_circle")}
+        {/* Shape buttons -> now set drawMode so kids drag to draw */}
+        <button
+          className={`px-3 py-1 bg-purple-500 text-white rounded-lg font-bold hover:bg-purple-600 ${drawMode === "circle" ? "ring-2 ring-yellow-300" : ""}`}
+          onClick={() => setDrawMode("circle")}
+        >
+          {t("drawing.add_circle") || "Circle"}
         </button>
-        <button className="px-3 py-1 bg-purple-500 text-white rounded-lg font-bold hover:bg-purple-600" onClick={addRectangle}>
-          {t("drawing.add_rectangle")}
+        <button
+          className={`px-3 py-1 bg-purple-500 text-white rounded-lg font-bold hover:bg-purple-600 ${drawMode === "rect" ? "ring-2 ring-yellow-300" : ""}`}
+          onClick={() => setDrawMode("rect")}
+        >
+          {t("drawing.add_rectangle") || "Rectangle"}
         </button>
-        <button className="px-3 py-1 bg-purple-500 text-white rounded-lg font-bold hover:bg-purple-600" onClick={addLine}>
-          {t("drawing.add_line")}
+        <button
+          className={`px-3 py-1 bg-purple-500 text-white rounded-lg font-bold hover:bg-purple-600 ${drawMode === "line" ? "ring-2 ring-yellow-300" : ""}`}
+          onClick={() => setDrawMode("line")}
+        >
+          {t("drawing.add_line") || "Line"}
+        </button>
+        <button
+          className={`px-3 py-1 bg-purple-500 text-white rounded-lg font-bold hover:bg-purple-600 ${drawMode === "triangle" ? "ring-2 ring-yellow-300" : ""}`}
+          onClick={() => setDrawMode("triangle")}
+        >
+          🔺
+        </button>
+        <button
+          className={`px-3 py-1 bg-purple-500 text-white rounded-lg font-bold hover:bg-purple-600 ${drawMode === "star" ? "ring-2 ring-yellow-300" : ""}`}
+          onClick={() => setDrawMode("star")}
+        >
+          ⭐
+        </button>
+        <button
+          className={`px-3 py-1 bg-purple-500 text-white rounded-lg font-bold hover:bg-purple-600 ${drawMode === "heart" ? "ring-2 ring-yellow-300" : ""}`}
+          onClick={() => setDrawMode("heart")}
+        >
+          ❤️
+        </button>
+        <button
+          className={`px-3 py-1 bg-purple-500 text-white rounded-lg font-bold hover:bg-purple-600 ${drawMode === "arrow" ? "ring-2 ring-yellow-300" : ""}`}
+          onClick={() => setDrawMode("arrow")}
+        >
+          ➡️
         </button>
 
         <button className="px-3 py-1 bg-green-500 text-white rounded-lg font-bold hover:bg-green-600" onClick={handleUndo}>

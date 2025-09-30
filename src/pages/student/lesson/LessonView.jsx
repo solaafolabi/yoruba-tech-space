@@ -1,4 +1,4 @@
-// src/pages/student/LessonView.jsx
+
 import React, { useEffect, useState, Suspense, lazy } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import supabase from "../../../supabaseClient";
@@ -27,6 +27,8 @@ const LessonView = () => {
   useEffect(() => {
     const fetchLesson = async () => {
       try {
+        console.log("🔎 Fetching lesson with slug:", lessonSlug);
+
         const { data, error } = await supabase
           .from("lessons")
           .select(
@@ -44,9 +46,12 @@ const LessonView = () => {
               ? JSON.parse(data.content_blocks || "[]")
               : data.content_blocks;
         }
+
+        console.log("📘 Lesson fetched:", data);
+
         setLesson({ ...data, content_blocks: contentBlocks });
       } catch (error) {
-        console.error("Error fetching lesson:", error);
+        console.error("❌ Error fetching lesson:", error);
       }
     };
     fetchLesson();
@@ -55,22 +60,47 @@ const LessonView = () => {
   // ===== Fetch quizzes =====
   useEffect(() => {
     const fetchQuizzes = async () => {
-      if (!lesson?.id) return;
+      if (!lesson?.id) {
+        console.log("⏳ Waiting for lesson.id before fetching quizzes...");
+        return;
+      }
+
       try {
+        console.log("🔎 Fetching quizzes for lesson_id:", lesson.id);
+
         const { data, error } = await supabase
           .from("quizzes")
           .select(
-            "id, question_en, question_yo, options_en, options_yo, correct_answer_en, correct_answer_yo"
+            `
+            id,
+            lesson_id,
+            question_en,
+            question_yo,
+            options_en,
+            options_yo,
+            correct_answer_en,
+            correct_answer_yo
+          `
           )
           .eq("lesson_id", lesson.id);
 
-        if (error) throw error;
+        if (error) {
+          console.error("❌ Supabase quiz fetch error:", error);
+          return;
+        }
+
+        console.log("📚 Quizzes fetched:", data);
+
+        if (!data || data.length === 0) {
+          console.warn("⚠️ No quizzes found for this lesson!");
+        }
 
         setQuizzes(data || []);
       } catch (error) {
-        console.error("Error fetching quizzes:", error);
+        console.error("💥 Unexpected error fetching quizzes:", error);
       }
     };
+
     fetchQuizzes();
   }, [lesson, i18n.language]);
 
@@ -81,6 +111,7 @@ const LessonView = () => {
         const {
           data: { user },
         } = await supabase.auth.getUser();
+
         if (!user) return navigate("/login");
         setUser(user);
 
@@ -90,9 +121,12 @@ const LessonView = () => {
           .eq("id", user.id)
           .single();
 
-        if (!error) setProfile(data);
+        if (!error) {
+          setProfile(data);
+          console.log("👤 Profile fetched:", data);
+        }
       } catch (error) {
-        console.error("Error fetching profile:", error);
+        console.error("❌ Error fetching profile:", error);
       }
     };
     fetchProfile();
@@ -165,12 +199,16 @@ const LessonView = () => {
         </Suspense>
 
         <Suspense fallback={<TalkingDrumSpinner />}>
-          {lesson && quizzes.length > 0 && (
+          {lesson && quizzes.length > 0 ? (
             <LessonQuiz
               lessonSlug={lessonSlug}
               quizzes={quizzes}
               lessonId={lesson.id} // ✅ Pass lessonId
             />
+          ) : (
+            <p className="text-gray-400 italic mt-6">
+              {lesson ? "⚠️ No quizzes available for this lesson." : ""}
+            </p>
           )}
         </Suspense>
       </main>

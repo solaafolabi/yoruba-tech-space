@@ -1,6 +1,6 @@
-{
+  {
   "selectLanguage": "Yan Èdè",
-  "yoruba": "Èdè Yorùbá",
+  "yorùbá": "Èdè Yorùbá",
   "english": "Èdè Gẹ̀ẹ́sì",
   "nav": {
     "home": "Àkọ́kọ́",
@@ -11,47 +11,46 @@
     "login": "Wọlé",
     "parentSignup": "Ìforúkọsílẹ̀ Òbí",
     "parentSignupDescription": "Fún àwọn òbí láti ṣàkóso Ìforúkọsílẹ̀, ìlọsíwájú ẹ̀kọ́,  iṣẹ́ ilé àwọn ọmọ wọn.",
-    "adultSignup": "Forukọsilẹ Agbalagba",
-    "adultSignupDescription": "Fún àwọn àgbàlagbà bí ọmọ ọdún mẹ́rìndínlógún s’ókè, láti wọlé sí Ilé-ìwé Yoruba Tech Space.",
+    "adultSignup": "Ìforúkọsílẹ̀ Àgbàlagbà",
+    "adultSignupDescription": "Fún àwọn àgbàlagbà bí ọmọ ọdún mẹ́rìndínlógún s’ókè, láti wọlé sí Ilé-ìwé Yorùbá Tech Space.",
     "signup": "Forúkọsílẹ̀"
-    
-    },
+  },
     "hero": {
-    "no1Bilingual": "Ìkánnì Ákọ́kọ́ ilé ẹ̀kọ́ ìmọ̀ ẹ̀rọ tó jẹ́ ẹ̀dá méjì",
-    "headline": "Àhùn Ṣe Ẹ̀rọnílàgbára Fún Ìràn Tó ń Bọ̀ Nípà Àṣà àti Ìmọ̀ Ẹ̀rọ",
-    "description": "Ilé-Ẹ̀kọ́ ọ̀fẹ́ tó dá lórí ìdánilẹ́kọ àti ìdàgbàsókè ìdánimọ̀. Láti kọ́ kóòdù, àti láti di akósẹ́mọṣẹ́ iṣẹ́ kóòdù, a ń jẹ́ kó rọrùn láti kọ́ ẹ̀kọ́ ní Èdè Yorùbá àti Èdè Gẹ̀ẹ́sì..",
+    "no1Bilingual": "Ìkànnì Àkọ́kọ́ ilé ẹ̀kọ́ ìmọ̀ ẹ̀rọ tó jẹ́ ẹ̀dá méjì",
+    "headline": "Àhún Ṣe Ìrónilágbára Fún Ìran Tó ń Bọ̀ Nípa Àṣà àti Ìmọ̀ Ẹ̀rọ",
+    "description": "Ilé-Ẹ̀kọ́ ọ̀fẹ́ tó dá lórí ìdánilẹ́kọ àti ìdàgbàsókè ìdánimọ̀. Láti kọ́ kóòdù, àti láti di akọ́sẹ́mọṣẹ́ iṣẹ́ kóòdù, à ń jẹ́ kó rọrùn láti kọ́ ẹ̀kọ́ ní Èdè Yorùbá àti Èdè Gẹ̀ẹ́sì..",
     "kids": {
-      "title": "Ọmọde",
+      "title": "Ọmọdé",
       "text": "Kó kóòdù pẹ̀lú ìdárayá, eré ìmọ̀, àti Láti dá ohun tuntun ṣẹ"
     },
     "teens": {
-      "title": "Àwọn ọdọ",
-      "text": "Ìṣe àdáni gidi, ìrànwọ́ pẹ̀lú iṣẹ́ ile, àti ìmọ̀ tó yẹ fún ọjọ́ iwájú"
+      "title": "Àwọn ọ̀dọ́",
+      "text": "Iṣẹ́ àdáni gidi, ìrànwọ́ pẹ̀lú iṣẹ́ àmúrelé, àti ìmọ̀ tó yẹ fún ọjọ́ iwájú"
     },
     "adults": {
-      "title": "Àgàbàlagbà",
+      "title": "Àgbàlagbà",
       "text": "Ìmọ̀ tó yèkoro, àti ẹ̀kọ́ tó bá òde òní mu pẹ̀lú ìtọ́sọ́nà ọjọ́ pípé"
     },
     "parents": {
       "title": "Ọ̀bí",
-      "text": "láti ṣàkóso Ìforúkọsílẹ̀, ìlọsíwájú ẹ̀kọ́, iṣẹ́ ilé àwọn ọmọ wọn."
+      "text": "láti ṣàkóso Ìforúkọsílẹ̀, ìlọsíwájú ẹ̀kọ́, iṣẹ́ àmúrelé àwọn ọmọ wọn."
     },
-    "startLearning": "Bèrè ẹ̀kọ́ rẹ lónìí!",
+    "startLearning": "Bẹ̀rẹ̀ ẹ̀kọ́ rẹ lónìí!",
     "seeHowItWorks": "Wo Bí Ó Ṣe Ń Ṣiṣẹ́"
   },
   "howItWorks": {
     "title": "Bí A Ṣe Ń Ṣiṣẹ́",
     "step1": {
       "title": "1. Ṣe Ìforúkọsílẹ̀",
-      "desc": "Bẹ̀rẹ̀ irinàjò rẹ nípa fífi orúkọ sílẹ̀ láti darapọ̀ mọ́ Yoruba Tech Space."
+      "desc": "Bẹ̀rẹ̀ ìrìnàjò rẹ nípa fífi orúkọ sílẹ̀ láti darapọ̀ mọ́ Yorùbá Tech Space."
     },
     "step2": {
-      "title": "2. Ìgbàníwọlé",
-      "desc": "lẹ́yìn ìgbàníwọlé, gba ìwé ìdánimọ̀ rẹ àti ìwé ìgbàníwọlé tí yóò tọ́ ọ sọ́nà láti tẹ̀síwájú pẹ̀lú ẹ̀kọ́ rẹ."
+      "title": "2. Ìgbaniwọlé",
+      "desc": "lẹ́yìn ìgbaniwọlé, gba ìwé ìdánimọ̀ rẹ àti ìwé ìgbaniwọlé tí yóò tọ́ ọ sọ́nà láti tẹ̀síwájú pẹ̀lú ẹ̀kọ́ rẹ."
     },
     "step3": {
-      "title": "3. Bèrè Ẹ̀kọ́ Rẹ",
-      "desc": "Kọ́ HTML, CSS, JavaScript, Python, àti ẹ́kọ̀ míràn ní èdè tí o fẹ́."
+      "title": "3. Bẹ̀rẹ̀ Ẹ̀kọ́ Rẹ",
+     "desc": "Kọ́ HTML, CSS, JavaScript, Python, àti ẹ̀kọ́ míràn ní èdè tí o fẹ́."
     },
     "step4": {
       "title": "4. Ṣe Ìdánwò àti Iṣé Ọwọ́",
@@ -59,16 +58,16 @@
     },
     "step5": {
       "title": "5. Ààmì Èyẹ àti Ìwé Ẹ̀rí",
-      "desc": "Gba ààmì èyẹ àti ìwé ẹ̀rí láti fi ìmọ̀ rẹ hàn áti fi ṣe àtìlẹ́yìn rẹ."
+      "desc": "Gba ààmì èyẹ àti ìwé ẹ̀rí láti fi ìmọ rẹ̀ hàn àti fi ṣe àtìlẹ́yìn rẹ."
     }
   },
   "courses": {
-    "title": "Ẹ̀kọ́ Wa",
-    "description": "Bẹ̀rẹ̀ ẹ̀kọ́ láti ipele alákọ̀bẹ́rẹ̀ títí dé ibi  akósémosé tó dára re lójú",
+    "title": "Ẹ̀kọ Wa",
+    "description": "Bẹ̀rẹ̀ ẹ̀kọ́ láti ìpele alákọ̀bẹ́rẹ̀ títí dé ibi  akọ́sẹ́mọsẹ́ tó dára rẹ̀ lójú",
     "list": {
-      "html": "Ìpilẹ̀ HTML & CSS",
-      "javascript": "Ìmò JavaScript",
-      "python": "Python Fún Alakọbẹrẹ",
+      "html": "Ìpìlẹ̀ HTML & CSS",
+      "javascript": "Ìmọ JavaScript",
+      "python": "Python Fún Alákọ́bẹ̀rẹ̀",
       "react": "Ẹ̀kọ́ React",
       "firebase": "Firebase & Ẹ̀rọ Ẹ̀yìn",
       "git": "Git & GitHub Fún Àmọ̀ràn"
@@ -81,30 +80,31 @@
     "viewCourse": "Wo Ẹ̀kọ́ Wa"
   },
   "admissionCTA": {
-    "title": " 🚀 Bẹ̀rẹ̀ ìrìnajò rẹ nípa imọ̀ ẹ̀rọ níbí!",
+    "title": " 🚀 Bẹ̀rẹ̀ ìrìnàjò rẹ nípa ìmọ̀ ẹ̀rọ níbi!",
     "description": "🤝 Darapò mọ́ Yorùbá Tech Space lónìí",
-    "applyButton": "📝 Forúkọsílẹ̀ fún ìgbàníwọlé kí o lè tẹ̀síwájú"
+    "applyButton": "📝 Forúkọsílẹ̀ fún ìgbaniwọlé kí o lè tẹ̀síwájú"
   },
    "about": {
     "title": "Nípa Wa Yorùbá Tech Space",
     "imageAlt": "Olùkọ́ Kóòdù Yorùbá",
     "intro": "Orúkọ mi ni Sọlá Afọ́labí.",
-    "description1": "Mo jẹ́ ẹni tó ní ìmọ̀ nípa dídá ìkàní ṣílé àti ẹni tó ní ìmọ̀ kíkún ní Imọ̀ Ẹ̀rọ. Mo ní ìfẹ́ gidi sí imọ̀ ẹ̀rọ àti láti túmọ̀ rẹ̀ sí èdè Yorùbá, kí ó le rọrùn fún gbogbo ọmọ bíbí Yorùbá láti kọ́.",
-    "description2": "Yorùbá Tech Space jẹ́ ìkàní tí a dá sílẹ̀ láti mú kọ́òdù rọrùn pẹ̀lú àṣà, èdè, àti ìdánimọ̀",
-    "description3": "Àfojúsùn wa ni láti ṣe ìrònilágbára fún àwọn ọ̀dọ́, kí wọ́n lè kọ́ HTML, CSS, JavaScript, React, Python, Artificial Intelligence, àti bẹ́ẹ̀ bẹ́ẹ̀ lọ ní èdè Yorùbá.",
+    "description1": "Mo jẹ́ ẹni tó ní ìmọ̀ nípa dídá ìkànì ṣílẹ̀ àti ẹni tó ní ìmọ̀ kíkún nípa Ìmọ̀ Ẹ̀rọ. Mo ní ìfẹ́ sí ìmọ̀ ẹ̀rọ àti láti túmọ̀ rẹ̀ sí èdè Yorùbá, kí o lè rọrùn fún gbogbo ọmọ bíbí Yorùbá láti kọ́.",
+    "description2": "Yorùbá Tech Space jẹ́ ìkànì tí a dá sílẹ̀ láti mú kọ́òdù rọrùn pẹ̀lú àṣà, èdè, àti ìdánimọ̀",
+    "description3": "Àfojúsùn wa ni láti ṣe ìrọ́nilágbára fún àwọn ọ̀dọ́, kí wọ́n le kọ́ HTML, CSS, JavaScript, React, Python, Artificial Intelligence, àti bẹ́ẹ̀ bẹ́ẹ̀ lọ ní èdè Yorùbá.",
     "vision": {
       "title": "Ìran Wa",
-      "text": "“Láti fi ìmọ̀ ẹ̀rọ hàn lágbáyé, àti láti kó gbogbo ọmọ Yorùbá àti gbogbo ilẹ̀ Adúláwò (Áfíríkà) ni ẹ́kọ imo ẹ̀rọ pẹ̀lú èdè tí wọ́n mọ̀, láì jẹ́ kí èdè tàbí owó dà wọn dúró.”"
+      "text": "“Láti fi ìmọ̀ ẹ̀rọ hàn lágbàyé, àti láti kó gbogbo ọmọ Yorùbá àti gbogbo ilẹ̀ Adúláwò (Áfíríkà) ní ẹ̀kọ́ ìmọ̀ ẹ̀rọ pẹ̀lú èdè tí wọ́n mọ̀, láì jẹ́ kí èdè tàbí owó dá wọn dúró.”"
     },
     "mission": {
       "title": "Ìlànà Wa"
     }
   },
   "mission": {
-    "educate1Million": {
+    "educate1Million": { 
+    
       "icon": "🎯",
-      "title": "Kọ́ Ọ̀pọ̀lọpọ̀ omo. odo, obi (Adúláwò) Áfíríkà",
-      "text": "A fẹ́ kọ́ àwọn ọ̀dọ́ Áfíríkà láti kọ́ kóòdù ní èdè abínibí wọn, pẹ̀lú ẹ̀kọ́ tó rọrùn fún gbogbo ènìyàn."
+      "title": "Kọ́ Ọ̀pọ̀lọpọ̀ ọmọ, ọ̀dọ́ àti òbí (Adúláwò) Áfíríkà",
+      "text": "A fẹ́ kọ́ àwọn ọ̀dọ́ Áfíríkà láti kọ́ kóódù ní èdè abínibí wọn, pẹ̀lú ẹ̀kọ́ tó rọrùn fún gbogbo ènìyàn."
     },
     "grassrootsCampaign": {
       "icon": "🚀",
@@ -114,167 +114,166 @@
     "buildTechTribe": {
       "icon": "👥",
       "title": "Dá Ẹbí Oní Ìmọ̀ Ẹ̀rọ sílẹ̀",
-      "text": "À ǹ kóó ẹbí tó tán káàkírí ní gbogbo àgbáyé jọ Kí wọ́n lè kọ́ ẹ̀kọ́ àti ṣe àṣepọ̀."
+      "text": "À ń kóó ẹbí tó tàn káàkiri ní gbogbo àgbáyé jọ Kí wọ́n lè kọ́ ẹ̀kọ́ àti ṣe àṣepọ̀."
     },
     "culturallyRooted": {
       "icon": "💡",
-      "title": "Ẹ̀kọ́ pelu àṣà wa",
-      "text": "Ẹ̀kọ́ pẹ̀lú àṣà wa A gbà pé ẹ̀kọ́ yẹ kí ó ní ìtàn wa. Ẹ̀kọ́ wa dápọ̀ mọ́ àṣà àti èdè Yorùbá fún ìrírí ẹ̀kọ́ tó dùn.."
+      "title": "Ẹ̀kọ́ pẹ̀lú àṣà wa",
+      "text": "Ẹ̀kọ́ pẹ̀lú àṣà wa : A gbà pé ẹ̀kọ́ yẹ kí ó ní ìtàn wa. Ẹ̀kọ́ wa dàpọ̀ mọ́ àṣà àti èdè Yorùbá fún ìrírí ẹ̀kọ́ tó dùn.."
     }
   },
   
   "contact": {
     "title": "Kàn sí Wa",
     "addressLabel": "Àdúgbò Ibi Isẹ́",
-    "address": "Ìfélódùn Ìkìrún, Ìpínlẹ̀ Osun, Nàìjíríà",
+    "address": "Ìfélódùn Ìkìrun, Ìpínlẹ̀ Osun, Nàìjíríà",
     "email": "yorubatechspace@gmail.com",
     "whatsappLabel": "WhatsApp",
     "whatsappNumber": "2348068367072",
     "whatsappNumberDisplay": "̣234 806 836 7072",
     "namePlaceholder": "Orúkọ Rẹ",
-    "emailPlaceholder": "Ímeelì",
-    "messagePlaceholder": "Àtèjìsẹ́ Rẹ",
-    "sendButton": "Àtẹ̀jìsẹ́",
-    "sending": "Àtẹ̀jìsẹ́ ń lọ...",
-    "successMessage": "✅ Àtẹ̀jìsẹ́ rẹ ti lo!",
-    "errorMessage": "⚠️ Àtẹ̀jìsẹ́ kò lọ. Jọwọ gbìyànjú lẹ́ẹ̀kansi.",
+    "emailPlaceholder": "Íméèlì Rẹ",
+    "messagePlaceholder": "Àtèjísẹ́ Rẹ",
+    "sendButton": "Àtẹ̀jísẹ́",
+    "sending": "Àtẹ̀jísẹ́ ń lọ...",
+    "successMessage": "✅ Àtẹ̀jísẹ́ rẹ ti lọ!",
+    "errorMessage": "⚠️ Àtẹ̀jísẹ́ kò lọ. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kansi.",
     "successTitle": "Àṣeyọrí ✅",
     "errorTitle": "Àṣìṣe ⚠️",
-    "closeButton": "Gbékurò",
-    "mapTitle": "Atónà si Ìkìrun"
+    "closeButton": "Gbekúrò",
+    "mapTitle": "Atónà sí Ìkìrun"
   },
 
   "footer": {
-    "tagline": "Ẹ jẹ ká kọ́ ẹ̀kọ́ kóòdù pẹ̀lú èdè wa, àṣà wa, àti ìran tuntun.",
+    "tagline": "Ẹ jẹ́ ká kọ́ ẹ̀kọ́ kóòdù pẹ̀lú èdè wa, àṣà wa, àti ìran tuntun.",
     "quickLinks": "Àwọn Àsàyàn",
     "home": "Àkọ́kọ́",
-    "aboutUs": "Nipa Wa",
+    "aboutUs": "Nípa Wa",
     "courses": "Ẹ̀kọ́",
     "contact": "Kàn sí Wa",
     "ourCourses": "Ẹ̀kọ́ Wa",
     "followUs": "Tẹ̀lé wa",
-    "rights": "lóni Gbogbo nkan yìí."
+    "rights": "lóni Gbogbo ǹkan yìí."
   },
 
- 
   "login": {
     "title": "Wọlé sí Yorùbá Tech Space",
-    "email": "Ìmeelí",
+    "email": "Íméèlí",
     "password": "Ọ̀rọ̀ìgbaniwọlé",
-    "show": "Ṣàfíhàn",
-    "hide": "Tọjú",
-    "remember": "Ránti mí",
+    "show": "Ṣàfihàn",
+    "hide": "Tọ́jú",
+    "remember": "Rán mi létí",
     "forgot": "Gbàgbé Ọ̀rọ̀ìgbaniwọlé?",
-     "loading": "Nwọlé…",
+     "loading": "Ńwọlé…",
     "button": "Wọlé",
     "or": "— Tàbí —",
     "google": "Wọlé pẹ̀lú Google",
-    "success": "✅ Ìwọlé rẹ́ yáyà!",
-    "enterEmail": "⚠️ Jọ̀wọ́ tẹ Ìmeelí rẹ.",
-    "resetLink": "🔑 A ti fi A sàtúnse  rán sẹ́ sí imeeli rẹ.",
+    "success": "✅ Ìwọlé rẹ ti yọrí!",
+    "enterEmail": "⚠️ Jọ̀wọ́ tẹ Íméèlì rẹ.",
+    "resetLink": "🔑 A ti fi Àtẹ̀jísẹ́  rán sẹ́ sí íméèlì rẹ.",
     "errors": {
-        "emailRequired": "Jọ̀wọ́ tẹ Ìmeelí rẹ",
-        "emailInvalid": "te ojúlówó Ìmeelí",
+        "emailRequired": "Jọ̀wọ́ tẹ Íméèlì rẹ",
+        "emailInvalid": "tẹ ojúlówó Íméèlì rẹ",
         "passwordRequired": "Jọ̀wọ́ tẹ Ọ̀rọ̀ìgbaniwọlé re",
-        "passwordShort": "Ọrọigbaniwọle gbọdọ̀ ju ọ̀rọ̀ mẹ́fà lo, dákun se àtúnse si",
+        "passwordShort": "Ọ̀rọ̀ìgbaniwọlé gbọdọ̀ ju ọ̀rọ̀ mẹ́fà lọ, dákun se àtúnse si",
         "captcha": "Jọ̀wọ́ parí captch"
       }
   },
   "signup": {
     "title": "Ìforúkọsílẹ̀ Ọ̀dọ́",
     "fullName": "Orúkọ kíkún",
-    "email": "Imeeli",
-    "password": "Ọ̀rọ̀ìgbànìwọlé",
-    "confirmPassword": "jẹ́rísí Ọ̀rọ̀ìgbànìwọlé",
-    "remember": "Rántí mí",
+    "email": "Íméèlì",
+    "password": "Ọ̀rọ̀ìgbaniwọlé",
+    "confirmPassword": "jẹ́rìsí Ọ̀rọ̀ìgbaniwọlé",
+    "remember": "Rán mi létí",
     "signup": "Forúkọsílẹ̀",
-    "loading": "Ǹ ṣe ìforúkọsílẹ̀......",
+    "loading": "Ń ṣe ìforúkọsílẹ̀......",
     "errors": {
       "fullNameRequired": "Tẹ Orúkọ kíkún",
-      "emailRequired": "Tẹ Imeeli ",
-      "emailInvalid": "Imeeli kòdára",
-      "passwordRequired": "Tẹ Ọ̀rọ̀ìgbànìwọlé",
-      "passwordWeak": " Ọ̀rọ̀ìgbànìwọlé gbọdọ ni Àlìfábẹ́ẹ̀tì ńlá, kékeré, ònkà kan àti aàmì pàtàkì kan.",
-      "confirmPasswordRequired": "Tẹ ìjẹ́rísí Ọ̀rọ̀ìgbànìwọlé ",
-      "confirmPasswordMismatch": "Ọrọigbaniwọle àti ìjẹ́rísí rẹ kò papò.",
-      "captchaRequired": "Jọ̀wọ́ ṣe àyèwò CAPTCHA",
+      "emailRequired": "Tẹ Íméèlì",
+      "emailInvalid": "Ímíèlì kòdára",
+      "passwordRequired": "Tẹ Ọ̀rọ̀ìgbaniwọlé",
+      "passwordWeak": " Ọ̀rọ̀ìgbaniwọlé gbọdọ ni Álífábẹ́ẹ̀tì ńlá, kékeré, ònkà kan àti ààmì pàtàkì kan.",
+      "confirmPasswordRequired": "Tẹ ìjẹ́rísí Ọ̀rọ̀ìgbaniwọlé ",
+      "confirmPasswordMismatch": "Ọ̀rọ̀ìgbaniwọlé àti ìjẹ́rísí rẹ kò papò.",
+      "captchaRequired": "Jọ̀wọ́ ṣe àyẹ̀wò CAPTCHA",
       "signupFailed": "Ìforúkọsílẹ̀ kùnà",
-      "signupError": "Oti fi Orùkọsìlẹ̀ tẹ́lè",
-      "generic": "Àṣìṣe kan ṣẹlè."
+      "signupError": "Oti fi Orúkọsílẹ̀ tẹ́lè",
+      "generic": "Àṣiṣe kan ṣẹlẹ̀."
     },
     "success": "Ìforúkọsílẹ̀ ṣàṣeyọrí!"
   
   },
   "forgot": {
-    "title": "Gbagbe Ọrọigbaniwọle",
-    "email": "Tẹ imeeli rẹ",
-    "send": "Firanṣẹ ọna asopọ atunṣe",
-    "success": "🔑 A ti fi ọna asopọ atunṣe ranṣẹ si imeeli rẹ."
+    "title": "Gbàgbé Ọ̀rọ̀ìgbaniwọlé",
+    "email": "Tẹ íméèlì rẹ",
+    "send": "Firánṣẹ́ ọ̀ńà àsopọ̀ àtúnse",
+    "success": "🔑 A ti fi ọ̀na àsopọ̀ àtúnse ránsẹ́ sí íméèlì rẹ."
   },
   "reset": {
-    "title": "Tun Ọrọigbaniwọle Rẹ Ṣe",
-    "newPassword": "Ọrọigbaniwọle Tuntun",
-    "confirmPassword": "Jẹrisi Ọrọigbaniwọle",
-    "show": "Fi Ọrọigbaniwọle Han",
-    "hide": "Tọju Ọrọigbaniwọle",
-    "reset": "Tun Ọrọigbaniwọle Ṣe",
-    "loading": "N tuni ọrọigbaniwọle...",
-    "backToLogin": "Padà sí Iwọle",
-    "weakPassword": "Ọrọigbaniwọle gbọdọ ni o kere ju awọn lẹta 8.",
-    "mismatch": "Ọrọigbaniwọle ko baamu.",
-    "success": "A ti tun ọrọigbaniwọle rẹ ṣe ni aṣeyọri!",
-    "failed": "Kuna lati tun ọrọigbaniwọle ṣe. Jọwọ gbiyanju lẹẹkansi.",
-    "networkError": "Aṣiṣe nẹtiwọọki"
+    "title": "Tún Ọ̀rọ̀ìgbaniwọlé Rẹ Ṣi",
+    "newPassword": " Ọ̀rọ̀ìgbaniwọlé Tuntun",
+    "confirmPassword": "Jẹ́rìsí Ọ̀rọ̀ìgbaniwọlé",
+    "show": "Fi  Ọ̀rọ̀ìgbaniwọlé Hàn",
+    "hide": "Tọ́jú Ọ̀rọ̀ìgbaniwọlé ",
+    "reset": "Tun Ọ̀rọ̀ìgbaniwọlé Ṣe",
+    "loading": "Ń túní Ọ̀rọ̀ìgbaniwọlé ...",
+    "backToLogin": "Padà sí Ìwọlé",
+    "weakPassword": "Ọ̀rọ̀ìgbaniwọlé  gbọdọ̀ ní ó kéré ju àwọn lẹ́tà mẹ́jọ (8) .",
+    "mismatch": "Ọ̀rọ̀ìgbaniwọlé  kò baamu.",
+    "success": "A ti tún Òrọ̀ìgbaniwọlé rẹ ṣe ní àṣeyọrí!",
+    "failed": "Kùnàn láti tún Ọ̀rọ̀ìgbaniwọlé ṣe. Jọ̀wọ́ gbìyànjú lẹ́ẹ̀kansi.",
+    "networkError": "Àṣìṣe nẹ́tíwọ́ọ́kì"
   },
  "donation": {
-    "title": "Ẹ Ran Wa Lọ́wọ́ Láti se ìfọwọ́sowọpọ́ Fún ẹ̀kọ́ imo ẹ̀rọ",
+    "title": "Ẹ Ràn Wá Lọ́wọ́ Láti se ìfọwọ́sowọ́pọ̀ Fún ẹ̀kọ́ ìmọ̀ ẹ̀rọ",
     "englishMsg": "",
-    "yorubaMsg": "Ẹ̀bùn yín ń ran wa lọwọ láti kọ́ àwọn akẹ́kọ̀ọ́ ní imọ̀ ẹ̀rọ ní èdè Yorùbá àti Èdè Gẹ̀ẹ́sì. kí wọn lè ní ọgbọ́n àti ìmọ̀ tó yẹ kí wọn ni lórí  ìmọ̀ ẹ̀rọ.",
+    "yorubaMsg": "Ẹ̀bun yín ń ràn wá lọ́wọ́ láti kọ́ àwọn akẹ́kọ̀ọ́ ní ìmọ̀ ẹ̀rọ ní èdè Yorùbá àti Èdè Gẹ̀ẹ́sì. kí wọ́n le ní ọgbọ́n àti ìmọ̀ tó yẹ kí wọ́n ní  lórí  ìmọ̀ ẹ̀rọ.",
     "impact": "Ẹ̀bùn ẹgbẹ̀rún lọ́nà àádọ́ta yóò pèsè wákàtí ẹ̀ẹ́dẹ́gbẹ̀ta ẹ̀kọ́  fún àwọn ènìyàn káàkiri ayé ní oṣù kan.",
     "confirmTitle": "Jẹ́rìí Ẹ̀bùn Rẹ:",
-    "preset": "Ìbùn Kánkán",
-    "custom": "Tàbí tẹ owó tó wù ọ",
-    "email": "Imeeli rẹ",
+    "preset": "Ẹ̀bùn Kánkán",
+    "custom": "Tàbí tẹ owó tó wù ọ́",
+    "email": "Ímíéèlì rẹ",
      "anonymous": "Fúnni ní Ẹ̀bùn láì dárúkọ",
     "button": "Ṣe Ẹ̀bùn pẹ̀lú Paystack",
-     "directBank": "Ṣe Ẹ̀bùn pẹ̀lú Ilé Ìfowópamasí",
+     "directBank": "Ṣe Ẹ̀bùn pẹ̀lú Ilé Ìfowópamọ́nsí",
       "chooseFile": "Yan fáìlì",
   "noFile": "Kò sí fáìlì tí ọ yàn",
     "selectedFile": "Fáìlì tí a yàn",
     "thank_title": "Ẹ Ṣé Púpọ̀!",
-      "submitProof": "Fi Ìdánilójú Ẹ̀bùn re Ránṣẹ́",
-    "thank_msg": "Gbogbo ẹ̀bùn yin ní ìtumò síwa. Ìrànlọ́wọ́ yín ń pèsè ẹ̀kọ́ àti ìlosìwàjù fún ọ̀pọ̀ ènìyàn!",
-    "noBankAccounts": "Kò sí àkọọlẹ  Ìfowópàmasí",
-    "bankName": "Ìle Ìfowópàmasí",
+      "submitProof": "Fi Ìdánilójú Ẹ̀bùn rẹ Ránṣẹ́",
+    "thank_msg": "Gbogbo ẹ̀bùn yín ní ìtumò síwa. Ìrànlọ́wọ́ yín ń pèsè ẹ̀kọ́ àti ìlọsíwájú fún ọ̀pọ̀ ènìyàn!",
+    "noBankAccounts": "Kò sí àkọọ́lẹ̀  Ìfowópamọ́nsí",
+    "bankName": "Ilé Ìfowópamọ́nsí",
     "accountName": "Orúkọ",
     "accountNumber": "Nọ́mbà",
-      "proofMsg": "Lẹ́yìn tí o bá tí fi èbùn ránsé, fi ẹ̀ri ọwọ́ re ránsé"
+      "proofMsg": "Lẹ́yìn tí o bá ti fi ẹ̀bùn ránsé, fi ẹ̀rí ọwọ́ re ránsé"
   },
  "parentSignup": {
   "parentTitle": "Ìforúkọsílẹ̀ òbí",
  "fullName": "Orúkọ kíkún",
-    "email": "Imeeli",
-    "password": "Ọ̀rọ̀ìgbànìwọlé",
-    "confirmPassword": "jẹ́rísí Ọ̀rọ̀ìgbànìwọlé",
-    "remember": "Rántí mí",
+    "email": "Íméèlì",
+    "password": "Ọ̀rọ̀ìgbaniwọlé",
+    "confirmPassword": "jẹ́rìsí Ọ̀rọ̀ìgbaniwọlé",
+    "remember": "Rán mi létí",
     "signup": "Forúkọsílẹ̀",
-    "loading": "Ǹ ṣe ìforúkọsílẹ̀......",
+    "loading": "Ń ṣe ìforúkọsílẹ̀......",
     "errors": {
       "fullNameRequired": "Tẹ Orúkọ kíkún",
-      "emailRequired": "Tẹ Imeeli ",
-      "emailInvalid": "Imeeli kòdára",
-      "passwordRequired": "Tẹ Ọ̀rọ̀ìgbànìwọlé",
-      "passwordWeak": " Ọ̀rọ̀ìgbànìwọlé gbọdọ ni Àlìfábẹ́ẹ̀tì ńlá, kékeré, ònkà kan àti aàmì pàtàkì kan.",
-      "confirmPasswordRequired": "Tẹ ìjẹ́rísí Ọ̀rọ̀ìgbànìwọlé ",
-      "confirmPasswordMismatch": "Ọrọigbaniwọle àti ìjẹ́rísí rẹ kò papò.",
+      "emailRequired": "Tẹ Íméèlì",
+      "emailInvalid": "Íméèlì kòdára",
+      "passwordRequired": "Tẹ Ọ̀rọ̀ìgbaniwọlé",
+    "passwordWeak": " Ọ̀rọ̀ìgbaniwọlé gbọdọ̀ ní Álífábẹ́ẹ̀tì ńlá, kékeré, ònkà kan àti ààmì pàtàkì kan.",
+      "confirmPasswordRequired": "Tẹ ìjẹ́rísí Ọ̀rọ̀ìgbaniwọlé ",
+      "confirmPasswordMismatch": "Ọ̀rọ̀ìgbaniwọlé àti ìjẹ́rísí rẹ kò papò.",
       "captchaRequired": "Jọ̀wọ́ ṣe àyèwò CAPTCHA",
       "signupFailed": "Ìforúkọsílẹ̀ kùnà",
-      "signupError": "Oti fi Orùkọsìlẹ̀ tẹ́lè",
+      "signupError": "Oti fi Orúkọsílẹ̀ tẹ́lẹ̀",
       "generic": "Àṣìṣe kan ṣẹlè."
     },
 
     "messages": {
-      "signupSuccess": "Ìforúkọsílẹ̀ ṣàṣeyọrí! Ń darí rí lọ.............."
+      "signupSuccess": "Ìforúkọsílẹ̀ ṣàṣeyọrí! Ń daríí lọ.............."
     }
     
   },
@@ -296,28 +295,28 @@
     }
   },
   "childrenDashboard": {
-    "welcomeTitle": "🌟 Ìmọ̀ Ẹ̀rọ fún Àwọn Ọmọde Yorùbá!",
-      "welcome": "Kaabo si Dasibodu Ẹkọ Rẹ!",
-      "subtitle": "Tẹle awọn ẹkọ rẹ, awọn ami-ẹyọ rẹ, ati awọn iṣiro ìdánwò nibi",
-      "lessons": "Awọn Ẹkọ Ti O Parí",
-      "badges": "Awọn Ami Ẹyọ Rẹ",
-      "quizScores": "Awọn Iṣiro Ìdánwò",
-      "noQuiz": "Ko si awọn ìdánwò ti a ṣe",
-      "close": "Gbekuro",
+    "welcomeTitle": "🌟 Ìmọ̀ Ẹ̀rọ fún Àwọn Ọmọdé Yorùbá!",
+      "welcome": "Kaàbọ̀ sí Dásíbọdù Ẹ̀kọ́ Rẹ!",
+      "subtitle": "Tẹ̀lé àwọn ẹ̀kọ́ rẹ, àwọn Àmì-Ẹ̀yẹ rẹ, àti àwọn ìṣirò ìdánwò",
+      "lessons": "Àwọn Ẹ̀kọ́ Tí Ó Parí",
+      "badges": "Àwọn Àmì Ẹ̀yẹ Rẹ",
+      "quizScores": "Àwọn Ìṣirò Ìdánwò",
+      "noQuiz": "Kò sí àwọn ìdánwò tí o ṣe",
+      "close": "Gbekúrò",
     "topbar": {
-      "greeting": "Báwo, {{name}}",
-      "profile": "Àkọọ́lẹ́ Mi",
+      "greeting": "Báwo ni, {{name}}",
+      "profile": "Àkọ́ọ́lẹ́ Mi",
       "logout": "Jáde"
     },
     "cards": {
       "start": {
-        "title": "🚀 Bẹrẹ Kọ́ Ẹ̀kọ́",
-        "desc": "Bẹrẹ ìrìnàjò rẹ̀ lọ́dọ̀ ìmọ̀ ẹ̀rọ pẹ̀lú ẹ̀kọ́ ìdárayá tí a ṣe fún ọ.",
+        "title": "🚀 Bẹ̀rẹ̀ Kọ́ Ẹ̀kọ́",
+        "desc": "Bẹ̀rẹ̀ ìrìnàjò rẹ nípa ìmọ̀ ẹ̀rọ pẹ̀lú ẹ̀kọ́ ìdárayá tí a ṣe fún ọ.",
         "button": "Ẹ jẹ́ ká bẹ̀rẹ̀!"
       },
       "profile": {
-        "title": "🧑‍🎓 Àkọọ́lẹ́ Mi",
-        "desc": "Wo orúkọ rẹ, ìpele ìtẹ̀síwájú àti àwọn àṣẹ́yọrí rẹ."
+        "title": "🧑‍🎓 Àkọ́ọ́lẹ́ Mi",
+        "desc": "Wo orúkọ rẹ, ìpele ìtẹ̀sìwájú àti àwọn àṣeyọrí rẹ."
       },
       "games": {
         "title": "🎮 Eré àti Ìdárayá",

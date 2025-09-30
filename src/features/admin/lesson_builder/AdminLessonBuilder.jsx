@@ -501,23 +501,39 @@ const uploadFile = async (file, lang = "en", blockIndex, pairIndex = null) => {
         await supabase.from("quizzes").delete().eq("lesson_id", lessonIdToUse);
       }
 
-      // insert quizzes
-      for (const quiz of quizzes) {
-        if (!quiz.question_en || !quiz.question_yo) continue;
-        const { error: quizError } = await supabase.from("quizzes").insert([{
-          lesson_id: lessonIdToUse,
-          question_en: quiz.question_en,
-          question_yo: quiz.question_yo,
-          options_en: quiz.options_en || [],
-          options_yo: quiz.options_yo || [],
-          correct_answer_en: quiz.correct_answer_en,
-          correct_answer_yo: quiz.correct_answer_yo,
-          question: quiz.question_en,
-          options: JSON.stringify(quiz.options_en || []),
-          correct_answer: quiz.correct_answer_en,
-        }]);
-        if (quizError) throw quizError;
-      }
+try {
+  const payload = quizzes
+    .filter((q) => q.question_en && q.question_yo)
+    .map((quiz) => ({
+      lesson_id: lessonIdToUse,
+      question: quiz.question_en, // base
+      options: quiz.options_en || [], // base
+      correct_answer: quiz.correct_answer_en, // base
+      question_en: quiz.question_en,
+      question_yo: quiz.question_yo,
+      options_en: quiz.options_en || [],
+      options_yo: quiz.options_yo || [],
+      correct_answer_en: quiz.correct_answer_en,
+      correct_answer_yo: quiz.correct_answer_yo,
+    }));
+
+  console.log("📦 Payload to insert:", payload);
+
+  const { data, error } = await supabase
+    .from("quizzes")
+    .insert(payload)
+    .select();
+
+  if (error) {
+    console.error("❌ Insert error:", error);
+  } else {
+    console.log("✅ Insert success:", data);
+  }
+} catch (err) {
+  console.error("🔥 Exception during insert:", err);
+}
+
+
 
       setSuccess("🔥 Lesson saved successfully!");
       setError(null);

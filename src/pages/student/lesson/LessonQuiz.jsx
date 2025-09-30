@@ -141,7 +141,7 @@ const LessonQuiz = ({ quizzes = [], lessonSlug, lessonId }) => {
             <h4 className="text-white font-bold text-base m-0 max-w-[90%]">
               {i + 1}. {i18n.language === "yo" ? q.question_yo : q.question_en}
             </h4>
-            <span className="text-white text-lg ml-2">❓</span>
+            <span className="text-white text-lg ml-2"></span>
           </div>
           <div className="space-y-4 p-5">
             {(i18n.language === "yo" ? q.options_yo : q.options_en)?.map((option, index) => (
