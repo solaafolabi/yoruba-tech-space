@@ -88,8 +88,7 @@ const LessonHeader = ({ lesson }) => {
               className="
                 mb-8 text-lg max-w-full 
                 prose prose-invert list-inside
-                text-justify 
-                [&>*:first-child]:mt-0  
+              
 
                 [&_h1]:text-3xl [&_h1]:font-bold [&_h1]:text-[#FFD700]
                 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:text-[#FFD700]
