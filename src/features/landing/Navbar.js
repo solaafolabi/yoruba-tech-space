@@ -33,7 +33,6 @@ export default function Navbar() {
         >
           <Link to="/" onClick={handleLinkClick} className="flex items-center gap-2">
             <img src="/logo.png" alt="Yoruba Tech Logo" className="h-10 w-auto" />
-            <span className="text-blue-400 text-2xl font-bold">Yorùbá Tech Space </span>
           </Link>
         </motion.div>
 
