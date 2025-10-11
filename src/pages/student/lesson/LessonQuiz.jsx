@@ -4,6 +4,59 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import supabase from "../../../supabaseClient";
 import confetti from "canvas-confetti";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { oneDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+
+const MarkdownRenderer = ({ content }) => (
+  <ReactMarkdown
+    remarkPlugins={[remarkGfm]}
+    components={{
+      p: ({ children }) => <p className="text-white leading-relaxed mb-2">{children}</p>,
+      strong: ({ children }) => <strong className="text-yellow-300 font-semibold">{children}</strong>,
+      em: ({ children }) => <em className="italic text-gray-300">{children}</em>,
+      ul: ({ children }) => <ul className="list-disc list-inside text-white">{children}</ul>,
+      ol: ({ children }) => <ol className="list-decimal list-inside text-white">{children}</ol>,
+      li: ({ children }) => <li className="ml-4">{children}</li>,
+      code({ inline, className, children, ...props }) {
+        const match = /language-(\w+)/.exec(className || "");
+        return !inline && match ? (
+          <SyntaxHighlighter
+            style={oneDark}
+            language={match[1]}
+            PreTag="div"
+            showLineNumbers
+            customStyle={{
+              borderRadius: "0.5rem",
+              padding: "1rem",
+              background: "#1E293B",
+              overflowX: "auto",
+            }}
+            {...props}
+          >
+            {String(children).replace(/\n$/, "")}
+          </SyntaxHighlighter>
+        ) : (
+          <code
+            {...props}
+            style={{
+              backgroundColor: "",
+              color: "#FFD700",
+              padding: "2px 5px",
+              borderRadius: "4px",
+              fontSize: "0.9em",
+            }}
+          >
+            {children}
+          </code>
+        );
+      },
+    }}
+  >
+    {content}
+  </ReactMarkdown>
+);
 
 const LessonQuiz = ({ quizzes = [], lessonSlug, lessonId }) => {
   const { i18n } = useTranslation();
@@ -17,59 +70,45 @@ const LessonQuiz = ({ quizzes = [], lessonSlug, lessonId }) => {
   const [showToast, setShowToast] = useState(false);
   const [lessonHasPractical, setLessonHasPractical] = useState(false);
 
-  // Fetch user, quiz, and practical existence
   useEffect(() => {
-    const fetchUserQuizAndPractical = async () => {
-      try {
-        const { data: userData } = await supabase.auth.getUser();
-        const currentUser = userData.user;
-        if (!currentUser) return navigate("/login");
-        setUser(currentUser);
+    const fetchData = async () => {
+      const { data: userData } = await supabase.auth.getUser();
+      const currentUser = userData.user;
+      if (!currentUser) return navigate("/login");
+      setUser(currentUser);
 
-        if (!lessonId) return;
+      if (!lessonId) return;
 
-        // Fetch quiz data
-        const { data: quizData, error: quizError } = await supabase
-          .from("user_quizzes")
-          .select("*")
-          .eq("user_id", currentUser.id)
-          .eq("lesson_id", lessonId)
-          .maybeSingle();
+      const { data: quizData } = await supabase
+        .from("user_quizzes")
+        .select("*")
+        .eq("user_id", currentUser.id)
+        .eq("lesson_id", lessonId)
+        .maybeSingle();
 
-        if (quizError) console.error("Error fetching quiz:", quizError);
-
-        if (quizData) {
-          setAnswers(quizData.answers || {});
-          if (quizData.completed) {
-            setQuizCompleted(true);
-            const completedFeedback = {};
-            quizzes.forEach((q) => (completedFeedback[q.id] = "correct"));
-            setFeedback(completedFeedback);
-            setShowToast(true);
-          }
+      if (quizData) {
+        setAnswers(quizData.answers || {});
+        if (quizData.completed) {
+          setQuizCompleted(true);
+          const completedFeedback = {};
+          quizzes.forEach((q) => (completedFeedback[q.id] = "correct"));
+          setFeedback(completedFeedback);
+          setShowToast(true);
         }
-
-        // Check if practical exists
-        const { data: practicalSteps, error: practicalError } = await supabase
-          .from("practical_steps")
-          .select("id")
-          .eq("lesson_id", lessonId)
-          .limit(1);
-
-        if (practicalError) {
-          console.error("Error fetching practical:", practicalError);
-        } else {
-          setLessonHasPractical(practicalSteps?.length > 0);
-        }
-      } catch (err) {
-        console.error("Fetch user/quiz/practical error:", err);
       }
+
+      const { data: practicalSteps } = await supabase
+        .from("practical_steps")
+        .select("id")
+        .eq("lesson_id", lessonId)
+        .limit(1);
+
+      setLessonHasPractical(practicalSteps?.length > 0);
     };
 
-    fetchUserQuizAndPractical();
+    fetchData();
   }, [lessonId, navigate, quizzes]);
 
-  // Trigger confetti on all correct submission
   useEffect(() => {
     if (Object.values(feedback).every((val) => val === "correct") && Object.keys(feedback).length) {
       confetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
@@ -78,7 +117,7 @@ const LessonQuiz = ({ quizzes = [], lessonSlug, lessonId }) => {
   }, [feedback]);
 
   const handleOptionChange = (qid, option) => {
-    if (quizCompleted) return; // lock after passing
+    if (quizCompleted) return;
     setAnswers((prev) => ({ ...prev, [qid]: option }));
   };
 
@@ -103,25 +142,18 @@ const LessonQuiz = ({ quizzes = [], lessonSlug, lessonId }) => {
     const allCorrect = Object.values(newFeedback).every((val) => val === "correct");
     if (allCorrect) setQuizCompleted(true);
 
-    try {
-      const { error } = await supabase
-        .from("user_quizzes")
-        .upsert(
-          {
-            user_id: user.id,
-            lesson_id: lessonId,
-            answers,
-            completed: allCorrect,
-            updated_at: new Date(),
-          },
-          { onConflict: ["user_id", "lesson_id"] }
-        );
+    await supabase.from("user_quizzes").upsert(
+      {
+        user_id: user.id,
+        lesson_id: lessonId,
+        answers,
+        completed: allCorrect,
+        updated_at: new Date(),
+      },
+      { onConflict: ["user_id", "lesson_id"] }
+    );
 
-      if (error) console.error("Error saving quiz:", error);
-      if (allCorrect) setShowToast(true);
-    } catch (err) {
-      console.error("Unexpected error saving quiz:", err);
-    }
+    if (allCorrect) setShowToast(true);
   };
 
   if (!quizzes.length) {
@@ -129,20 +161,20 @@ const LessonQuiz = ({ quizzes = [], lessonSlug, lessonId }) => {
   }
 
   return (
-    <div className="bg-[#1B263B] p-4 rounded shadow mt-10 max-w-full">
+    <div className="bg-[#1E293B] p-4 rounded shadow mt-10 max-w-full">
       <h2 className="text-xl font-semibold mb-4 text-[#FFD700]">📝 Quiz</h2>
 
       {quizzes.map((q, i) => (
         <div
           key={q.id}
-          className="mb-8 bg-[#102030] rounded-lg shadow-md border border-[#FFD700]/20"
+          className="mb-8 bg-[#0F172A] rounded-lg shadow-md border border-[#FFD700]/20"
         >
-          <div className="p-4 bg-[#1E2A47] rounded-t-lg flex justify-between items-center">
+          <div className="p-4 bg-[#0F172A] rounded-t-lg flex justify-between items-center">
             <h4 className="text-white font-bold text-base m-0 max-w-[90%]">
-              {i + 1}. {i18n.language === "yo" ? q.question_yo : q.question_en}
+              {i + 1}. <MarkdownRenderer content={i18n.language === "yo" ? q.question_yo : q.question_en} />
             </h4>
-            <span className="text-white text-lg ml-2"></span>
           </div>
+
           <div className="space-y-4 p-5">
             {(i18n.language === "yo" ? q.options_yo : q.options_en)?.map((option, index) => (
               <label key={index} className="block text-base space-y-1">
@@ -156,7 +188,7 @@ const LessonQuiz = ({ quizzes = [], lessonSlug, lessonId }) => {
                     onChange={() => handleOptionChange(q.id, option)}
                     className="w-6 h-6 accent-[#FFD700]"
                   />
-                  <span className="text-white">{option}</span>
+                  <MarkdownRenderer content={option} />
                 </div>
               </label>
             ))}
@@ -169,7 +201,10 @@ const LessonQuiz = ({ quizzes = [], lessonSlug, lessonId }) => {
                   </span>
                 ) : (
                   <span className="text-red-400">
-                    ❌ {i18n.language === "yo" ? "Ko dara, gbiyanju lẹẹkansi" : "Incorrect, try again"}
+                    ❌{" "}
+                    {i18n.language === "yo"
+                      ? "Ko dara, gbiyanju lẹẹkansi"
+                      : "Incorrect, try again"}
                   </span>
                 )}
               </div>
@@ -178,40 +213,39 @@ const LessonQuiz = ({ quizzes = [], lessonSlug, lessonId }) => {
         </div>
       ))}
 
-     {!quizCompleted && (
-  <button
-    onClick={handleSubmit}
-    className="mt-6 w-full bg-white hover:bg-yellow-300 text-black font-bold py-3 rounded text-lg transition"
-  >
-    {i18n.language === "yo" ? "Ṣàfihàn Àbọ̀" : "Submit Answers"}
-  </button>
-)}
+      {!quizCompleted && (
+        <button
+          onClick={handleSubmit}
+          className="mt-6 w-full bg-white hover:bg-yellow-300 text-black font-bold py-3 rounded text-lg transition"
+        >
+          {i18n.language === "yo" ? "Ṣàfihàn Àbọ̀" : "Submit Answers"}
+        </button>
+      )}
 
-{quizCompleted && (
-  <button
-    onClick={async () => {
-      if (!lessonHasPractical) {
-        // Mark lesson as completed
-        await supabase.from("practical_progress").upsert(
-          {
-            user_id: user.id,
-            lesson_slug: lessonSlug,
-            current_step: 0,
-            completed: true,
-            code_state: {},
-          },
-          { onConflict: ["user_id", "lesson_slug"] }
-        );
-        navigate("/dashboard");
-      } else {
-        navigate(`/student/practical/${lessonSlug}`);
-      }
-    }}
-    className="mt-6 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded text-lg transition"
-  >
-    🚀 {i18n.language === "yo" ? "Tẹ̀síwájú" : "Continue"}
-  </button>
-)}
+      {quizCompleted && (
+        <button
+          onClick={async () => {
+            if (!lessonHasPractical) {
+              await supabase.from("practical_progress").upsert(
+                {
+                  user_id: user.id,
+                  lesson_slug: lessonSlug,
+                  current_step: 0,
+                  completed: true,
+                  code_state: {},
+                },
+                { onConflict: ["user_id", "lesson_slug"] }
+              );
+              navigate("/dashboard");
+            } else {
+              navigate(`/student/practical/${lessonSlug}`);
+            }
+          }}
+          className="mt-6 w-full bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded text-lg transition"
+        >
+          🚀 {i18n.language === "yo" ? "Tẹ̀síwájú" : "Continue"}
+        </button>
+      )}
 
       {/* Modal */}
       {showModal && (

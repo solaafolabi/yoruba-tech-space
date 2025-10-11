@@ -18,6 +18,8 @@
       content="Yoruba Tech, Yoruba Coding, Yoruba Web Development, Yoruba HTML, Yoruba CSS, Yoruba JavaScript, Bilingual Learning, Yoruba Education, Ẹ̀kọ́ ní Yorùbá"
     />
     <meta name="author" content="Yoruba Tech Space" />
+
+    <!-- ✅ Canonical -->
     <link rel="canonical" href="https://yorubatechspace.com" />
 
     <!-- ✅ Language alternates -->
@@ -30,7 +32,7 @@
       property="og:description"
       content="Kọ́ ẹ̀kọ́ imọ̀ ẹ̀rọ ní Yorùbá àti Gẹ̀ẹ́sì. Ìkànìyàn àkọ́kọ́ tí ń kópa pẹ̀lú àwọn èdè méjì."
     />
-    <meta property="og:image" content="%PUBLIC_URL%/og-image.png" />
+    <meta property="og:image" content="/og-image.png" />
     <meta property="og:url" content="https://yorubatechspace.com" />
     <meta property="og:type" content="website" />
 
@@ -41,28 +43,27 @@
       name="twitter:description"
       content="Kọ́ HTML, CSS, àti JavaScript ní Yorùbá àti Gẹ̀ẹ́sì. Ìpinnu tuntun fún ìdàgbàsókè ìmọ̀ ẹ̀rọ Yorùbá."
     />
-    <meta name="twitter:image" content="%PUBLIC_URL%/og-image.png" />
+    <meta name="twitter:image" content="/og-image.png" />
 
-    <!-- ✅ PWA + Theme -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <link rel="icon" href="%PUBLIC_URL%/logo.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="%PUBLIC_URL%/logo.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="%PUBLIC_URL%/logo.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="%PUBLIC_URL%/logo.png" />
+    <!-- ✅ Favicon & PWA -->
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="icon" href="/logo.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/logo.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/logo.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/logo.png" />
     <meta name="theme-color" content="#0D1B2A" />
 
     <!-- ✅ External Scripts -->
     <script src="https://meet.jit.si/external_api.js" defer></script>
 
-    <!-- Blockly CSS -->
-<link rel="stylesheet" href="https://unpkg.com/blockly/media/blockly.css" />
+    <!-- ✅ Blockly CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/blockly/media/blockly.css" />
 
-<!-- Scratch GUI CSS -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scratch-gui@latest/dist/gui.css" />
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scratch-gui@latest/dist/extensions.css" />
+    <!-- ✅ Scratch GUI CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scratch-gui@latest/dist/gui.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/scratch-gui@latest/dist/extensions.css" />
 
-
-    <!-- ✅ Structured Data (JSON-LD) -->
+    <!-- ✅ Structured Data (Organization + FAQ Schema) -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -77,6 +78,35 @@
         "description": "Kọ́ ẹ̀kọ́ imọ̀ ẹrọ ní Yorùbá àti Gẹ̀ẹ́sì. Ìkànìyàn àkọ́kọ́ tó ń kópa pẹ̀lú àwọn èdè méjì."
       }
     </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "What is Yoruba Tech Space?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Yoruba Tech Space is the first bilingual learning platform for programming and technology in Yoruba and English."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "What languages are supported?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "We support both Yoruba and English for all courses."
+            }
+          }
+        ]
+      }
+    </script>
+
+    <!-- ✅ Sitemap & Robots -->
+    <link rel="sitemap" type="application/xml" title="Sitemap" href="/sitemap.xml" />
+    <meta name="robots" content="index, follow" />
   </head>
 
   <body class="bg-[#0D1B2A] text-[#F0F0F0]">

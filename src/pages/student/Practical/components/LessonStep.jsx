@@ -62,104 +62,113 @@ export default function LessonStep({
       ? step.instruction_yo || step.instruction_en
       : step.instruction_en || step.instruction_yo;
 
-  const handleCheck = () => {
-    const failed = [];
+ const handleCheck = () => {
+  const failed = [];
 
-    Object.keys(step.validation_rules || {}).forEach((lang) => {
-      const code = currentCode[lang] || "";
-      const langRules = step.validation_rules[lang] || [];
+  Object.keys(step.validation_rules || {}).forEach((lang) => {
+    const code = currentCode[lang] || "";
+    const rawRules = step.validation_rules[lang];
+    const langRules = Array.isArray(rawRules)
+      ? rawRules
+      : rawRules
+      ? [rawRules]
+      : [];
 
-      langRules.forEach((rule) => {
-        const msgs = [];
+    langRules.forEach((rule) => {
+      const msgs = [];
 
-        switch (rule.type) {
-          case "contains":
-            if (!code.includes(rule.value))
-              msgs.push(
-                t("lessonStep.validation.mustContain", {
-                  lang: lang.toUpperCase(),
-                  value: rule.value,
-                })
-              );
-            break;
-          case "notContains":
-            if (code.includes(rule.value))
-              msgs.push(
-                t("lessonStep.validation.mustNotContain", {
-                  lang: lang.toUpperCase(),
-                  value: rule.value,
-                })
-              );
-            break;
-          case "equals":
-            if (code.trim() !== rule.value.trim())
-              msgs.push(
-                t("lessonStep.validation.mustEqual", {
-                  lang: lang.toUpperCase(),
-                  value: rule.value,
-                })
-              );
-            break;
-          case "regex":
-            try {
-              const regex = new RegExp(rule.value);
-              if (!regex.test(code))
-                msgs.push(
-                  t("lessonStep.validation.regexMismatch", {
-                    lang: lang.toUpperCase(),
-                    value: rule.value,
-                  })
-                );
-            } catch {
-              msgs.push(
-                t("lessonStep.validation.invalidRegex", {
-                  lang: lang.toUpperCase(),
-                })
-              );
-            }
-            break;
-          case "mustHaveIds":
-            try {
-              const parser = new DOMParser();
-              const doc = parser.parseFromString(code, "text/html");
-              rule.value.forEach((id) => {
-                if (!doc.getElementById(id))
-                  msgs.push(t("lessonStep.validation.missingId", { id }));
-              });
-            } catch {
-              msgs.push(t("lessonStep.validation.htmlParseError"));
-            }
-            break;
-          case "rule":
-            const cssRegex = new RegExp(
-              `${rule.selector}\\s*\\{[^}]*${rule.property}\\s*:\\s*${rule.value}`,
-              "i"
-            );
-            if (!cssRegex.test(code))
-              msgs.push(
-                t("lessonStep.validation.missingCSS", {
-                  selector: rule.selector,
-                  property: rule.property,
-                  value: rule.value,
-                })
-              );
-            break;
-          default:
+      switch (rule.type) {
+        case "contains":
+          if (!code.includes(rule.value))
             msgs.push(
-              t("lessonStep.validation.unknownRule", { type: rule.type })
+              t("lessonStep.validation.mustContain", {
+                lang: lang.toUpperCase(),
+                value: rule.value,
+              })
             );
-        }
+          break;
 
-        if (msgs.length) failed.push(msgs.join(" "));
-      });
+        case "notContains":
+          if (code.includes(rule.value))
+            msgs.push(
+              t("lessonStep.validation.mustNotContain", {
+                lang: lang.toUpperCase(),
+                value: rule.value,
+              })
+            );
+          break;
+
+        case "equals":
+          if (code.trim() !== rule.value.trim())
+            msgs.push(
+              t("lessonStep.validation.mustEqual", {
+                lang: lang.toUpperCase(),
+                value: rule.value,
+              })
+            );
+          break;
+
+        case "regex":
+          try {
+            const regex = new RegExp(rule.value);
+            if (!regex.test(code))
+              msgs.push(
+                t("lessonStep.validation.regexMismatch", {
+                  lang: lang.toUpperCase(),
+                  value: rule.value,
+                })
+              );
+          } catch {
+            msgs.push(
+              t("lessonStep.validation.invalidRegex", {
+                lang: lang.toUpperCase(),
+              })
+            );
+          }
+          break;
+
+        case "mustHaveIds":
+          try {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(code, "text/html");
+            rule.value.forEach((id) => {
+              if (!doc.getElementById(id))
+                msgs.push(t("lessonStep.validation.missingId", { id }));
+            });
+          } catch {
+            msgs.push(t("lessonStep.validation.htmlParseError"));
+          }
+          break;
+
+        case "rule":
+          const cssRegex = new RegExp(
+            `${rule.selector}\\s*\\{[^}]*${rule.property}\\s*:\\s*${rule.value}`,
+            "i"
+          );
+          if (!cssRegex.test(code))
+            msgs.push(
+              t("lessonStep.validation.missingCSS", {
+                selector: rule.selector,
+                property: rule.property,
+                value: rule.value,
+              })
+            );
+          break;
+
+        default:
+          msgs.push(t("lessonStep.validation.unknownRule", { type: rule.type }));
+      }
+
+      if (msgs.length) failed.push(msgs.join(" "));
     });
+  });
 
-    if (failed.length) setError(failed.join("\n"));
-    else {
-      setError(null);
-      onPass();
-    }
-  };
+  if (failed.length) setError(failed.join("\n"));
+  else {
+    setError(null);
+    onPass();
+  }
+};
 
   const renderEditor = (lang) => (
     <div className="space-y-2 flex-1 min-w-0">

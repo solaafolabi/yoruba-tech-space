@@ -3,6 +3,31 @@ import supabase from "../../supabaseClient";
 import AdminLayout from "./layout/AdminLayout";
 import PracticalStepsTable from "../../features/admin/PracticalStepsTable";
 
+// ✅ Universal JSON cleaner that accepts raw, HTML-wrapped, or encoded JSON
+function cleanAndParseJson(input) {
+  if (!input) return [];
+  try {
+    if (typeof input === "object") return input;
+
+    let text = input
+      .replace(/<[^>]*>/g, "") // remove HTML tags
+      .replace(/&nbsp;/g, " ")
+      .replace(/&quot;/g, '"')
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .trim();
+
+    // auto-wrap if it's a single object
+    if (text.startsWith("{") && text.endsWith("}")) text = `[${text}]`;
+
+    const parsed = JSON.parse(text);
+    return Array.isArray(parsed) ? parsed : [parsed];
+  } catch (err) {
+    console.error("❌ Invalid JSON:", err);
+    return [];
+  }
+}
+
 export default function PracticalStepsUpload() {
   const [courses, setCourses] = useState([]);
   const [modules, setModules] = useState([]);
@@ -12,8 +37,8 @@ export default function PracticalStepsUpload() {
   const [selectedModule, setSelectedModule] = useState("");
   const [selectedLesson, setSelectedLesson] = useState("");
 
-  const [lessonType, setLessonType] = useState([]); // UI checkbox selection
-  const [stepsJSON, setStepsJSON] = useState("");   // bulk steps JSON
+  const [lessonType, setLessonType] = useState([]);
+  const [stepsJSON, setStepsJSON] = useState("");
   const [loading, setLoading] = useState(false);
   const [exporting, setExporting] = useState(false);
   const [success, setSuccess] = useState(null);
@@ -57,6 +82,50 @@ export default function PracticalStepsUpload() {
     })();
   }, [selectedModule]);
 
+  // Fetch existing steps when a lesson is selected
+  useEffect(() => {
+    if (!selectedLesson) {
+      setStepsJSON("");
+      return;
+    }
+    (async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        setSuccess(null);
+
+        const { data, error } = await supabase
+          .from("practical_steps")
+          .select("*")
+          .eq("lesson_id", selectedLesson)
+          .order("step_number", { ascending: true });
+
+        if (error) throw error;
+
+        if (data && data.length > 0) {
+          const formatted = data.map((s) => ({
+            step: s.step_number,
+            instruction_en: s.instruction_en,
+            instruction_yo: s.instruction_yo,
+            lesson_type: s.lesson_type || [],
+            validation_rules: s.validation_rules || [],
+            expected_output: s.expected_output || "",
+          }));
+          setStepsJSON(JSON.stringify(formatted, null, 2));
+          setLessonType(data[0]?.lesson_type || []);
+          setSuccess(`📖 Loaded ${data.length} step(s) for editing.`);
+        } else {
+          setStepsJSON("");
+          setSuccess("ℹ️ No steps found for this lesson.");
+        }
+      } catch (err) {
+        setError("Failed to load steps: " + err.message);
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [selectedLesson]);
+
   const handleLessonTypeChange = (lang) => {
     setLessonType((prev) =>
       prev.includes(lang) ? prev.filter((l) => l !== lang) : [...prev, lang]
@@ -76,32 +145,36 @@ export default function PracticalStepsUpload() {
     }
 
     if (lessonType.length === 0) {
-      setError("Please select at least one lesson type (HTML, CSS, JS, PYTHON...).");
+      setError("Please select at least one lesson type (HTML, CSS, JS, etc.)");
       setLoading(false);
       return;
     }
 
-    let parsedSteps = null;
-    try {
-      parsedSteps = JSON.parse(stepsJSON);
-      if (!Array.isArray(parsedSteps)) throw new Error("Steps JSON must be an array.");
-    } catch (err) {
-      setError("Steps must be a valid JSON array.");
+    // ✅ CLEAN AND PARSE any JSON format (HTML-wrapped, stringified, etc.)
+    const parsedSteps = cleanAndParseJson(stepsJSON);
+    if (parsedSteps.length === 0) {
+      setError("Steps must be a valid JSON array or object.");
       setLoading(false);
       return;
     }
 
     try {
-      // Build upsert payload
-      const inserts = parsedSteps.map((s, index) => ({
-        lesson_id: selectedLesson,
-        step_number: s.step ?? index + 1,
-        instruction_en: s.instruction_en,
-        instruction_yo: s.instruction_yo,
-        lesson_type: s.lesson_type?.length ? s.lesson_type : lessonType, // Use per-step or UI selection
-        validation_rules: s.validation_rules || [], // optional per-step rules
-        expected_output: s.expected_output || "",
-      }));
+      const inserts = parsedSteps.map((s, index) => {
+        const rules = cleanAndParseJson(s.validation_rules);
+
+        return {
+          lesson_id: selectedLesson,
+          step_number: s.step ?? index + 1,
+          instruction_en: s.instruction_en,
+          instruction_yo: s.instruction_yo,
+          lesson_type:
+            Array.isArray(s.lesson_type) && s.lesson_type.length > 0
+              ? s.lesson_type
+              : lessonType,
+          validation_rules: rules,
+          expected_output: s.expected_output || "",
+        };
+      });
 
       const { error: insertError } = await supabase
         .from("practical_steps")
@@ -112,8 +185,6 @@ export default function PracticalStepsUpload() {
       if (insertError) throw insertError;
 
       setSuccess(`✅ ${parsedSteps.length} steps uploaded/updated successfully.`);
-      setStepsJSON("");
-      setLessonType([]);
       setRefreshSteps((k) => !k);
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
@@ -182,11 +253,11 @@ export default function PracticalStepsUpload() {
   return (
     <AdminLayout>
       <h2 className="text-2xl font-bold mb-6">
-        🛠 Upload or Update Practical Steps (Dynamic)
+        🛠 Upload or Update Practical Steps (Accepts Any JSON)
       </h2>
 
       <form onSubmit={handleSubmit} className="space-y-6 max-w-4xl">
-        {/* Course / Module / Lesson selectors */}
+        {/* Selectors */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <select
             required
@@ -197,6 +268,7 @@ export default function PracticalStepsUpload() {
               setSelectedLesson("");
               setModules([]);
               setLessons([]);
+              setStepsJSON("");
             }}
             className="p-2 border rounded bg-white dark:bg-gray-800"
           >
@@ -215,6 +287,7 @@ export default function PracticalStepsUpload() {
               setSelectedModule(e.target.value);
               setSelectedLesson("");
               setLessons([]);
+              setStepsJSON("");
             }}
             className="p-2 border rounded bg-white dark:bg-gray-800"
           >
@@ -243,7 +316,9 @@ export default function PracticalStepsUpload() {
 
         {/* Lesson Types */}
         <div>
-          <p className="font-bold mb-2">Select Lesson Type(s) (Default for all steps if not set in JSON):</p>
+          <p className="font-bold mb-2">
+            Select Lesson Type(s) (Default for all steps if not set in JSON):
+          </p>
           <div className="flex gap-6 flex-wrap">
             {LANGS.map((lang) => (
               <label key={lang} className="flex items-center gap-2">
@@ -259,16 +334,16 @@ export default function PracticalStepsUpload() {
           </div>
         </div>
 
-        {/* Bulk Steps JSON */}
+        {/* Steps JSON */}
         <textarea
-          placeholder={`Steps JSON with per-step lesson_type & validation_rules`}
-          rows={10}
+          placeholder="Paste your steps JSON (any format: raw, HTML, or encoded)"
+          rows={12}
           value={stepsJSON}
           onChange={(e) => setStepsJSON(e.target.value)}
           className="w-full p-2 border rounded bg-white dark:bg-gray-800 font-mono"
         />
 
-        {/* Actions */}
+        {/* Buttons */}
         <div className="flex flex-col md:flex-row gap-3">
           <button
             type="submit"

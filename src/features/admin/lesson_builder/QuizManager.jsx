@@ -68,65 +68,60 @@ export default function QuizManager({
                         </div>
                       </div>
 
-                      {/* English Question + Options */}
-                      <input
-                        type="text"
-                        placeholder={`Question ${i + 1} (English)`}
-                        value={quiz.question_en ?? ""}
-                        onChange={(e) => updateQuiz(i, "question_en", e.target.value)}
-                        className="w-full p-2 border rounded bg-white dark:bg-gray-700 mb-2"
-                      />
+                     {/* English Question + Options */}
+<textarea
+  placeholder={`Question ${i + 1} (English)`}
+  value={quiz.question_en ?? ""}
+  onChange={(e) => updateQuiz(i, "question_en", e.target.value)}
+  className="w-full p-2 border rounded bg-white dark:bg-gray-700 mb-2 min-h-[100px]"
+/>
 
-                      <div className="grid grid-cols-2 gap-2 mb-2">
-                        {(quiz.options_en ?? ["", "", "", ""]).map((opt, j) => (
-                          <input
-                            key={j}
-                            type="text"
-                            placeholder={`Option ${j + 1} (English)`}
-                            value={opt}
-                            onChange={(e) => updateQuizOption(i, j, e.target.value, "en")}
-                            className="p-2 border rounded bg-white dark:bg-gray-700"
-                          />
-                        ))}
-                      </div>
+<div className="grid grid-cols-2 gap-2 mb-2">
+  {(quiz.options_en ?? ["", "", "", ""]).map((opt, j) => (
+    <textarea
+      key={j}
+      placeholder={`Option ${j + 1} (English)`}
+      value={opt}
+      onChange={(e) => updateQuizOption(i, j, e.target.value, "en")}
+      className="p-2 border rounded bg-white dark:bg-gray-700 min-h-[60px]"
+    />
+  ))}
+</div>
 
-                      <input
-                        type="text"
-                        placeholder="Correct Answer (English)"
-                        value={quiz.correct_answer_en ?? ""}
-                        onChange={(e) => updateQuiz(i, "correct_answer_en", e.target.value)}
-                        className="w-full p-2 border rounded bg-white dark:bg-gray-700 mb-4"
-                      />
+<textarea
+  placeholder="Correct Answer (English)"
+  value={quiz.correct_answer_en ?? ""}
+  onChange={(e) => updateQuiz(i, "correct_answer_en", e.target.value)}
+  className="w-full p-2 border rounded bg-white dark:bg-gray-700 mb-4 min-h-[60px]"
+/>
 
-                      {/* Yoruba Question + Options */}
-                      <input
-                        type="text"
-                        placeholder={`Question ${i + 1} (Yoruba)`}
-                        value={quiz.question_yo ?? ""}
-                        onChange={(e) => updateQuiz(i, "question_yo", e.target.value)}
-                        className="w-full p-2 border rounded bg-white dark:bg-gray-700 mb-2"
-                      />
+{/* Yoruba Question + Options */}
+<textarea
+  placeholder={`Question ${i + 1} (Yoruba)`}
+  value={quiz.question_yo ?? ""}
+  onChange={(e) => updateQuiz(i, "question_yo", e.target.value)}
+  className="w-full p-2 border rounded bg-white dark:bg-gray-700 mb-2 min-h-[100px]"
+/>
 
-                      <div className="grid grid-cols-2 gap-2 mb-2">
-                        {(quiz.options_yo ?? ["", "", "", ""]).map((opt, j) => (
-                          <input
-                            key={j}
-                            type="text"
-                            placeholder={`Option ${j + 1} (Yoruba)`}
-                            value={opt}
-                            onChange={(e) => updateQuizOption(i, j, e.target.value, "yo")}
-                            className="p-2 border rounded bg-white dark:bg-gray-700"
-                          />
-                        ))}
-                      </div>
+<div className="grid grid-cols-2 gap-2 mb-2">
+  {(quiz.options_yo ?? ["", "", "", ""]).map((opt, j) => (
+    <textarea
+      key={j}
+      placeholder={`Option ${j + 1} (Yoruba)`}
+      value={opt}
+      onChange={(e) => updateQuizOption(i, j, e.target.value, "yo")}
+      className="p-2 border rounded bg-white dark:bg-gray-700 min-h-[60px]"
+    />
+  ))}
+</div>
 
-                      <input
-                        type="text"
-                        placeholder="Correct Answer (Yoruba)"
-                        value={quiz.correct_answer_yo ?? ""}
-                        onChange={(e) => updateQuiz(i, "correct_answer_yo", e.target.value)}
-                        className="w-full p-2 border rounded bg-white dark:bg-gray-700"
-                      />
+<textarea
+  placeholder="Correct Answer (Yoruba)"
+  value={quiz.correct_answer_yo ?? ""}
+  onChange={(e) => updateQuiz(i, "correct_answer_yo", e.target.value)}
+  className="w-full p-2 border rounded bg-white dark:bg-gray-700 min-h-[60px]"
+/>
+
                     </div>
                   )}
                 </Draggable>

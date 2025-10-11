@@ -201,6 +201,7 @@ const LessonHeader = ({ lesson }) => {
                           customStyle={{
                             margin: 0,
                             borderRadius: "0.5rem",
+                            background: "#1E293B",
                             padding: "1rem",
                           }}
                         >
